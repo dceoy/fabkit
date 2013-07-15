@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # Zsh
-chsh `zsh`
+# chsh `zsh` [user]
 
 # Git config
-# git config --global user.name "name"
-# git config --global user.email "email"
+# git config --global user.name [name]
+# git config --global user.email [email]
 git config --global color.ui true
 
 ln -s ~/dotfiles/d.zshrc ~/.zshrc
