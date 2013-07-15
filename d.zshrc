@@ -101,11 +101,14 @@ esac
 # ------------------------------
 
 ### Custom ###
-if [ `uname` = "Darwin" ]; then
-  export PATH=~/bin:/usr/local/bin:$PATH
-elif [ `uname` = "Linux" ]; then
-  alias ls="ls --color=auto"
-fi
+case ${OSTYPE} in
+  darwin*)
+    export PATH=~/bin:/usr/local/bin:$PATH
+    ;;
+  linux*)
+    alias ls="ls --color=auto"
+    ;;
+esac
 
 alias v=vim
 alias ls="ls -F" ll="ls -lt" lla="ll -a"
