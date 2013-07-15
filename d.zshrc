@@ -104,14 +104,15 @@ esac
 case ${OSTYPE} in
   darwin*)
     export PATH=~/bin:/usr/local/bin:$PATH
+    alias ls="ls -F"
     ;;
   linux*)
-    alias ls="ls --color=auto"
+    alias ls="ls --color=auto -F"
     ;;
 esac
 
 alias v=vim
-alias ls="ls -F" ll="ls -lt" lla="ll -a"
+alias ll="ls -lt" lla="ll -a"
 
 
 ### Git ###
