@@ -20,20 +20,23 @@ if [ `uname` = "Darwin" ]; then
   brew install rbenv
   brew install ruby-build
 elif [ `uname` = "Linux" ]; then
+  echo 'Check out rbenv'
   git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
+  echo 'Install ruby-build as an rbenv plugin'
   git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 fi
 
 
 # Neobundle
+echo 'Setup Neobundle'
 mkdir -p ~/.vim/bundle
 git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
 
 # Pythonbrew
-curl -kL http://xrl.us/pythonbrewinstall | bash
+# curl -kL http://xrl.us/pythonbrewinstall | bash
 
 # Nodebrew
-curl -L git.io/nodebrew | perl - setup
+# curl -L git.io/nodebrew | perl - setup
 
 
 source ~/.zshrc
