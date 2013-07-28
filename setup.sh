@@ -40,5 +40,5 @@ git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
 # curl -L git.io/nodebrew | perl - setup
 
 
-source ~/.zshrc
-source ~/.zshenv
+# source ~/.zshrc
+# source ~/.zshenv
