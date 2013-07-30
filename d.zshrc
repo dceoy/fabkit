@@ -111,6 +111,7 @@ case ${OSTYPE} in
     ;;
 esac
 
+setopt nonomatch
 alias v=vim
 alias ll="ls -lt" lla="ll -a"
 
