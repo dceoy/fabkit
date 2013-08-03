@@ -1,6 +1,6 @@
 #!/usr/bin/zsh
 
-# chsh `zsh` [user]
+# chsh `zsh`
 
 # git config --global user.name [name]
 # git config --global user.email [email]
@@ -9,6 +9,7 @@ git config --global color.ui true
 ln -sf ~/dotfiles/d.zshrc ~/.zshrc
 ln -sf ~/dotfiles/d.zshenv ~/.zshenv
 ln -sf ~/dotfiles/d.vimrc ~/.vimrc
+ln -sf ~/dotfiles/d.gemrc ~/.gemrc
 
 # rbenv
 case ${OSTYPE} in
