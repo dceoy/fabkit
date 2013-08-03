@@ -6,9 +6,9 @@
 # git config --global user.email [email]
 git config --global color.ui true
 
-ln -s ~/dotfiles/d.zshrc ~/.zshrc
-ln -s ~/dotfiles/d.zshenv ~/.zshenv
-ln -s ~/dotfiles/d.vimrc ~/.vimrc
+ln -sf ~/dotfiles/d.zshrc ~/.zshrc
+ln -sf ~/dotfiles/d.zshenv ~/.zshenv
+ln -sf ~/dotfiles/d.vimrc ~/.vimrc
 
 # rbenv
 case ${OSTYPE} in
