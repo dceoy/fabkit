@@ -118,8 +118,8 @@ set cursorline                              " highlight the screen line of the c
 set lazyredraw                              " don't redraw while running macros (much faster) (LazyRedraw)
 set backspace=start,eol,indent              " make backspace work normal
 set whichwrap=b,s,h,l,<,>,[,],~             " allow backspace and cursor keys to cross line boundaries
-set mouse=a                                 " use mouse everywhere
-set ttymouse=xterm2                         " terminal type for which mouse codes are to be recognized
+"set mouse=a                                 " use mouse everywhere
+"set ttymouse=xterm2                         " terminal type for which mouse codes are to be recognized
 set shortmess=atI                           " shorten messages to avoid 'press a key' prompt
 set report=0                                " tell us when any line is changed via : commands
 set noerrorbells                            " don't make noise on error messages
