@@ -158,7 +158,7 @@ set textwidth=0                             " don't wrap lines by default
 
 
 " autocommand
-au BufNewFile,BufRead *.sh,*.pl,*.js,*.rb,*.py,*.R,*.hs set ts=2 sw=2
+au BufNewFile,BufRead *.sh,*.pl,*.js,*.rb,*.py,*.R,*.hs,*.html,*.css,*.erb set ts=2 sw=2
 
 
 " enable :DiffOrig
