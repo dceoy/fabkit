@@ -53,7 +53,7 @@ NeoBundle 'kien/ctrlp.vim'                          " fuzzy file, buffer, mru, t
 NeoBundle 'scrooloose/nerdtree'                     " a tree explorer plugin for vim
 " git
 NeoBundle 'tpope/vim-fugitive'                      " a Git wrapper so awesome, it should be illegal
-NeoBundle 'airblade/vim-gitgutter'                  " plugin which shows a git diff in the gutter (sign column)
+"NeoBundle 'airblade/vim-gitgutter'                  " plugin which shows a git diff in the gutter (sign column)
 
 " html
 NeoBundle 'mattn/emmet-vim'                         " emmet for vim
@@ -184,7 +184,7 @@ set smarttab                                " sw at the start of the line, sts e
 set textwidth=0                             " don't wrap lines by default
 
 " autocommand
-au BufNewFile,BufRead *.sh,*.pl,*.js,*.rb,*.py,*.R,*.hs,*.html,*.css,*.erb,*.yml set ts=2 sw=2
+au BufNewFile,BufRead *.sh,*.pl,*.js,*.rb,*.py,*.R,*.hs,*.html,*.css,*.scss,*.erb,*.yml set ts=2 sw=2
 
 " enable :DiffOrig
 if !exists(":DiffOrig")
