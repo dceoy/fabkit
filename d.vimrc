@@ -179,12 +179,9 @@ au BufNewFile,BufRead * match ZenkakuSpace /　/
 set autoindent                              " take indent for new line from previous line
 set cindent                                 " do c-style indenting
 set expandtab                               " replace tabs with ${tabstop} spaces
-set ts=4 sw=4 sts=0                         " set tabstop, shiftwidth, softtabstop
+set ts=2 sw=2 sts=0                         " set tabstop, shiftwidth, softtabstop
 set smarttab                                " sw at the start of the line, sts everywhere else
 set textwidth=0                             " don't wrap lines by default
-
-" autocommand
-au BufNewFile,BufRead *.sh,*.pl,*.js,*.rb,*.py,*.R,*.hs,*.html,*.css,*.scss,*.erb,*.yml set ts=2 sw=2
 
 " enable :DiffOrig
 if !exists(":DiffOrig")
