@@ -64,13 +64,14 @@ NeoBundle 'nono/vim-handlebars'                     " plugin for Handlebars
 " css
 NeoBundle 'skammer/vim-css-color'                   " highlight colors in css files
 NeoBundle 'hail2u/vim-css3-syntax'                  " add CSS3 syntax support to vim's built-in `syntax/css.vim`
+NeoBundle 'csslint.vim'                             " CSS code quality tool
 NeoBundle 'groenewege/vim-less'                     " syntax for LESS (dynamic CSS)
 " javascript
 NeoBundle 'pangloss/vim-javascript'                 " vastly improved Javascript indentation and syntax support in Vim
 NeoBundle 'othree/javascript-libraries-syntax.vim'  " syntax for JavaScript libraries
 NeoBundle 'lint.vim'                                " JSHint integration with quickfix window
 NeoBundle 'kchmck/vim-coffee-script'                " CoffeeScript support for vim
-NeoBundle 'leafgarland/typescript-vim'              " Typescript syntax files for Vim
+"NeoBundle 'leafgarland/typescript-vim'              " Typescript syntax files for Vim
 " ruby
 NeoBundle 'vim-ruby/vim-ruby'                       " Vim/Ruby Configuration Files
 NeoBundle 'rails.vim'                               " Ruby on Rails: easy file navigation, enhanced syntax highlighting, and more
