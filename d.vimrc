@@ -60,7 +60,8 @@ NeoBundle 'mattn/emmet-vim'                         " emmet for vim
 NeoBundle 'othree/html5.vim'                        " HTML5 omnicomplete and syntax
 NeoBundle 'slim-template/vim-slim'                  " a clone of the slim vim plugin from stonean
 NeoBundle 'tpope/vim-haml'                          " Vim runtime files for Haml, Sass, and SCSS
-NeoBundle 'nono/vim-handlebars'                     " plugin for Handlebars
+NeoBundle 'plasticboy/vim-markdown'                 " Syntax highlighting, matching rules and mappings for Markdown
+"NeoBundle 'nono/vim-handlebars'                     " plugin for Handlebars
 " css
 NeoBundle 'skammer/vim-css-color'                   " highlight colors in css files
 NeoBundle 'hail2u/vim-css3-syntax'                  " add CSS3 syntax support to vim's built-in `syntax/css.vim`
