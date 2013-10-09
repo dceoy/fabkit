@@ -61,7 +61,6 @@ NeoBundle 'othree/html5.vim'                        " HTML5 omnicomplete and syn
 NeoBundle 'slim-template/vim-slim'                  " a clone of the slim vim plugin from stonean
 NeoBundle 'tpope/vim-haml'                          " Vim runtime files for Haml, Sass, and SCSS
 NeoBundle 'plasticboy/vim-markdown'                 " Syntax highlighting, matching rules and mappings for Markdown
-"NeoBundle 'nono/vim-handlebars'                     " plugin for Handlebars
 " css
 NeoBundle 'skammer/vim-css-color'                   " highlight colors in css files
 NeoBundle 'hail2u/vim-css3-syntax'                  " add CSS3 syntax support to vim's built-in `syntax/css.vim`
@@ -81,11 +80,11 @@ NeoBundle 'tpope/vim-endwise'                       " wisely add 'end' in ruby, 
 " python
 NeoBundle 'python.vim'                              " a set of menus/shortcuts to work with Python files
 NeoBundle 'python.vim--Vasiliev'                    " enhanced version of the python syntax highlighting script
+NeoBundle 'nvie/vim-flake8'                         " a static syntax and style checker for Python source code
 " R
 NeoBundle 'R-syntax-highlighting'                   " R syntax highlighting
 NeoBundle 'Vim-R-plugin'                            " plugin to work with R
 " haskell
-NeoBundle 'dag/vim2hs'                              " a collection of vimscripts for Haskell development
 NeoBundle 'pbrisbin/html-template-syntax'           " highlight the various HTML templating languages in Haskell
 
 " Non github repos
@@ -152,7 +151,7 @@ set whichwrap=b,s,h,l,<,>,[,],~             " allow backspace and cursor keys to
 set mouse=a                                 " use mouse everywhere
 set ttymouse=xterm2                         " terminal type for which mouse codes are to be recognized
 set shortmess=atI                           " shorten messages to avoid 'press a key' prompt
-set report=0                                " tell us when any line is changed via : commands
+set report=0                                " tell us when any line is changed via : commands
 set noerrorbells                            " don't make noise on error messages
 set novisualbell                            " don't blink
 
@@ -187,6 +186,8 @@ set textwidth=0                             " don't wrap lines by default
 
 " enable :DiffOrig
 if !exists(":DiffOrig")
-    command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
+  command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 endif
 
+" autocmd
+autocmd BufWritePost *.py call Flake8()     " activate vim-flake8 every time
