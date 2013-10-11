@@ -84,8 +84,13 @@ NeoBundle 'nvie/vim-flake8'                         " a static syntax and style 
 " R
 NeoBundle 'R-syntax-highlighting'                   " R syntax highlighting
 NeoBundle 'Vim-R-plugin'                            " plugin to work with R
+NeoBundle 'Screen-vim---gnu-screentmux'             " simulate a split shell, using gnu screen or tmux
 " haskell
+NeoBundle 'haskell.vim'                             " syntax highlight for Haskell
 NeoBundle 'pbrisbin/html-template-syntax'           " highlight the various HTML templating languages in Haskell
+" clojure
+NeoBundle 'VimClojure'                              " a filetype, syntax and indent plugin for Clojure
+NeoBundle 'tpope/vim-fireplace'                     " fireplace.vim: Clojure REPL tease
 
 " Non github repos
 "NeoBundle 'git://git.wincent.com/command-t.git'
