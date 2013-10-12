@@ -104,17 +104,16 @@ case ${OSTYPE} in
   darwin*)
     export PATH=~/bin:/usr/local/bin:$PATH
     export LANG=ja_JP.UTF-8
-    alias ls="ls -F"
     ;;
   linux*)
     export LANG=C
-    alias ls="ls --color=auto -F"
+    alias ls="ls --color=auto"
     ;;
 esac
 
 setopt nonomatch
 alias v=vim
-alias ll="ls -lt" lla="ll -a"
+alias ll="ls -lF" lla="ll -a"
 
 
 ### Git ###
