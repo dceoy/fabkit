@@ -88,6 +88,8 @@ NeoBundle 'Screen-vim---gnu-screentmux'             " simulate a split shell, us
 " haskell
 NeoBundle 'haskell.vim'                             " syntax highlight for Haskell
 NeoBundle 'pbrisbin/html-template-syntax'           " highlight the various HTML templating languages in Haskell
+" scala
+NeoBundle 'scala.vim'                               " syntaxic coloration for Scala code
 " clojure
 NeoBundle 'VimClojure'                              " a filetype, syntax and indent plugin for Clojure
 NeoBundle 'tpope/vim-fireplace'                     " fireplace.vim: Clojure REPL tease
