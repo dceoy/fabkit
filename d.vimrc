@@ -90,6 +90,7 @@ NeoBundle 'haskell.vim'                             " syntax highlight for Haske
 NeoBundle 'pbrisbin/html-template-syntax'           " highlight the various HTML templating languages in Haskell
 " scala
 NeoBundle 'scala.vim'                               " syntaxic coloration for Scala code
+NeoBundle 'snipMate'                                " TextMate-style snippets for Vim
 " clojure
 NeoBundle 'VimClojure'                              " a filetype, syntax and indent plugin for Clojure
 NeoBundle 'tpope/vim-fireplace'                     " fireplace.vim: Clojure REPL tease
