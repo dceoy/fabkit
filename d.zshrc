@@ -106,7 +106,7 @@ case ${OSTYPE} in
     export LANG=ja_JP.UTF-8
     ;;
   linux*)
-    export LANG=C
+    export LANG=en_US.UTP-8
     alias ls="ls --color=auto"
     ;;
 esac
