@@ -102,15 +102,17 @@ esac
 ### Custom ###
 case ${OSTYPE} in
   darwin*)
-    export PATH=~/bin:/usr/local/bin:$PATH
+    export PATH=$HOME/.rbenv/shims:/usr/local/bin:$PATH
     export LANG=ja_JP.UTF-8
     ;;
   linux*)
+    export PATH=$HOME/.rbenv/bin:$PATH
     export LANG=en_US.UTP-8
     alias ls="ls --color=auto"
     ;;
 esac
 
+eval "$(rbenv init -)"
 setopt nonomatch
 alias v=vim
 alias ll="ls -lF" lla="ll -a"
