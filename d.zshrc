@@ -107,7 +107,7 @@ case ${OSTYPE} in
     ;;
   linux*)
     export PATH=$HOME/.rbenv/bin:$PATH
-    export LANG=en_US.UTP-8
+    export LANG=en_US.UTF-8
     alias ls="ls --color=auto"
     ;;
 esac
