@@ -199,3 +199,4 @@ endif
 
 " autocmd
 autocmd BufWritePost *.py call Flake8()     " activate vim-flake8 every time
+let g:flake8_ignore="E111"                  " ignore indentation error
