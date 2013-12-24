@@ -192,6 +192,9 @@ set ts=2 sw=2 sts=0                         " set tabstop, shiftwidth, softtabst
 set smarttab                                " sw at the start of the line, sts everywhere else
 set textwidth=0                             " don't wrap lines by default
 
+" search for visually selected text
+vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><CR>
+
 " enable :DiffOrig
 if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
