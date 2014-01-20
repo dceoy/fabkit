@@ -8,6 +8,7 @@ git config --global color.ui true
 
 ln -sf ~/dotfiles/d.zshrc ~/.zshrc
 ln -sf ~/dotfiles/d.zshenv ~/.zshenv
+#ln -sf ~/dotfiles/d.zprofile ~/.zprofile
 ln -sf ~/dotfiles/d.vimrc ~/.vimrc
 ln -sf ~/dotfiles/d.gemrc ~/.gemrc
 
@@ -36,9 +37,11 @@ git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
 
 # install pythonbrew
 # curl -kL http://xrl.us/pythonbrewinstall | bash
+# pybrew install 3.3.1
 
 # install nodebrew
 # curl -L git.io/nodebrew | perl - setup
+# nodebrew install-binary v0.10.24
 
 
 # source ~/.zshrc
