@@ -46,6 +46,7 @@ NeoBundle 'tpope/vim-surround'                      " quoting/parenthesizing mad
 NeoBundle 'matchit.zip'                             " extended % matching for HTML, LaTeX, and many other languages
 " run
 NeoBundle 'thinca/vim-quickrun'                     " run commands quickly
+NeoBundle 'Shougo/vimshell.vim'                     " powerful shell implemented by vim
 " file
 NeoBundle 'Shougo/unite.vim'                        " unite and create user interfaces
 NeoBundle 'Shougo/vimfiler.vim'                     " powerful file explorer implemented by Vim script
