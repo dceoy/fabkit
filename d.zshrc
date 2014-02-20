@@ -116,6 +116,7 @@ eval "$(rbenv init -)"
 setopt nonomatch
 alias v=vim
 alias ll="ls -lF" lla="ll -a"
+alias grep="grep --color=auto"
 
 
 ### Git ###
