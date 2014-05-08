@@ -5,51 +5,44 @@
 " NeoBundle
 let g:neobundle_default_git_protocol='https'
 
-set nocompatible               " Be iMproved
-filetype off                   " Required!
-
 if has('vim_starting')
+  set nocompatible                " Be iMproved
+
+  " Required:
   set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
 
-call neobundle#rc(expand('~/.vim/bundle/'))
+" Required:
+call neobundle#begin(expand('~/.vim/bundle/'))
 
 " Let NeoBundle manage NeoBundle
-NeoBundle 'Shougo/neobundle.vim'
+" Required:
+NeoBundleFetch 'Shougo/neobundle.vim'
 
-" Recommended to install
-" After install, turn shell ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
-NeoBundle 'Shougo/vimproc'
-
-" My Bundles here:
-"
-" Note: You don't set neobundle setting in .gvimrc!
-" Original repos on github
-"NeoBundle 'Lokaltog/vim-easymotion'
-"NeoBundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 " vim-scripts repos
-NeoBundle 'L9'                                      " some utility functions and commands for programming in Vim
+NeoBundle 'L9'                                      " some utility functions and commands for programming in vim
 NeoBundle 'FuzzyFinder'                             " buffer/file/command/tag/etc explorer with fuzzy matching
 
 " screen
 NeoBundle 'altercation/vim-colors-solarized'        " precision colorscheme for the vim text editor
-NeoBundle 'tyru/open-browser.vim'                   " open URI with your favorite browser from your favorite editor
+NeoBundle 'tyru/open-browser.vim'                   " open uri with your favorite browser from your favorite editor
 " syntax
 NeoBundle 'scrooloose/syntastic'                    " syntax checking hacks for vim
 " edit
-NeoBundle 'Shougo/neocomplcache.vim'                " ultimate auto-completion system for Vim
+NeoBundle 'Shougo/neocomplcache.vim'                " ultimate auto-completion system for vim
 NeoBundle 'Shougo/neosnippet.vim'                   " neocomplcache snippets source
 "NeoBundle 'Shougo/neocomplete.vim'                  " next generation completion framework after neocomplcache
 NeoBundle 'AndrewRadev/switch.vim'                  " switch segments of text with predefined replacements
 " surroundings
 NeoBundle 'tpope/vim-surround'                      " quoting/parenthesizing made simple
-NeoBundle 'matchit.zip'                             " extended % matching for HTML, LaTeX, and many other languages
+NeoBundle 'matchit.zip'                             " extended % matching for html, latex, and many other languages
 " run
 NeoBundle 'thinca/vim-quickrun'                     " run commands quickly
+NeoBundle 'Shougo/vimproc'                          " interactive command execution in vim
 NeoBundle 'Shougo/vimshell.vim'                     " powerful shell implemented by vim
 " file
 NeoBundle 'Shougo/unite.vim'                        " unite and create user interfaces
-NeoBundle 'Shougo/vimfiler.vim'                     " powerful file explorer implemented by Vim script
+NeoBundle 'Shougo/vimfiler.vim'                     " powerful file explorer implemented by vim script
 NeoBundle 'kien/ctrlp.vim'                          " fuzzy file, buffer, mru, tag, etc finder
 NeoBundle 'scrooloose/nerdtree'                     " a tree explorer plugin for vim
 " git
@@ -58,69 +51,55 @@ NeoBundle 'tpope/vim-fugitive'                      " a Git wrapper so awesome, 
 
 " html
 NeoBundle 'mattn/emmet-vim'                         " emmet for vim
-NeoBundle 'othree/html5.vim'                        " HTML5 omnicomplete and syntax
+NeoBundle 'othree/html5.vim'                        " html5 omnicomplete and syntax
 NeoBundle 'slim-template/vim-slim'                  " a clone of the slim vim plugin from stonean
-NeoBundle 'tpope/vim-haml'                          " Vim runtime files for Haml, Sass, and SCSS
-NeoBundle 'plasticboy/vim-markdown'                 " Syntax highlighting, matching rules and mappings for Markdown
+NeoBundle 'tpope/vim-haml'                          " vim runtime files for haml, sass, and scss
+NeoBundle 'plasticboy/vim-markdown'                 " syntax highlighting, matching rules and mappings for markdown
 " css
 NeoBundle 'skammer/vim-css-color'                   " highlight colors in css files
-NeoBundle 'hail2u/vim-css3-syntax'                  " add CSS3 syntax support to vim's built-in `syntax/css.vim`
-NeoBundle 'csslint.vim'                             " CSS code quality tool
-NeoBundle 'groenewege/vim-less'                     " syntax for LESS (dynamic CSS)
+NeoBundle 'hail2u/vim-css3-syntax'                  " add css3 syntax support to vim's built-in `syntax/css.vim`
+NeoBundle 'csslint.vim'                             " css code quality tool
+NeoBundle 'groenewege/vim-less'                     " syntax for less (dynamic css)
 " javascript
-NeoBundle 'pangloss/vim-javascript'                 " vastly improved Javascript indentation and syntax support in Vim
-NeoBundle 'othree/javascript-libraries-syntax.vim'  " syntax for JavaScript libraries
-NeoBundle 'lint.vim'                                " JSHint integration with quickfix window
-NeoBundle 'kchmck/vim-coffee-script'                " CoffeeScript support for vim
-"NeoBundle 'leafgarland/typescript-vim'              " Typescript syntax files for Vim
+NeoBundle 'pangloss/vim-javascript'                 " vastly improved Javascript indentation and syntax support in vim
+NeoBundle 'othree/javascript-libraries-syntax.vim'  " syntax for javascript libraries
+NeoBundle 'lint.vim'                                " jshint integration with quickfix window
+NeoBundle 'kchmck/vim-coffee-script'                " coffeescript support for vim
+"NeoBundle 'leafgarland/typescript-vim'              " typescript syntax files for vim
 " ruby
-NeoBundle 'vim-ruby/vim-ruby'                       " Vim/Ruby Configuration Files
-NeoBundle 'rails.vim'                               " Ruby on Rails: easy file navigation, enhanced syntax highlighting, and more
-NeoBundle 'tpope/vim-rails'                         " Ruby on Rails power tools
+NeoBundle 'vim-ruby/vim-ruby'                       " vim/ruby configuration files
+NeoBundle 'rails.vim'                               " ruby on rails: easy file navigation, enhanced syntax highlighting, and more
+NeoBundle 'tpope/vim-rails'                         " ruby on rails power tools
 NeoBundle 'tpope/vim-endwise'                       " wisely add 'end' in ruby, endfunction/endif/more in vim script, etc
 " python
-NeoBundle 'python.vim'                              " a set of menus/shortcuts to work with Python files
+NeoBundle 'python.vim'                              " a set of menus/shortcuts to work with python files
 NeoBundle 'python.vim--Vasiliev'                    " enhanced version of the python syntax highlighting script
-NeoBundle 'nvie/vim-flake8'                         " a static syntax and style checker for Python source code
+NeoBundle 'nvie/vim-flake8'                         " a static syntax and style checker for python source code
 " R
-NeoBundle 'R-syntax-highlighting'                   " R syntax highlighting
-NeoBundle 'Vim-R-plugin'                            " plugin to work with R
+NeoBundle 'R-syntax-highlighting'                   " r syntax highlighting
+NeoBundle 'Vim-R-plugin'                            " plugin to work with r
 NeoBundle 'Screen-vim---gnu-screentmux'             " simulate a split shell, using gnu screen or tmux
 " haskell
-NeoBundle 'haskell.vim'                             " syntax highlight for Haskell
-NeoBundle 'pbrisbin/html-template-syntax'           " highlight the various HTML templating languages in Haskell
+NeoBundle 'haskell.vim'                             " syntax highlight for haskell
+NeoBundle 'pbrisbin/html-template-syntax'           " highlight the various html templating languages in haskell
 " scala
-NeoBundle 'scala.vim'                               " syntaxic coloration for Scala code
-NeoBundle 'snipMate'                                " TextMate-style snippets for Vim
+NeoBundle 'scala.vim'                               " syntaxic coloration for scala code
+NeoBundle 'snipMate'                                " textmate-style snippets for vim
 " clojure
-NeoBundle 'VimClojure'                              " a filetype, syntax and indent plugin for Clojure
-NeoBundle 'tpope/vim-fireplace'                     " fireplace.vim: Clojure REPL tease
+NeoBundle 'VimClojure'                              " a filetype, syntax and indent plugin for clojure
+NeoBundle 'tpope/vim-fireplace'                     " fireplace.vim: clojure repl tease
 
-" Non github repos
-"NeoBundle 'git://git.wincent.com/command-t.git'
-" Non git repos
-"NeoBundle 'http://svn.macports.org/repository/macports/contrib/mpvim/'
-"NeoBundle 'https://bitbucket.org/ns9tks/vim-fuzzyfinder'
+call neobundle#end()
 
-" ...
+" Required:
+filetype plugin indent on
 
-filetype plugin indent on   " Required!
-"
-" Brief help
-" :NeoBundleList          - list configured bundles
-" :NeoBundleInstall(!)    - install(update) bundles
-" :NeoBundleClean(!)      - confirm(or auto-approve) removal of unused bundles
-
-" Installation check.
-if neobundle#exists_not_installed_bundles()
-  echomsg 'Not installed bundles : ' .
-    \ string(neobundle#get_not_installed_bundle_names())
-  echomsg 'Please execute ":NeoBundleInstall" command.'
-  "finish
-endif
+" If there are uninstalled bundles found on startup,
+" this will conveniently prompt you to install them.
+NeoBundleCheck
 
 " neocomplete
-let g:neocomplete#enable_at_startup = 1
+"let g:neocomplete#enable_at_startup = 1
 
 
 " general
