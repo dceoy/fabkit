@@ -1,6 +1,11 @@
-# nodebrew
-export PATH=$HOME/.nodebrew/current/bin:$PATH
+# rbenv
+export PATH="$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH"
+eval "$(rbenv init -)"
 
-# pythonbrew
-[[ -s "$HOME/.pythonbrew/etc/bashrc" ]] && source "$HOME/.pythonbrew/etc/bashrc"
+# pyenv
+export PATH="$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH"
+eval "$(pyenv init -)"
 
+# ndenv
+export PATH="$HOME/.ndenv/bin:$PATH"
+eval "$(ndenv init -)"

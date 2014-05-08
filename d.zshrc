@@ -102,22 +102,18 @@ esac
 ### Custom ###
 case ${OSTYPE} in
   darwin*)
-    export PATH=$HOME/.rbenv/shims:/usr/local/bin:$PATH
     export LANG=ja_JP.UTF-8
     ;;
   linux*)
-    export PATH=$HOME/.rbenv/bin:$PATH
     export LANG=en_US.UTF-8
     alias ls="ls --color=auto"
     ;;
 esac
 
-eval "$(rbenv init -)"
 setopt nonomatch
 alias v=vim
 alias ll="ls -lF" lla="ll -a"
 alias grep="grep --color=auto"
-
 
 ### Git ###
 autoload -Uz vcs_info
@@ -129,14 +125,3 @@ precmd () {
   [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
 }
 RPROMPT="%1(v|%F{green}%1v%f|)"$RPROMPT
-
-
-### Ruby ###
-function gem(){
-  $HOME/.rbenv/shims/gem $*
-  if [ "$1" = "install" ] || [ "$1" = "i" ] || [ "$1" = "uninstall" ] || [ "$1" = "uni" ]; then
-    rbenv rehash
-    rehash
-  fi
-}
-
