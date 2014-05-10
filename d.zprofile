@@ -3,7 +3,7 @@
 if [ -e ~/Dropbox/dropbox.py ]; then
   STAT=`/usr/bin/python ~/Dropbox/dropbox.py status` && echo $STAT
   if [[ $STAT =~ "^Dropbox isn't running\!$" ]]; then
-    python ~/Dropbox/dropbox.py start
+    /usr/bin/python ~/Dropbox/dropbox.py start
   fi
 else
   echo "dropbox.py does not exist"
