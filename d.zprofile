@@ -9,6 +9,9 @@ else
   echo "dropbox.py does not exist"
 fi
 
+# aws-cli
+export AWS_CONFIG_FILE=~/aws.conf
+
 # proxy
 PROXY=proxy.example.com:8080
 export http_proxy="http://$PROXY"
