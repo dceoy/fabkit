@@ -103,6 +103,8 @@ esac
 case ${OSTYPE} in
   darwin*)
     export LANG=ja_JP.UTF-8
+    alias sed="gsed"
+    alias awk="gawk"
     ;;
   linux*)
     export LANG=en_US.UTF-8
