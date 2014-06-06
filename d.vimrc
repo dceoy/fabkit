@@ -86,8 +86,10 @@ NeoBundle 'pbrisbin/html-template-syntax'           " highlight the various html
 NeoBundle 'scala.vim'                               " syntaxic coloration for scala code
 NeoBundle 'snipMate'                                " textmate-style snippets for vim
 " clojure
-NeoBundle 'VimClojure'                              " a filetype, syntax and indent plugin for clojure
-NeoBundle 'tpope/vim-fireplace'                     " fireplace.vim: clojure repl tease
+"NeoBundle 'VimClojure'                              " a filetype, syntax and indent plugin for clojure
+"NeoBundle 'tpope/vim-fireplace'                     " fireplace.vim: clojure repl tease
+" sql
+NeoBundle 'sql.vim--Stinson'                        " better sql syntax
 
 call neobundle#end()
 
