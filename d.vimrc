@@ -28,6 +28,7 @@ NeoBundle 'altercation/vim-colors-solarized'        " precision colorscheme for 
 NeoBundle 'tyru/open-browser.vim'                   " open uri with your favorite browser from your favorite editor
 " syntax
 NeoBundle 'scrooloose/syntastic'                    " syntax checking hacks for vim
+NeoBundle 'elzr/vim-json'                           " a better json for vim
 " edit
 NeoBundle 'Shougo/neocomplcache.vim'                " ultimate auto-completion system for vim
 NeoBundle 'Shougo/neosnippet.vim'                   " neocomplcache snippets source
