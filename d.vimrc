@@ -19,6 +19,16 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 " Required:
 NeoBundleFetch 'Shougo/neobundle.vim'
 
+" Vimproc
+NeoBundle 'Shougo/vimproc.vim', {
+      \ 'build' : {
+      \     'windows' : 'tools\\update-dll-mingw',
+      \     'cygwin' : 'make -f make_cygwin.mak',
+      \     'mac' : 'make -f make_mac.mak',
+      \     'unix' : 'make -f make_unix.mak',
+      \    },
+      \ }
+
 " vim-scripts repos
 NeoBundle 'L9'                                      " some utility functions and commands for programming in vim
 NeoBundle 'FuzzyFinder'                             " buffer/file/command/tag/etc explorer with fuzzy matching
@@ -38,7 +48,6 @@ NeoBundle 'tpope/vim-surround'                      " quoting/parenthesizing mad
 NeoBundle 'matchit.zip'                             " extended % matching for html, latex, and many other languages
 " run
 NeoBundle 'thinca/vim-quickrun'                     " run commands quickly
-NeoBundle 'Shougo/vimproc'                          " interactive command execution in vim
 NeoBundle 'Shougo/vimshell.vim'                     " powerful shell implemented by vim
 " file
 NeoBundle 'Shougo/unite.vim'                        " unite and create user interfaces
