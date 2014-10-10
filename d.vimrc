@@ -86,17 +86,16 @@ NeoBundle 'python.vim--Vasiliev'                    " enhanced version of the py
 NeoBundle 'nvie/vim-flake8'                         " a static syntax and style checker for python source code
 " R
 NeoBundle 'R-syntax-highlighting'                   " r syntax highlighting
-NeoBundle 'Vim-R-plugin'                            " plugin to work with r
-NeoBundle 'Screen-vim---gnu-screentmux'             " simulate a split shell, using gnu screen or tmux
+"NeoBundle 'Vim-R-plugin'                            " plugin to work with r
+"NeoBundle 'Screen-vim---gnu-screentmux'             " simulate a split shell, using gnu screen or tmux
 " haskell
 NeoBundle 'haskell.vim'                             " syntax highlight for haskell
 NeoBundle 'pbrisbin/html-template-syntax'           " highlight the various html templating languages in haskell
 " scala
 NeoBundle 'scala.vim'                               " syntaxic coloration for scala code
 NeoBundle 'snipMate'                                " textmate-style snippets for vim
-" clojure
-"NeoBundle 'VimClojure'                              " a filetype, syntax and indent plugin for clojure
-"NeoBundle 'tpope/vim-fireplace'                     " fireplace.vim: clojure repl tease
+" go
+NeoBundle 'fatih/vim-go'                            " go development plugin for vim
 " sql
 NeoBundle 'sql.vim--Stinson'                        " better sql syntax
 
