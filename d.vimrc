@@ -19,6 +19,16 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 " Required:
 NeoBundleFetch 'Shougo/neobundle.vim'
 
+" Vimproc
+NeoBundle 'Shougo/vimproc.vim', {
+      \ 'build' : {
+      \     'windows' : 'tools\\update-dll-mingw',
+      \     'cygwin' : 'make -f make_cygwin.mak',
+      \     'mac' : 'make -f make_mac.mak',
+      \     'unix' : 'make -f make_unix.mak',
+      \    },
+      \ }
+
 " vim-scripts repos
 NeoBundle 'L9'                                      " some utility functions and commands for programming in vim
 NeoBundle 'FuzzyFinder'                             " buffer/file/command/tag/etc explorer with fuzzy matching
@@ -39,7 +49,6 @@ NeoBundle 'tpope/vim-surround'                      " quoting/parenthesizing mad
 NeoBundle 'matchit.zip'                             " extended % matching for html, latex, and many other languages
 " run
 NeoBundle 'thinca/vim-quickrun'                     " run commands quickly
-NeoBundle 'Shougo/vimproc'                          " interactive command execution in vim
 NeoBundle 'Shougo/vimshell.vim'                     " powerful shell implemented by vim
 " file
 NeoBundle 'Shougo/unite.vim'                        " unite and create user interfaces
@@ -78,17 +87,16 @@ NeoBundle 'python.vim--Vasiliev'                    " enhanced version of the py
 NeoBundle 'nvie/vim-flake8'                         " a static syntax and style checker for python source code
 " R
 NeoBundle 'R-syntax-highlighting'                   " r syntax highlighting
-NeoBundle 'Vim-R-plugin'                            " plugin to work with r
-NeoBundle 'Screen-vim---gnu-screentmux'             " simulate a split shell, using gnu screen or tmux
+"NeoBundle 'Vim-R-plugin'                            " plugin to work with r
+"NeoBundle 'Screen-vim---gnu-screentmux'             " simulate a split shell, using gnu screen or tmux
 " haskell
 NeoBundle 'haskell.vim'                             " syntax highlight for haskell
 NeoBundle 'pbrisbin/html-template-syntax'           " highlight the various html templating languages in haskell
 " scala
 NeoBundle 'scala.vim'                               " syntaxic coloration for scala code
 NeoBundle 'snipMate'                                " textmate-style snippets for vim
-" clojure
-"NeoBundle 'VimClojure'                              " a filetype, syntax and indent plugin for clojure
-"NeoBundle 'tpope/vim-fireplace'                     " fireplace.vim: clojure repl tease
+" go
+NeoBundle 'fatih/vim-go'                            " go development plugin for vim
 " sql
 NeoBundle 'sql.vim--Stinson'                        " better sql syntax
 

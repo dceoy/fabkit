@@ -1,10 +1,8 @@
-# Dropbox Init Script
+# dropbox init script
 # wget https://www.dropbox.com/download?dl=packages/dropbox.py ~/Dropbox/
 if [ -e ~/Dropbox/dropbox.py ]; then
-  STAT=`/usr/bin/python ~/Dropbox/dropbox.py status` && echo $STAT
-  if [[ $STAT =~ "^Dropbox isn't running\!$" ]]; then
-    /usr/bin/python ~/Dropbox/dropbox.py start
-  fi
+  stat=`/usr/bin/python ~/Dropbox/dropbox.py status` && echo $stat
+  [[ $stat =~ "^Dropbox isn't running\!$" ]] && /usr/bin/python ~/Dropbox/dropbox.py start
 else
   echo "dropbox.py does not exist"
 fi
