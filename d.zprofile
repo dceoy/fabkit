@@ -7,6 +7,9 @@ else
   echo "dropbox.py does not exist"
 fi
 
+# openmpi
+export LD_LIBRARY_PATH=/usr/lib64/openmpi/lib/
+
 # aws-cli
 export AWS_CONFIG_FILE=~/aws.conf
 
