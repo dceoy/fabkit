@@ -1,0 +1,92 @@
+# fabric config
+
+user_name: r
+
+yum_group:
+  - Development Tools
+  - C Development Tools and Libraries
+
+yum:
+  - zsh
+  - vim
+  - wget
+  - curl
+  - tree
+  - nkf
+  - wol
+  - tmux
+  - R
+  - gcc-gfortran
+  - openmpi
+  - openmpi-devel
+  - redis
+  - mongodb
+  - postgresql
+  - postgresql-devel
+  - sqlite-devel
+  - openssl-devel
+  - readline-devel
+  - bzip2-devel
+  - libxml2-devel
+  - libxslt-devel
+  - libsqlite3x-devel
+  - atlas-sse3-devel
+  - libpng-devel
+  - freetype-devel
+  - python3-devel
+  - docker-io
+
+pip:
+  - fabric
+  - tornado
+  - bottle
+  - flake8
+  - awscli
+  - ipython
+  - sphinx
+  - tinkerer
+  - numpy
+  - scipy
+  - matplotlib
+  - scikit-learn
+  - pandas
+  - pyper
+  - pyyaml
+
+gem:
+  - bundler
+  - rails
+  - compass
+  - middleman
+
+npm:
+  - yo
+
+brew:
+  - gcc
+  - gfortran
+  - git
+  - gawk
+  - gnu-sed
+  - nkf
+  - wget
+  - tree
+  - rename
+  - jq
+  - tmux
+  - readline
+  - openssl
+  - open-mpi
+  - gdbm
+  - pkg-config
+  - sqlite
+  - postgresql
+  - mariadb
+  - mongodb
+  - redis
+  - r
+  - rbenv
+  - ruby-build
+  - pyenv
+  - jenkins
+
