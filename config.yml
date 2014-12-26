@@ -1,6 +1,10 @@
 # fabric config
 
-user_name: r
+ver:
+  python2: 2.7.9
+  python3: 3.4.2
+  ruby: 2.2.0
+  nodejs: 0.10.35
 
 yum_group:
   - Development Tools
@@ -63,8 +67,8 @@ npm:
   - yo
 
 brew:
+  - zsh
   - gcc
-  - gfortran
   - git
   - gawk
   - gnu-sed
