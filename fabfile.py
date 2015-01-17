@@ -5,15 +5,10 @@
 #
 
 
+from __future__ import with_statement
 import yaml
 from fabric.api import sudo, run, settings, task
-
-
-# env variables
-
-env_user = run("echo $USER")
-with open('config.yml') as f:
-  env_config = yaml.load(f)
+from fabric.contrib.files import exists
 
 
 # general
@@ -30,27 +25,40 @@ def git_email(email):
 
 def dotf():
   run("git config --global color.ui true")
-  run("git clone https://github.com/dceoy/dotfiles.git ~/dotfiles")
+  if not exists('~/dotfiles/'):
+    run("git clone https://github.com/dceoy/dotfiles.git ~/dotfiles")
 
   for f in ('.zshrc', '.zshenv', '.vimrc', '.gemrc'):
-    run("ln -s ~/dotfiles/%s ~/%s" % ('d' + f, f))
+    if not exists("~/%s" % f):
+      run("ln -s ~/dotfiles/%s ~/%s" % ('d' + f, f))
 
 
-def lang_env():
+def lang_env(env_config):
   run("source ~/.zshenv")
 
   py2 = env_config['ver']['python2']
   py3 = env_config['ver']['python3']
-  run("pyenv install %s && pyenv rehash" % py2)
-  run("pyenv install %s && pyenv rehash" % py3)
+  rb = env_config['ver']['ruby']
+  nd = env_config['ver']['nodejs']
+
+  with settings(warn_only=True):
+    py2_v = run("pyenv versions | grep -o %s" % py2)
+    py3_v = run("pyenv versions | grep -o %s" % py3)
+    rb_v = run("rbenv versions | grep -o %s" % rb)
+    nd_v = run("ndenv versions | grep -o %s" % nd)
+
+  if py2_v.failed:
+    run("pyenv install %s && pyenv rehash" % py2)
+  if py3_v.failed:
+    run("pyenv install %s && pyenv rehash" % py3)
   run("pyenv global %s" % py3)
 
-  rb = env_config['ver']['ruby']
-  run("rbenv install %s && rbenv rehash" % rb)
+  if rb_v.failed:
+    run("rbenv install %s && rbenv rehash" % rb)
   run("rbenv global %s" % rb)
 
-  nd = env_config['ver']['nodejs']
-  run("ndenv install %s && ndenv rehash" % nd)
+  if nd_v.failed:
+    run("ndenv install %s && ndenv rehash" % nd)
   run("ndenv global %s" % nd)
 
   with settings(warn_only=True):
@@ -66,6 +74,10 @@ def lang_env():
 
 @task
 def init_rhel_env():
+  env_user = run("echo $USER")
+  with open('config.yml') as f:
+    env_config = yaml.load(f)
+
   sudo("yum -y update")
   sudo("yum -y groupinstall '%s'" % '\' \''.join(env_config['yum_group']))
   sudo("yum -y install %s" % ' '.join(env_config['yum']))
@@ -75,15 +87,19 @@ def init_rhel_env():
 
   dotf()
 
-  run("git clone https://github.com/sstephenson/rbenv.git ~/.rbenv")
-  run("git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build")
-  run("git clone https://github.com/yyuu/pyenv.git ~/.pyenv")
-  run("git clone https://github.com/riywo/ndenv ~/.ndenv")
-  run("git clone https://github.com/riywo/node-build.git ~/.ndenv/plugins/node-build")
-  run("mkdir -p ~/.vim/bundle")
-  run("git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim")
+  if not exists('~/.rbenv/'):
+    run("git clone https://github.com/sstephenson/rbenv.git ~/.rbenv")
+    run("git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build")
+  if not exists('~/.pyenv/'):
+    run("git clone https://github.com/yyuu/pyenv.git ~/.pyenv")
+  if not exists('~/.ndenv/'):
+    run("git clone https://github.com/riywo/ndenv ~/.ndenv")
+    run("git clone https://github.com/riywo/node-build.git ~/.ndenv/plugins/node-build")
+  if not exists('~/.vim/bundle/neobundle.vim/'):
+    run("mkdir -p ~/.vim/bundle/")
+    run("git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim")
 
-  lang_env()
+  lang_env(env_config)
 
   run("vim -c NeoBundleInstall -c q")
 
@@ -92,22 +108,27 @@ def init_rhel_env():
 
 @task
 def init_osx_env():
-  with settings(warn_only=True):
-    r = run("brew --version")
-  if r.failed:
+  with open('config.yml') as f:
+    env_config = yaml.load(f)
+
+  brew_v = run("brew --version", warn_only=True)
+  if brew_v.failed:
     run("ruby -e '$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)'")
   else:
-    run("brew update")
+    run("brew update && brew upgrade")
 
+  run("brew tap homebrew/science")
   for f in env_config['brew']:
     run("brew install %s" % f)
 
   dotf()
 
-  run("git clone https://github.com/riywo/ndenv ~/.ndenv")
-  run("git clone https://github.com/riywo/node-build.git ~/.ndenv/plugins/node-build")
-  run("curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh")
+  if not exists('~/.ndenv/'):
+    run("git clone https://github.com/riywo/ndenv ~/.ndenv")
+    run("git clone https://github.com/riywo/node-build.git ~/.ndenv/plugins/node-build")
+  if not exists('~/.vim/bundle/neobundle.vim/'):
+    run("curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh")
 
-  lang_env()
+  lang_env(env_config)
 
   run("vim -c NeoBundleInstall -c q")

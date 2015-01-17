@@ -30,6 +30,7 @@ yum:
   - sqlite-devel
   - openssl-devel
   - readline-devel
+  - libffi-devel
   - bzip2-devel
   - libxml2-devel
   - libxslt-devel
