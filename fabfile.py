@@ -20,22 +20,35 @@ def git_user(user):
 
 @task
 def git_email(email):
+  run("git config --global color.ui true")
   run("git config --global user.email %s" % email)
 
 
+@task
+def sshd_rsa_auth():
+  run("ssh-keygen -t rsa")
+  run("mv ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys")
+  run("chmod 600 ~/.ssh/authorized_keys")
+  sudo("sed -ie 's/^\(PasswordAuthentication\s\+\)yes$/\\1no/' /etc/ssh/sshd_config")
+  sudo("systemctl restart sshd")
+
+
+@task
+def no_pass_sudo():
+  sudo("sed -ie 's/^#\s\+\(%wheel\s\+ALL=(ALL)\s\+NOPASSWD:\s\+ALL\)$/\\1/' /etc/sudoers")
+
+
 def dotf():
-  run("git config --global color.ui true")
   if not exists('~/dotfiles/'):
     run("git clone https://github.com/dceoy/dotfiles.git ~/dotfiles")
 
   for f in ('.zshrc', '.zshenv', '.vimrc', '.gemrc'):
     if not exists("~/%s" % f):
       run("ln -s ~/dotfiles/%s ~/%s" % ('d' + f, f))
+      run("source ~/%s" % f)
 
 
 def lang_env(env_config):
-  run("source ~/.zshenv")
-
   py2 = env_config['ver']['python2']
   py3 = env_config['ver']['python3']
   rb = env_config['ver']['ruby']
@@ -74,7 +87,6 @@ def lang_env(env_config):
 
 @task
 def init_rhel_env():
-  env_user = run("echo $USER")
   with open('config.yml') as f:
     env_config = yaml.load(f)
 
@@ -82,8 +94,8 @@ def init_rhel_env():
   sudo("yum -y groupinstall '%s'" % '\' \''.join(env_config['yum_group']))
   sudo("yum -y install %s" % ' '.join(env_config['yum']))
 
-  sudo("usermod -G wheel %s" % env_user)
-  sudo("chsh -s `which zsh` %s" % env_user)
+  sudo("usermod -G wheel $USER")
+  sudo("chsh -s `which zsh` $USER")
 
   dotf()
 
