@@ -6,14 +6,14 @@ Profiles of Zsh, Vim, etc.
 Construction of Development Environment
 ---------------------------------------
 
-In RHEL (local or remote)
+In Fedora
 
 ```sh
 fab -u [user name] -H [host address] init_rhel_env
 ```
 
-In MacOSX (local)
+In MacOSX
 
 ```sh
-fab -u [user name] -H localhost init_osx_env
+fab -u [user name] -H [host address] init_osx_env
 ```
