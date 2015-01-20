@@ -42,7 +42,7 @@ def dotf():
   if not exists('~/dotfiles/'):
     run("git clone https://github.com/dceoy/dotfiles.git ~/dotfiles")
 
-  for f in ('.zshrc', '.zshenv', '.vimrc', '.gemrc'):
+  for f in ('.zshrc', '.zshenv', '.vimrc'):
     if not exists("~/%s" % f):
       run("ln -s ~/dotfiles/%s ~/%s" % ('d' + f, f))
       run("source ~/%s" % f)
@@ -78,7 +78,7 @@ def lang_env(env_config):
     for p in env_config['pip']:
       run("pip install %s" % p)
     for g in env_config['gem']:
-      run("gem install --no-ri --no-rdoc %s" % g)
+      run("gem install --no-document %s" % g)
     for n in env_config['npm']:
       run("npm install -g %s" % n)
 
