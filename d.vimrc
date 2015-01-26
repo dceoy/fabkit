@@ -56,7 +56,7 @@ NeoBundle 'Shougo/vimfiler.vim'                     " powerful file explorer imp
 NeoBundle 'kien/ctrlp.vim'                          " fuzzy file, buffer, mru, tag, etc finder
 NeoBundle 'scrooloose/nerdtree'                     " a tree explorer plugin for vim
 " git
-NeoBundle 'tpope/vim-fugitive'                      " a Git wrapper so awesome, it should be illegal
+NeoBundle 'tpope/vim-fugitive'                      " a git wrapper so awesome, it should be illegal
 "NeoBundle 'airblade/vim-gitgutter'                  " plugin which shows a git diff in the gutter (sign column)
 
 " html
@@ -89,6 +89,10 @@ NeoBundle 'nvie/vim-flake8'                         " a static syntax and style 
 NeoBundle 'R-syntax-highlighting'                   " r syntax highlighting
 "NeoBundle 'Vim-R-plugin'                            " plugin to work with r
 "NeoBundle 'Screen-vim---gnu-screentmux'             " simulate a split shell, using gnu screen or tmux
+" BUGS
+NeoBundle 'BUGS-language'                           " bugs syntax highlighting
+" Stan
+NeoBundle 'maverickg/stan.vim'                      " syntax highlighting for stan modeling lauguage
 " haskell
 NeoBundle 'haskell.vim'                             " syntax highlight for haskell
 NeoBundle 'pbrisbin/html-template-syntax'           " highlight the various html templating languages in haskell

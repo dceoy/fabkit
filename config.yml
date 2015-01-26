@@ -20,6 +20,8 @@ yum:
   - wol
   - tmux
   - R
+  - go
+  - mercurial
   - gcc-gfortran
   - openmpi
   - openmpi-devel
@@ -39,6 +41,7 @@ yum:
   - libpng-devel
   - freetype-devel
   - python3-devel
+  - nginx
   - docker-io
 
 pip:
@@ -94,4 +97,5 @@ brew:
   - ruby-build
   - pyenv
   - jenkins
-
+  - go
+  - mercurial
