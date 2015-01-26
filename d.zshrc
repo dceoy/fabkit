@@ -26,7 +26,7 @@ setopt auto_menu
 setopt list_packed
 setopt list_types
 bindkey "^[[Z" reverse-menu-complete
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ":completion:*" matcher-list "m:{a-z}={A-Z}"
 
 ### Glob ###
 setopt extended_glob
@@ -56,10 +56,10 @@ function history-all { history -E 1 }
 # ------------------------------
 ### Ls Color ###
 export LSCOLORS=Exfxcxdxbxegedabagacad
-export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
-export ZLS_COLORS=$LS_COLORS
+export LS_COLORS="di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30"
+export ZLS_COLORS="${LS_COLORS}"
 export CLICOLOR=true
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ":completion:*:default" list-colors "${(s.:.)LS_COLORS}"
 
 ### Prompt ###
 autoload -U colors; colors
@@ -69,17 +69,17 @@ tmp_prompt2="%{${fg[cyan]}%}%_> %{${reset_color}%}"
 tmp_rprompt="%{${fg[green]}%}[%~]%{${reset_color}%}"
 tmp_sprompt="%{${fg[yellow]}%}%r is correct? [Yes, No, Abort, Edit]:%{${reset_color}%}"
 
-if [ ${UID} -eq 0 ]; then
+if [ "${UID}" -eq 0 ]; then
   tmp_prompt="%B%U${tmp_prompt}%u%b"
   tmp_prompt2="%B%U${tmp_prompt2}%u%b"
   tmp_rprompt="%B%U${tmp_rprompt}%u%b"
   tmp_sprompt="%B%U${tmp_sprompt}%u%b"
 fi
 
-PROMPT=$tmp_prompt
-PROMPT2=$tmp_prompt2
-RPROMPT=$tmp_rprompt
-SPROMPT=$tmp_sprompt
+PROMPT="${tmp_prompt}"
+PROMPT2="${tmp_prompt2}"
+RPROMPT="${tmp_rprompt}"
+SPROMPT="${tmp_sprompt}"
 
 [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
   PROMPT="%{${fg[white]}%}${HOST%%.*} ${PROMPT}"
@@ -100,18 +100,17 @@ esac
 # ------------------------------
 
 ### Custom ###
-case ${OSTYPE} in
+case "${OSTYPE}" in
   darwin*)
-    export LANG=ja_JP.UTF-8
     alias sed="gsed"
     alias awk="gawk"
     ;;
   linux*)
-    export LANG=en_US.UTF-8
     alias ls="ls --color=auto"
     ;;
 esac
 
+export LANG=en_US.UTF-8
 setopt nonomatch
 alias v=vim
 alias ll="ls -lF" lla="ll -a"
@@ -119,11 +118,11 @@ alias grep="grep --color=auto"
 
 ### Git ###
 autoload -Uz vcs_info
-zstyle ':vcs_info:*' formats '%b '
-zstyle ':vcs_info:*' actionformats '%b|%a '
+zstyle ":vcs_info:*" formats "%b "
+zstyle ":vcs_info:*" actionformats "%b|%a "
 precmd () {
   psvar=()
   LANG=en_US.UTF-8 vcs_info
-  [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
+  [[ -n "${vcs_info_msg_0_}" ]] && psvar[1]="${vcs_info_msg_0_}"
 }
-RPROMPT="%1(v|%F{green}%1v%f|)"$RPROMPT
+RPROMPT="%1(v|%F{green}%1v%f|)${RPROMPT}"

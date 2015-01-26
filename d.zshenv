@@ -1,15 +1,15 @@
 # rbenv
-export PATH="$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH"
+export PATH="${HOME}/.rbenv/bin:${HOME}/.rbenv/shims:${PATH}"
 eval "$(rbenv init -)"
 
 # pyenv
-export PATH="$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH"
+export PATH="${HOME}/.pyenv/bin:${HOME}/.pyenv/shims:${PATH}"
 eval "$(pyenv init -)"
 
 # ndenv
-export PATH="$HOME/.ndenv/bin:$PATH"
+export PATH="${HOME}/.ndenv/bin:${PATH}"
 eval "$(ndenv init -)"
 
 # go
-export GOPATH="$HOME/go"
-export PATH="$PATH:$GOPATH/bin"
+export GOPATH="${HOME}/go"
+export PATH="${PATH}:${GOPATH}/bin"
