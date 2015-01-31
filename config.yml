@@ -92,7 +92,6 @@ brew:
   - mariadb
   - mongodb
   - redis
-  - r
   - rbenv
   - ruby-build
   - pyenv

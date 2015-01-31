@@ -129,7 +129,6 @@ def init_osx_env():
   else:
     run("brew update && brew upgrade")
 
-  run("brew tap homebrew/science")
   for f in env_config['brew']:
     run("brew install %s" % f)
 
