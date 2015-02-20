@@ -195,8 +195,10 @@ if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 endif
 
-" autocmd
-"autocmd BufWritePost *.py call Flake8()     " activate vim-flake8 every time
+" flake8
 let g:flake8_ignore="E111"                  " ignore indentation error
 let g:syntastic_python_checkers = ['flake8']                 " use flake8
 let g:syntastic_python_flake8_args = '--ignore="E501,E111"'  " ignore indentation error
+
+" gofmt
+au BufNewFile,BufRead *.go set nolist
