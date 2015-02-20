@@ -95,7 +95,6 @@ NeoBundle 'BUGS-language'                           " bugs syntax highlighting
 NeoBundle 'maverickg/stan.vim'                      " syntax highlighting for stan modeling lauguage
 " haskell
 NeoBundle 'haskell.vim'                             " syntax highlight for haskell
-NeoBundle 'pbrisbin/html-template-syntax'           " highlight the various html templating languages in haskell
 " scala
 NeoBundle 'scala.vim'                               " syntaxic coloration for scala code
 NeoBundle 'snipMate'                                " textmate-style snippets for vim
@@ -183,7 +182,7 @@ au BufNewFile,BufRead * match ZenkakuSpace /　/
 set autoindent                              " take indent for new line from previous line
 set cindent                                 " do c-style indenting
 set expandtab                               " replace tabs with ${tabstop} spaces
-set ts=2 sw=2 sts=0                         " set tabstop, shiftwidth, softtabstop
+set tabstop=2 shiftwidth=2 softtabstop=0    " set tabstop, shiftwidth, softtabstop
 set smarttab                                " sw at the start of the line, sts everywhere else
 set textwidth=0                             " don't wrap lines by default
 
