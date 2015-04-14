@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# coding: utf8
 #
 # fabfile.py
 #
@@ -34,8 +33,9 @@ def sshd_rsa_auth():
 
 
 @task
-def no_pass_sudo():
+def wheel_nopass_sudo():
   sudo("sed -ie 's/^#\s\+\(%wheel\s\+ALL=(ALL)\s\+NOPASSWD:\s\+ALL\)$/\\1/' /etc/sudoers")
+  sudo("usermod -G wheel $USER")
 
 
 def dotf():
@@ -94,8 +94,7 @@ def init_rhel_env():
   sudo("yum -y groupinstall '%s'" % '\' \''.join(env_config['yum_group']))
   sudo("yum -y install %s" % ' '.join(env_config['yum']))
 
-  sudo("usermod -G wheel $USER")
-  sudo("chsh -s `which zsh` $USER")
+  sudo("chsh -s `grep zsh /etc/shells | tail -1` $USER")
 
   dotf()
 
@@ -123,8 +122,7 @@ def init_osx_env():
   with open('config.yml') as f:
     env_config = yaml.load(f)
 
-  brew_v = run("brew --version", warn_only=True)
-  if brew_v.failed:
+  if run("brew --version", warn_only=True).failed:
     run("ruby -e '$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)'")
   else:
     run("brew update && brew upgrade")

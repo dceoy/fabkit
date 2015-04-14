@@ -81,9 +81,7 @@ PROMPT2="${tmp_prompt2}"
 RPROMPT="${tmp_rprompt}"
 SPROMPT="${tmp_sprompt}"
 
-[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
-  PROMPT="%{${fg[white]}%}${HOST%%.*} ${PROMPT}"
-;
+[[ -n "${REMOTEHOST}${SSH_CONNECTION}" ]] && PROMPT="%{${fg[white]}%}${HOST%%.*} ${PROMPT}"
 
 ### Title (user@hostname) ###
 case "${TERM}" in

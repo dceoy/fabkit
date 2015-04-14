@@ -55,33 +55,33 @@ NeoBundle 'Shougo/unite.vim'                        " unite and create user inte
 NeoBundle 'Shougo/vimfiler.vim'                     " powerful file explorer implemented by vim script
 NeoBundle 'kien/ctrlp.vim'                          " fuzzy file, buffer, mru, tag, etc finder
 NeoBundle 'scrooloose/nerdtree'                     " a tree explorer plugin for vim
-" git
+" Git
 NeoBundle 'tpope/vim-fugitive'                      " a git wrapper so awesome, it should be illegal
 "NeoBundle 'airblade/vim-gitgutter'                  " plugin which shows a git diff in the gutter (sign column)
 
-" html
+" HTML
 NeoBundle 'mattn/emmet-vim'                         " emmet for vim
 NeoBundle 'othree/html5.vim'                        " html5 omnicomplete and syntax
 NeoBundle 'slim-template/vim-slim'                  " a clone of the slim vim plugin from stonean
 NeoBundle 'tpope/vim-haml'                          " vim runtime files for haml, sass, and scss
 NeoBundle 'plasticboy/vim-markdown'                 " syntax highlighting, matching rules and mappings for markdown
-" css
+" CSS
 NeoBundle 'skammer/vim-css-color'                   " highlight colors in css files
 NeoBundle 'hail2u/vim-css3-syntax'                  " add css3 syntax support to vim's built-in `syntax/css.vim`
 NeoBundle 'csslint.vim'                             " css code quality tool
 NeoBundle 'groenewege/vim-less'                     " syntax for less (dynamic css)
-" javascript
+" JavaScript
 NeoBundle 'pangloss/vim-javascript'                 " vastly improved Javascript indentation and syntax support in vim
 NeoBundle 'othree/javascript-libraries-syntax.vim'  " syntax for javascript libraries
 NeoBundle 'lint.vim'                                " jshint integration with quickfix window
 NeoBundle 'kchmck/vim-coffee-script'                " coffeescript support for vim
 "NeoBundle 'leafgarland/typescript-vim'              " typescript syntax files for vim
-" ruby
+" Ruby
 NeoBundle 'vim-ruby/vim-ruby'                       " vim/ruby configuration files
 NeoBundle 'rails.vim'                               " ruby on rails: easy file navigation, enhanced syntax highlighting, and more
 NeoBundle 'tpope/vim-rails'                         " ruby on rails power tools
 NeoBundle 'tpope/vim-endwise'                       " wisely add 'end' in ruby, endfunction/endif/more in vim script, etc
-" python
+" Python
 NeoBundle 'python.vim'                              " a set of menus/shortcuts to work with python files
 NeoBundle 'python.vim--Vasiliev'                    " enhanced version of the python syntax highlighting script
 NeoBundle 'nvie/vim-flake8'                         " a static syntax and style checker for python source code
@@ -93,14 +93,16 @@ NeoBundle 'R-syntax-highlighting'                   " r syntax highlighting
 NeoBundle 'BUGS-language'                           " bugs syntax highlighting
 " Stan
 NeoBundle 'maverickg/stan.vim'                      " syntax highlighting for stan modeling lauguage
-" haskell
+" SAS
+NeoBundle 'EricGebhart/SAS-Vim'                     " syntax and indention for sas
+" Haskell
 NeoBundle 'haskell.vim'                             " syntax highlight for haskell
-" scala
+" Scala
 NeoBundle 'scala.vim'                               " syntaxic coloration for scala code
 NeoBundle 'snipMate'                                " textmate-style snippets for vim
-" go
+" Go
 NeoBundle 'fatih/vim-go'                            " go development plugin for vim
-" sql
+" SQL
 NeoBundle 'sql.vim--Stinson'                        " better sql syntax
 
 call neobundle#end()
