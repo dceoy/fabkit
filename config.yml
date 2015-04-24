@@ -3,8 +3,8 @@
 ver:
   python2: 2.7.9
   python3: 3.4.3
-  ruby: 2.2.1
-  nodejs: 0.10.35
+  ruby: 2.2.2
+  nodejs: 0.12.2
 
 yum_group:
   - Development Tools
@@ -43,23 +43,24 @@ yum:
   - python3-devel
   - nginx
   - docker-io
+  - pandoc
 
 pip:
   - fabric
+  - pyyaml
   - tornado
   - bottle
   - flake8
+  - grip
   - awscli
   - ipython
   - sphinx
-  - tinkerer
   - numpy
   - scipy
   - matplotlib
   - scikit-learn
   - pandas
   - pyper
-  - pyyaml
 
 gem:
   - bundler
@@ -98,3 +99,4 @@ brew:
   - jenkins
   - go
   - mercurial
+  - pandoc

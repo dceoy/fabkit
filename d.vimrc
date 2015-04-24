@@ -203,3 +203,6 @@ let g:syntastic_python_flake8_args = '--ignore="E501,E111"'  " ignore indentatio
 
 " gofmt
 au BufNewFile,BufRead *.go set nolist
+
+" markdown
+let g:vim_markdown_folding_disabled=1
