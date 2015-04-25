@@ -90,7 +90,7 @@ def init_rhel_env():
   with open('config.yml') as f:
     env_config = yaml.load(f)
 
-  sudo("yum -y update")
+  sudo("yum -y upgrade")
   sudo("yum -y groupinstall '%s'" % '\' \''.join(env_config['yum_group']))
   sudo("yum -y install %s" % ' '.join(env_config['yum']))
 

@@ -73,6 +73,7 @@ npm:
 
 brew:
   - zsh
+  - vim
   - gcc
   - git
   - gawk
