@@ -71,6 +71,7 @@ NeoBundle 'tpope/vim-haml'                          " vim runtime files for haml
 NeoBundle 'plasticboy/vim-markdown'                 " syntax highlighting, matching rules and mappings for markdown
 " CSS
 NeoBundle 'hail2u/vim-css3-syntax'                  " add css3 syntax support to vim's built-in `syntax/css.vim`
+NeoBundle 'cakebaker/scss-syntax.vim'               " vim syntax file for scss
 NeoBundle 'csslint.vim'                             " css code quality tool
 NeoBundle 'groenewege/vim-less'                     " syntax for less (dynamic css)
 " JavaScript
