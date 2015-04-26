@@ -58,6 +58,10 @@ NeoBundle 'scrooloose/nerdtree'                     " a tree explorer plugin for
 " Git
 NeoBundle 'tpope/vim-fugitive'                      " a git wrapper so awesome, it should be illegal
 "NeoBundle 'airblade/vim-gitgutter'                  " plugin which shows a git diff in the gutter (sign column)
+" YAML
+NeoBundle 'ingydotnet/yaml-vim'                     " yaml highlight script for vim
+" TOML
+NeoBundle 'cespare/vim-toml'                        " vim syntax for toml
 
 " HTML
 NeoBundle 'mattn/emmet-vim'                         " emmet for vim

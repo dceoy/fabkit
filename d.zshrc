@@ -111,7 +111,7 @@ esac
 export LANG=en_US.UTF-8
 setopt nonomatch
 alias v="vim"
-alias vi="vi -u NONE --noplugin"
+alias vi="vi -u NONE --noplugin -N"
 alias ll="ls -lF"
 alias lla="ll -a"
 alias grep="grep --color=auto"
