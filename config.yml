@@ -23,6 +23,9 @@ yum:
   - go
   - mercurial
   - gcc-gfortran
+  - kernel-devel
+  - kernel-headers
+  - dkms
   - openmpi
   - openmpi-devel
   - redis
@@ -46,6 +49,7 @@ yum:
   - pandoc
 
 pip:
+  - pip
   - fabric
   - pyyaml
   - tornado
@@ -61,12 +65,17 @@ pip:
   - scikit-learn
   - pandas
   - pyper
+  - selenium
+  - mechanize
+  - scss
 
 gem:
   - bundler
   - rails
   - compass
   - middleman
+  - selenium
+  - mechanize
 
 npm:
   - yo

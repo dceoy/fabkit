@@ -9,11 +9,11 @@ Construction of Development Environment
 In Fedora
 
 ```sh
-fab -u [user name] -H [host address] init_rhel_env
+fab -u [user name] -H [host address] rhel_env
 ```
 
 In MacOSX
 
 ```sh
-fab -u [user name] -H [host address] init_osx_env
+fab -u [user name] -H [host address] osx_env
 ```

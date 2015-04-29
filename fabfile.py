@@ -39,7 +39,7 @@ def wheel_nopass_sudo():
 
 
 def dotf():
-  if not exists('~/dotfiles/'):
+  if not exists('~/dotfiles'):
     run("git clone https://github.com/dceoy/dotfiles.git ~/dotfiles")
 
   for f in ('.zshrc', '.zshenv', '.vimrc'):
@@ -76,9 +76,10 @@ def lang_env(env_config):
 
   with settings(warn_only=True):
     for p in env_config['pip']:
-      run("pip install %s" % p)
+      run("pip install -U %s" % p)
     for g in env_config['gem']:
       run("gem install --no-document %s" % g)
+    run("gem update")
     for n in env_config['npm']:
       run("npm install -g %s" % n)
 
@@ -86,7 +87,7 @@ def lang_env(env_config):
 # rhel
 
 @task
-def init_rhel_env():
+def rhel_env():
   with open('config.yml') as f:
     env_config = yaml.load(f)
 
@@ -98,17 +99,30 @@ def init_rhel_env():
 
   dotf()
 
-  if not exists('~/.rbenv/'):
+  if not exists('~/.rbenv'):
     run("git clone https://github.com/sstephenson/rbenv.git ~/.rbenv")
     run("git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build")
-  if not exists('~/.pyenv/'):
+  else:
+    run("cd ~/.rbenv && git pull && cd")
+    run("cd ~/.rbenv/plugins/ruby-build && git pull && cd")
+
+  if not exists('~/.pyenv'):
     run("git clone https://github.com/yyuu/pyenv.git ~/.pyenv")
-  if not exists('~/.ndenv/'):
+  else:
+    run("cd ~/.pyenv && git pull && cd")
+
+  if not exists('~/.ndenv'):
     run("git clone https://github.com/riywo/ndenv ~/.ndenv")
     run("git clone https://github.com/riywo/node-build.git ~/.ndenv/plugins/node-build")
-  if not exists('~/.vim/bundle/neobundle.vim/'):
-    run("mkdir -p ~/.vim/bundle/")
+  else:
+    run("cd ~/.ndenv && git pull && cd")
+    run("cd ~/.ndenv/plugins/node-build && git pull && cd")
+
+  if not exists('~/.vim/bundle/neobundle.vim'):
+    run("mkdir -p ~/.vim/bundle")
     run("git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim")
+  else:
+    run("cd ~/.vim/bundle/neobundle.vim && git pull && cd")
 
   lang_env(env_config)
 
@@ -118,25 +132,31 @@ def init_rhel_env():
 # osx
 
 @task
-def init_osx_env():
+def osx_env():
   with open('config.yml') as f:
     env_config = yaml.load(f)
 
   if run("brew --version", warn_only=True).failed:
     run("ruby -e '$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)'")
   else:
-    run("brew update && brew upgrade")
+    run("brew update && brew upgrade --all")
 
   for f in env_config['brew']:
     run("brew install %s" % f)
 
   dotf()
 
-  if not exists('~/.ndenv/'):
+  if not exists('~/.ndenv'):
     run("git clone https://github.com/riywo/ndenv ~/.ndenv")
     run("git clone https://github.com/riywo/node-build.git ~/.ndenv/plugins/node-build")
-  if not exists('~/.vim/bundle/neobundle.vim/'):
+  else:
+    run("cd ~/.ndenv && git pull && cd")
+    run("cd ~/.ndenv/plugins/node-build && git pull && cd")
+
+  if not exists('~/.vim/bundle/neobundle.vim'):
     run("curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh")
+  else:
+    run("cd ~/.vim/bundle/neobundle.vim && git pull && cd")
 
   lang_env(env_config)
 
