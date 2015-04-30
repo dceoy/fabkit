@@ -82,6 +82,8 @@ def lang_env(env_config):
     run("gem update")
     for n in env_config['npm']:
       run("npm install -g %s" % n)
+    for g in env_config['go']:
+      run("go get -v %s" % g)
 
 
 # rhel
@@ -99,17 +101,20 @@ def rhel_env():
 
   dotf()
 
+  if not exists('~/go'):
+    run("mkdir ~/go")
+
+  if not exists('~/.pyenv'):
+    run("git clone https://github.com/yyuu/pyenv.git ~/.pyenv")
+  else:
+    run("cd ~/.pyenv && git pull && cd")
+
   if not exists('~/.rbenv'):
     run("git clone https://github.com/sstephenson/rbenv.git ~/.rbenv")
     run("git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build")
   else:
     run("cd ~/.rbenv && git pull && cd")
     run("cd ~/.rbenv/plugins/ruby-build && git pull && cd")
-
-  if not exists('~/.pyenv'):
-    run("git clone https://github.com/yyuu/pyenv.git ~/.pyenv")
-  else:
-    run("cd ~/.pyenv && git pull && cd")
 
   if not exists('~/.ndenv'):
     run("git clone https://github.com/riywo/ndenv ~/.ndenv")
@@ -145,6 +150,9 @@ def osx_env():
     run("brew install %s" % f)
 
   dotf()
+
+  if not exists('~/go'):
+    run("mkdir ~/go")
 
   if not exists('~/.ndenv'):
     run("git clone https://github.com/riywo/ndenv ~/.ndenv")
