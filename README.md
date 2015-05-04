@@ -1,19 +1,30 @@
 dotfiles
 ========
 
-Profiles of Zsh, Vim, etc.
+Profiles and Toolkit for Development Environment
 
-Construction of Development Environment
----------------------------------------
+Setup of a client
+-----------------
 
-In Fedora
-
-```sh
-fab -u [user name] -H [host address] rhel_env
-```
-
-In MacOSX
+Python 2.x is needed.
 
 ```sh
-fab -u [user name] -H [host address] osx_env
+$ pip install fabric pyyaml
 ```
+
+
+Usage
+-----
+
+```sh
+$ fab -u [user name] -H [host address] <command>[:arg1,arg2]
+```
+
+Command
+-------
+
+    sshd_rsa_auth               Set up SSH public key authentication
+    wheel_nopass_sudo           Enable a user to sudo without password
+    git_config:user,email       Set global options of Git
+    rhel_env                    Provision development environment of RHEL (Fedora, CentOS, etc.)
+    osx_env                     Provision development environment of Mac OS X

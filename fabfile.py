@@ -13,13 +13,9 @@ from fabric.contrib.files import exists
 # general
 
 @task
-def git_user(user):
-  run("git config --global user.name %s" % user)
-
-
-@task
-def git_email(email):
+def git_config(user, email):
   run("git config --global color.ui true")
+  run("git config --global user.name %s" % user)
   run("git config --global user.email %s" % email)
 
 
@@ -84,6 +80,8 @@ def lang_env(env_config):
       run("npm install -g %s" % n)
     for g in env_config['go']:
       run("go get -v %s" % g)
+    if run("R --version").succeeded:
+      run("R --vanilla < ~/dotfiles/pkg_install.R")
 
 
 # rhel
