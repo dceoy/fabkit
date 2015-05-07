@@ -26,13 +26,11 @@ yum:
   - kernel-devel
   - kernel-headers
   - dkms
-  - openmpi
-  - openmpi-devel
   - redis
   - mongodb
-  - postgresql
   - postgresql-devel
   - sqlite-devel
+  - mariadb-devel
   - openssl-devel
   - readline-devel
   - libffi-devel
@@ -40,9 +38,14 @@ yum:
   - libxml2-devel
   - libxslt-devel
   - libsqlite3x-devel
+  - atlas-devel
   - atlas-sse3-devel
+  - gdbm-devel
+  - libdb4-devel
+  - libpcap-devel
   - libpng-devel
   - freetype-devel
+  - openmpi-devel
   - python3-devel
   - nginx
   - docker-io
@@ -50,6 +53,7 @@ yum:
 
 pip:
   - pip
+  - setuptools
   - fabric
   - pyyaml
   - tornado
@@ -59,9 +63,12 @@ pip:
   - awscli
   - ipython
   - sphinx
+  - cython
+  - nose
   - numpy
   - scipy
   - matplotlib
+  - ggplot
   - scikit-learn
   - pystan
   - theano

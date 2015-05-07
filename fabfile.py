@@ -35,7 +35,9 @@ def wheel_nopass_sudo():
 
 
 def dotf():
-  if not exists('~/dotfiles'):
+  if exists('~/dotfiles'):
+    run("cd ~/dotfiles && git pull && cd -")
+  else:
     run("git clone https://github.com/dceoy/dotfiles.git ~/dotfiles")
 
   for f in ('.zshrc', '.zshenv', '.vimrc'):
@@ -70,16 +72,27 @@ def lang_env(env_config):
     run("ndenv install %s && ndenv rehash" % nd)
   run("ndenv global %s" % nd)
 
+  pip = '~/.pyenv/shims/pip'
+  gem = '~/.rbenv/shims/gem'
+  npm = '~/.ndenv/shims/npm'
+
   with settings(warn_only=True):
+    run("%s freeze -l | grep -v '^\-e' | cut -d = -f 1  | xargs -n 1 %s install -U" % (pip, pip))
     for p in env_config['pip']:
-      run("pip install -U %s" % p)
-    for g in env_config['gem']:
-      run("gem install --no-document %s" % g)
-    run("gem update")
-    for n in env_config['npm']:
-      run("npm install -g %s" % n)
-    for g in env_config['go']:
-      run("go get -v %s" % g)
+      run("%s install %s" % (pip, p))
+
+    run("%s update" % gem)
+    for p in env_config['gem']:
+      run("%s install --no-document %s" % (gem, p))
+
+    run("%s update -g" % npm)
+    for p in env_config['npm']:
+      run("%s install -g %s" % (npm, p))
+
+    run("go get -u all")
+    for p in env_config['go']:
+      run("go get -v %s" % p)
+
     if run("R --version").succeeded:
       run("R --vanilla < ~/dotfiles/pkg_install.R")
 
@@ -105,30 +118,31 @@ def rhel_env():
   if not exists('~/.pyenv'):
     run("git clone https://github.com/yyuu/pyenv.git ~/.pyenv")
   else:
-    run("cd ~/.pyenv && git pull && cd")
+    run("cd ~/.pyenv && git pull && cd -")
 
   if not exists('~/.rbenv'):
     run("git clone https://github.com/sstephenson/rbenv.git ~/.rbenv")
     run("git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build")
   else:
-    run("cd ~/.rbenv && git pull && cd")
-    run("cd ~/.rbenv/plugins/ruby-build && git pull && cd")
+    run("cd ~/.rbenv && git pull && cd -")
+    run("cd ~/.rbenv/plugins/ruby-build && git pull && cd -")
 
   if not exists('~/.ndenv'):
     run("git clone https://github.com/riywo/ndenv ~/.ndenv")
     run("git clone https://github.com/riywo/node-build.git ~/.ndenv/plugins/node-build")
   else:
-    run("cd ~/.ndenv && git pull && cd")
-    run("cd ~/.ndenv/plugins/node-build && git pull && cd")
+    run("cd ~/.ndenv && git pull && cd -")
+    run("cd ~/.ndenv/plugins/node-build && git pull && cd -")
 
   if not exists('~/.vim/bundle/neobundle.vim'):
     run("mkdir -p ~/.vim/bundle")
     run("git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim")
   else:
-    run("cd ~/.vim/bundle/neobundle.vim && git pull && cd")
+    run("cd ~/.vim/bundle/neobundle.vim && git pull && cd -")
 
   lang_env(env_config)
 
+  run("vim -c NeoBundleUpdate -c q")
   run("vim -c NeoBundleInstall -c q")
 
 
@@ -156,14 +170,15 @@ def osx_env():
     run("git clone https://github.com/riywo/ndenv ~/.ndenv")
     run("git clone https://github.com/riywo/node-build.git ~/.ndenv/plugins/node-build")
   else:
-    run("cd ~/.ndenv && git pull && cd")
-    run("cd ~/.ndenv/plugins/node-build && git pull && cd")
+    run("cd ~/.ndenv && git pull && cd -")
+    run("cd ~/.ndenv/plugins/node-build && git pull && cd -")
 
   if not exists('~/.vim/bundle/neobundle.vim'):
     run("curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh")
   else:
-    run("cd ~/.vim/bundle/neobundle.vim && git pull && cd")
+    run("cd ~/.vim/bundle/neobundle.vim && git pull && cd -")
 
   lang_env(env_config)
 
+  run("vim -c NeoBundleUpdate -c q")
   run("vim -c NeoBundleInstall -c q")

@@ -5,11 +5,13 @@
 
 # CRAN
 pload <- function(p) {
-    if (! p %in% installed.packages()[,1]) {
-          install.packages(p, dependencies = TRUE, repos = "http://cran.rstudio.com/")
-  }
+  if (! p %in% installed.packages()[,1]) install.packages(p, dependencies = TRUE)
   require(p, character.only = TRUE)
 }
+
+options(repos = "http://cran.rstudio.com/")
+
+update.packages(checkBuilt = TRUE, ask = FALSE)
 
 pkgs <- c('dplyr',
           'tidyr',
