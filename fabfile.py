@@ -1,7 +1,4 @@
 #!/usr/bin/env python
-#
-# fabfile.py
-#
 
 
 from __future__ import with_statement
