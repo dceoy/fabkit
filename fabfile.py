@@ -8,7 +8,6 @@ from fabric.contrib.files import exists
 
 
 # general
-
 @task
 def git_config(user, email):
   run("git config --global color.ui true")
@@ -28,7 +27,7 @@ def sshd_rsa_auth():
 @task
 def wheel_nopass_sudo():
   sudo("sed -ie 's/^#\s\+\(%wheel\s\+ALL=(ALL)\s\+NOPASSWD:\s\+ALL\)$/\\1/' /etc/sudoers")
-  sudo("usermod -G wheel $USER")
+  sudo("usermod -G wheel %s" % run("whoami"))
 
 
 def dotf():
@@ -74,7 +73,7 @@ def lang_env(env_config):
   npm = '~/.ndenv/shims/npm'
 
   with settings(warn_only=True):
-    run("%s freeze -l | grep -v '^\-e' | cut -d = -f 1  | xargs -n 1 %s install -U" % (pip, pip))
+    run("%s list | cut -f 1 -d ' ' | xargs -n 1 %s install -U" % (pip, pip))
     for p in env_config['pip']:
       run("%s install %s" % (pip, p))
 
@@ -105,7 +104,7 @@ def rhel_env():
   sudo("yum -y groupinstall '%s'" % '\' \''.join(env_config['yum_group']))
   sudo("yum -y install %s" % ' '.join(env_config['yum']))
 
-  sudo("chsh -s `grep zsh /etc/shells | tail -1` $USER")
+  sudo("chsh -s `grep zsh /etc/shells | tail -1` %s" % run("whoami"))
 
   dotf()
 
@@ -179,3 +178,7 @@ def osx_env():
 
   run("vim -c NeoBundleUpdate -c q")
   run("vim -c NeoBundleInstall -c q")
+
+
+if __name__ == '__main__':
+  print("Usage: fab [options] <command>[:arg1,arg2=val2,host=foo,hosts='h1;h2',...] ...")
