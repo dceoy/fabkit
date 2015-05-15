@@ -123,3 +123,4 @@ brew:
   - go
   - mercurial
   - pandoc
+  - Caskroom/cask/xquartz
