@@ -77,6 +77,7 @@ pip:
   - selenium
   - mechanize
   - scss
+  - twitter
 
 gem:
   - bundler
@@ -85,6 +86,8 @@ gem:
   - middleman
   - selenium
   - mechanize
+  - clockwork
+  - twitter
 
 npm:
   - yo
