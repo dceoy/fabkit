@@ -6,6 +6,11 @@ ver:
   ruby: 2.2.2
   nodejs: 0.12.2
 
+dot:
+  - .zshrc
+  - .zshenv
+  - .vimrc
+
 yum_group:
   - Development Tools
   - C Development Tools and Libraries
@@ -78,6 +83,7 @@ pip:
   - mechanize
   - scss
   - twitter
+  - requests_oauthlib
 
 gem:
   - bundler

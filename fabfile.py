@@ -30,16 +30,13 @@ def wheel_nopass_sudo():
     sudo("usermod -G wheel %s" % run("whoami"))
 
 
-def dotf():
+def dotf(env_config):
     if exists('~/dotfiles'):
         run("cd ~/dotfiles && git pull && cd -")
     else:
         run("git clone https://github.com/dceoy/dotfiles.git ~/dotfiles")
 
-    for f in ('.zshrc', '.zshenv', '.vimrc'):
-        if not exists("~/%s" % f):
-            run("ln -s ~/dotfiles/%s ~/%s" % ('d' + f, f))
-            run("source ~/%s" % f)
+    map(lambda f: run("ln -s ~/dotfiles/%s ~/%s" % ('d' + f, f)), filter(lambda f: not exists("~/%s" % f), env_config['dot']))
 
 
 def lang_env(env_config):
@@ -74,20 +71,16 @@ def lang_env(env_config):
 
     with settings(warn_only=True):
         run("%s list | cut -f 1 -d ' ' | xargs -n 1 %s install -U" % (pip, pip))
-        for p in env_config['pip']:
-            run("%s install %s" % (pip, p))
+        map(lambda p: run("%s install %s" % (pip, p)), env_config['pip'])
 
         run("%s update" % gem)
-        for p in env_config['gem']:
-            run("%s install --no-document %s" % (gem, p))
+        map(lambda p: run("%s install --no-document %s" % (gem, p)), env_config['gem'])
 
         run("%s update -g" % npm)
-        for p in env_config['npm']:
-            run("%s install -g %s" % (npm, p))
+        map(lambda p: run("%s install -g %s" % (npm, p)), env_config['npm'])
 
         run("go get -u all")
-        for p in env_config['go']:
-            run("go get -v %s" % p)
+        map(lambda p: run("go get -v %s" % p), env_config['go'])
 
         if run("R --version").succeeded:
             run("R --vanilla < ~/dotfiles/pkg_install.R")
@@ -106,7 +99,7 @@ def rhel_env():
 
     sudo("chsh -s `grep zsh /etc/shells | tail -1` %s" % run("whoami"))
 
-    dotf()
+    dotf(env_config)
 
     if not exists('~/go'):
         run("mkdir ~/go")
@@ -154,10 +147,9 @@ def osx_env():
     else:
         run("brew update && brew upgrade --all")
 
-    for f in env_config['brew']:
-        run("brew install %s" % f)
+    map(lambda p: run("brew install %s" % p), env_config['brew'])
 
-    dotf()
+    dotf(env_config)
 
     if not exists('~/go'):
         run("mkdir ~/go")
