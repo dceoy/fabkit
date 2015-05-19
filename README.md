@@ -9,9 +9,10 @@ Setup of a client
 Python 2.x is needed.
 
 ```sh
-$ pip install fabric pyyaml
+$ pip install -U fabric pyyaml
+$ git clone https://github.com/dceoy/dotfiles.git
+$ cd dotfiles
 ```
-
 
 Usage
 -----
