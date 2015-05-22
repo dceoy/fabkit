@@ -125,7 +125,7 @@ NeoBundleCheck
 " general
 set history=256                             " number of lines of history to remember
 set scrolloff=16                            " minimal number of screen lines to keep above and below the cursor
-set clipboard=unnamed,autoselect            " share clipboard
+"set clipboard=unnamed,autoselect            " share clipboard
 set ttyfast                                 " fast terminal connection
 set t_Co=256                                " enable 256 colors
 
