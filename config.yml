@@ -49,12 +49,15 @@ yum:
   - libdb4-devel
   - libpcap-devel
   - libpng-devel
+  - libcurl-devel
   - freetype-devel
   - openmpi-devel
   - python3-devel
   - nginx
   - docker-io
   - pandoc
+  - scala
+  - sbt
 
 pip:
   - pip
@@ -94,6 +97,7 @@ gem:
   - mechanize
   - clockwork
   - twitter
+  - heroku
 
 npm:
   - yo
@@ -111,6 +115,7 @@ brew:
   - gnu-sed
   - nkf
   - wget
+  - curl
   - tree
   - rename
   - jq
@@ -118,6 +123,8 @@ brew:
   - readline
   - openssl
   - open-mpi
+  - xml2
+  - libxml2
   - gdbm
   - pkg-config
   - sqlite
@@ -132,4 +139,7 @@ brew:
   - go
   - mercurial
   - pandoc
+  - scala
+  - sbt
+  - homebrew/science/r
   - Caskroom/cask/xquartz

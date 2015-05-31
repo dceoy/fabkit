@@ -15,6 +15,7 @@ pkgs <- c('dplyr',
           'doSNOW',
           'ggplot2',
           'ggmcmc',
+          'glmmML',
           'MCMCpack',
           'RSQLite')
 

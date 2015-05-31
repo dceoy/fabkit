@@ -13,3 +13,6 @@ eval "$(ndenv init -)"
 # go
 export GOPATH="${HOME}/go"
 export PATH="${PATH}:${GOPATH}/bin"
+
+# R
+alias rv="R -q --vanilla"
