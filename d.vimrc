@@ -162,7 +162,7 @@ set shortmess=atI                           " shorten messages to avoid 'press a
 set report=0                                " tell us when any line is changed via : commands
 set noerrorbells                            " don't make noise on error messages
 set novisualbell                            " don't blink
-
+"
 " visual cues
 set showmatch                               " show matching brackets for a moment
 set matchtime=2                             " blink brackets
@@ -178,7 +178,6 @@ set display+=uhex                                                   " show unpri
 set laststatus=2                                                    " always show the status line
 set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %F    " determines the content of the status line
 set statusline+=%=%{fugitive#statusline()}\ %1l/%L,%c%V\ %P
-
 set ambiwidth=double                        " understand double-byte chars
 set formatoptions=lmoq                      " add multi-byte chars to options
 hi ZenkakuSpace cterm=underline ctermfg=lightblue guibg=#666666
@@ -194,6 +193,9 @@ set textwidth=0                             " don't wrap lines by default
 
 " search for visually selected text
 vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><CR>
+
+" check spelling
+au BufNewFile,BufRead *.md,*.txt set spell
 
 " enable :DiffOrig
 if !exists(":DiffOrig")

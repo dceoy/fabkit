@@ -53,9 +53,12 @@ yum:
   - freetype-devel
   - openmpi-devel
   - python3-devel
+  - gmp-devel
   - nginx
   - docker-io
   - pandoc
+  - ghc
+  - cabal-install
   - scala
   - sbt
 
@@ -117,6 +120,7 @@ brew:
   - wget
   - curl
   - tree
+  - watch
   - rename
   - jq
   - tmux
@@ -139,6 +143,8 @@ brew:
   - go
   - mercurial
   - pandoc
+  - ghc
+  - cabal-install
   - scala
   - sbt
   - homebrew/science/r
