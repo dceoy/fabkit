@@ -1,21 +1,19 @@
 # fabric config
 
 ver:
-  python2: 2.7.9
-  python3: 3.4.3
+  python: 3.4.3
   ruby: 2.2.2
-  nodejs: 0.12.2
 
 dot:
   - .zshrc
   - .zshenv
   - .vimrc
 
-yum_group:
+dnf_group:
   - Development Tools
   - C Development Tools and Libraries
 
-yum:
+dnf:
   - zsh
   - vim
   - wget
@@ -102,12 +100,10 @@ gem:
   - twitter
   - heroku
 
-npm:
-  - yo
-
 go:
   - github.com/codegangsta/cli
   - github.com/spf13/hugo
+  - github.com/dceoy/psv
 
 brew:
   - zsh

@@ -30,44 +30,33 @@ def wheel_nopass_sudo():
     sudo("usermod -G wheel %s" % run("whoami"))
 
 
-def dotf(env_config):
-    if exists('~/dotfiles'):
-        run("cd ~/dotfiles && git pull && cd -")
-    else:
+@task
+def ln_dotfiles(env_config):
+    if not exists('~/dotfiles'):
         run("git clone https://github.com/dceoy/dotfiles.git ~/dotfiles")
 
     map(lambda f: run("ln -s ~/dotfiles/%s ~/%s" % ('d' + f, f)), filter(lambda f: not exists("~/%s" % f), env_config['dot']))
 
 
+@task
 def lang_env(env_config):
-    py2 = env_config['ver']['python2']
-    py3 = env_config['ver']['python3']
+    py = env_config['ver']['python']
     rb = env_config['ver']['ruby']
-    nd = env_config['ver']['nodejs']
 
     with settings(warn_only=True):
-        py2_v = run("pyenv versions | grep -o %s" % py2)
-        py3_v = run("pyenv versions | grep -o %s" % py3)
+        py_v = run("pyenv versions | grep -o %s" % py)
         rb_v = run("rbenv versions | grep -o %s" % rb)
-        nd_v = run("ndenv versions | grep -o %s" % nd)
 
-    if py2_v.failed:
-        run("pyenv install %s && pyenv rehash" % py2)
-    if py3_v.failed:
-        run("pyenv install %s && pyenv rehash" % py3)
-    run("pyenv global %s" % py3)
+    if py_v.failed:
+        run("pyenv install %s && pyenv rehash" % py)
+    run("pyenv global %s" % py)
 
     if rb_v.failed:
         run("rbenv install %s && rbenv rehash" % rb)
     run("rbenv global %s" % rb)
 
-    if nd_v.failed:
-        run("ndenv install %s && ndenv rehash" % nd)
-    run("ndenv global %s" % nd)
-
     pip = '~/.pyenv/shims/pip'
     gem = '~/.rbenv/shims/gem'
-    npm = '~/.ndenv/shims/npm'
 
     with settings(warn_only=True):
         run("%s list | cut -f 1 -d ' ' | xargs -n 1 %s install -U" % (pip, pip))
@@ -76,14 +65,11 @@ def lang_env(env_config):
         run("%s update" % gem)
         map(lambda p: run("%s install --no-document %s" % (gem, p)), env_config['gem'])
 
-        run("%s update -g" % npm)
-        map(lambda p: run("%s install -g %s" % (npm, p)), env_config['npm'])
-
         run("go get -u all")
         map(lambda p: run("go get -v %s" % p), env_config['go'])
 
         if run("R --version").succeeded:
-            run("R --vanilla < ~/dotfiles/pkg_install.R")
+            run("R -q --vanilla < ~/dotfiles/pkg_install.R")
 
 
 # rhel
@@ -93,13 +79,13 @@ def rhel_env():
     with open('config.yml') as f:
         env_config = yaml.load(f)
 
-    sudo("yum -y upgrade")
-    sudo("yum -y groupinstall '%s'" % '\' \''.join(env_config['yum_group']))
-    sudo("yum -y install %s" % ' '.join(env_config['yum']))
+    sudo("dnf -y upgrade")
+    sudo("dnf -y groupinstall '%s'" % '\' \''.join(env_config['dnf_group']))
+    sudo("dnf -y install %s" % ' '.join(env_config['dnf']))
 
     sudo("chsh -s `grep zsh /etc/shells | tail -1` %s" % run("whoami"))
 
-    dotf(env_config)
+    ln_dotfiles(env_config)
 
     if not exists('~/go'):
         run("mkdir ~/go")
@@ -115,13 +101,6 @@ def rhel_env():
     else:
         run("cd ~/.rbenv && git pull && cd -")
         run("cd ~/.rbenv/plugins/ruby-build && git pull && cd -")
-
-    if not exists('~/.ndenv'):
-        run("git clone https://github.com/riywo/ndenv ~/.ndenv")
-        run("git clone https://github.com/riywo/node-build.git ~/.ndenv/plugins/node-build")
-    else:
-        run("cd ~/.ndenv && git pull && cd -")
-        run("cd ~/.ndenv/plugins/node-build && git pull && cd -")
 
     if not exists('~/.vim/bundle/neobundle.vim'):
         run("mkdir -p ~/.vim/bundle")
@@ -149,17 +128,10 @@ def osx_env():
 
     map(lambda p: run("brew install %s" % p), env_config['brew'])
 
-    dotf(env_config)
+    ln_dotfiles(env_config)
 
     if not exists('~/go'):
         run("mkdir ~/go")
-
-    if not exists('~/.ndenv'):
-        run("git clone https://github.com/riywo/ndenv ~/.ndenv")
-        run("git clone https://github.com/riywo/node-build.git ~/.ndenv/plugins/node-build")
-    else:
-        run("cd ~/.ndenv && git pull && cd -")
-        run("cd ~/.ndenv/plugins/node-build && git pull && cd -")
 
     if not exists('~/.vim/bundle/neobundle.vim'):
         run("curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh")

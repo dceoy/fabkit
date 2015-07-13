@@ -83,15 +83,6 @@ SPROMPT="${tmp_sprompt}"
 
 [[ -n "${REMOTEHOST}${SSH_CONNECTION}" ]] && PROMPT="%{${fg[white]}%}${HOST%%.*} ${PROMPT}"
 
-### Title (user@hostname) ###
-case "${TERM}" in
-kterm*|xterm*|)
-  precmd() {
-    echo -ne "\033]0;${USER}@${HOST%%.*}\007"
-  }
-  ;;
-esac
-
 
 # ------------------------------
 # Other Settings
