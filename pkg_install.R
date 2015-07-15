@@ -1,4 +1,4 @@
-#!/usr/bin/env R
+#!/usr/bin/env Rscript
 
 
 # CRAN
@@ -17,13 +17,14 @@ pkgs <- c('dplyr',
           'ggmcmc',
           'glmmML',
           'MCMCpack',
+          'abc',
+          'phangorn',
           'RSQLite')
 sapply(pkgs,
        function(p) {
          if (! p %in% installed.packages()[,1]) {
            install.packages(p, dependencies = TRUE)
          }
-         require(p, character.only = TRUE)
        })
 
 
@@ -33,4 +34,7 @@ if (! 'rstan' %in% installed.packages()[,1]) {
   source('http://mc-stan.org/rstan/install.R', echo = TRUE, max.deparse.length = 2000)
   install_rstan()
 }
-require('rstan', character.only = TRUE)
+
+
+# load test
+sapply(c(pkgs, 'rstan'), function(p) require(p, character.only = TRUE))
