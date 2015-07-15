@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 
+import os, re, platform, yaml
 from __future__ import with_statement
-import yaml
 from fabric.api import sudo, run, settings, task
 from fabric.contrib.files import exists
 
@@ -30,15 +30,16 @@ def wheel_nopass_sudo():
     sudo("usermod -G wheel %s" % run("whoami"))
 
 
-@task
-def ln_dotfiles(env_config):
+def zsh_env(env_config):
     if not exists('~/dotfiles'):
         run("git clone https://github.com/dceoy/dotfiles.git ~/dotfiles")
-
     map(lambda f: run("ln -s ~/dotfiles/%s ~/%s" % ('d' + f, f)), filter(lambda f: not exists("~/%s" % f), env_config['dot']))
 
+    if not re.match(r'.*\/zsh$', os.getenv('SHELL')):
+        sudo("grep `which zsh` /etc/shells || echo `which zsh` >> /etc/shells")
+        sudo("chsh -s `grep -e '\/zsh$' /etc/shells | tail -1` %s" % run("whoami"))
 
-@task
+
 def lang_env(env_config):
     py = env_config['ver']['python']
     rb = env_config['ver']['ruby']
@@ -58,6 +59,9 @@ def lang_env(env_config):
     pip = '~/.pyenv/shims/pip'
     gem = '~/.rbenv/shims/gem'
 
+    if not exists('~/go'):
+        run("mkdir ~/go")
+
     with settings(warn_only=True):
         run("%s list | cut -f 1 -d ' ' | xargs -n 1 %s install -U" % (pip, pip))
         map(lambda p: run("%s install %s" % (pip, p)), env_config['pip'])
@@ -72,8 +76,19 @@ def lang_env(env_config):
             run("R -q --vanilla < ~/dotfiles/pkg_install.R")
 
 
-# rhel
+def vim_env():
+    if not exists('~/.vim/bundle/neobundle.vim'):
+        run("mkdir -p ~/.vim/bundle")
+        run("git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim")
+    else:
+        run("cd ~/.vim/bundle/neobundle.vim && git pull && cd -")
 
+    if exists('~/.vimrc'):
+        run("vim -c NeoBundleUpdate -c q")
+        run("vim -c NeoBundleInstall -c q")
+
+
+# rhel
 @task
 def rhel_env():
     with open('config.yml') as f:
@@ -82,13 +97,6 @@ def rhel_env():
     sudo("dnf -y upgrade")
     sudo("dnf -y groupinstall '%s'" % '\' \''.join(env_config['dnf_group']))
     sudo("dnf -y install %s" % ' '.join(env_config['dnf']))
-
-    sudo("chsh -s `grep zsh /etc/shells | tail -1` %s" % run("whoami"))
-
-    ln_dotfiles(env_config)
-
-    if not exists('~/go'):
-        run("mkdir ~/go")
 
     if not exists('~/.pyenv'):
         run("git clone https://github.com/yyuu/pyenv.git ~/.pyenv")
@@ -102,20 +110,12 @@ def rhel_env():
         run("cd ~/.rbenv && git pull && cd -")
         run("cd ~/.rbenv/plugins/ruby-build && git pull && cd -")
 
-    if not exists('~/.vim/bundle/neobundle.vim'):
-        run("mkdir -p ~/.vim/bundle")
-        run("git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim")
-    else:
-        run("cd ~/.vim/bundle/neobundle.vim && git pull && cd -")
-
+    zsh_env(env_config)
     lang_env(env_config)
-
-    run("vim -c NeoBundleUpdate -c q")
-    run("vim -c NeoBundleInstall -c q")
+    vim_env()
 
 
 # osx
-
 @task
 def osx_env():
     with open('config.yml') as f:
@@ -128,20 +128,9 @@ def osx_env():
 
     map(lambda p: run("brew install %s" % p), env_config['brew'])
 
-    ln_dotfiles(env_config)
-
-    if not exists('~/go'):
-        run("mkdir ~/go")
-
-    if not exists('~/.vim/bundle/neobundle.vim'):
-        run("curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh")
-    else:
-        run("cd ~/.vim/bundle/neobundle.vim && git pull && cd -")
-
+    zsh_env(env_config)
     lang_env(env_config)
-
-    run("vim -c NeoBundleUpdate -c q")
-    run("vim -c NeoBundleInstall -c q")
+    vim_env()
 
 
 if __name__ == '__main__':
