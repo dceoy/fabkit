@@ -1,9 +1,9 @@
 # rbenv
-export PATH="${HOME}/.rbenv/bin:${HOME}/.rbenv/shims:${PATH}"
+export PATH="${HOME}/.rbenv/bin:${PATH}"
 eval "$(rbenv init -)"
 
 # pyenv
-export PATH="${HOME}/.pyenv/bin:${HOME}/.pyenv/shims:${PATH}"
+export PATH="${HOME}/.pyenv/bin:${PATH}"
 eval "$(pyenv init -)"
 
 # go
