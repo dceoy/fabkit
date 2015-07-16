@@ -173,6 +173,7 @@ set wrapscan                                " search wrap around the end of the 
 set ignorecase                              " ignore case sensitivity on search patterns
 set smartcase                               " case insensitive searches become sensitive with capitals
 set list listchars=eol:\ ,tab:>-,trail:_,extends:>,precedes:<       " show invisible chars
+au BufNewFile,BufRead *.go set nolist
 set display=lastline                                                " display as much as possible of the last line in a window
 set display+=uhex                                                   " show unprintable characters hexadecimal
 set laststatus=2                                                    " always show the status line
@@ -180,6 +181,7 @@ set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %F    
 set statusline+=%=%{fugitive#statusline()}\ %1l/%L,%c%V\ %P
 set ambiwidth=double                        " understand double-byte chars
 set formatoptions=lmoq                      " add multi-byte chars to options
+au BufNewFile,BufRead *.md,*.txt set spell  " check spelling
 hi ZenkakuSpace cterm=underline ctermfg=lightblue guibg=#666666
 au BufNewFile,BufRead * match ZenkakuSpace /　/
 
@@ -188,14 +190,12 @@ set autoindent                              " take indent for new line from prev
 set cindent                                 " do c-style indenting
 set expandtab                               " replace tabs with ${tabstop} spaces
 set tabstop=2 shiftwidth=2 softtabstop=0    " set tabstop, shiftwidth, softtabstop
+au BufNewFile,BufRead *.py set ts=4 sw=4 sts=0
 set smarttab                                " sw at the start of the line, sts everywhere else
 set textwidth=0                             " don't wrap lines by default
 
 " search for visually selected text
 vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><CR>
-
-" check spelling
-au BufNewFile,BufRead *.md,*.txt set spell
 
 " enable :DiffOrig
 if !exists(":DiffOrig")
@@ -203,12 +203,8 @@ if !exists(":DiffOrig")
 endif
 
 " flake8
-let g:flake8_ignore="E111"                  " ignore indentation error
-let g:syntastic_python_checkers = ['flake8']                 " use flake8
-let g:syntastic_python_flake8_args = '--ignore="E501,E111"'  " ignore indentation error
-
-" gofmt
-au BufNewFile,BufRead *.go set nolist
+let g:syntastic_python_checkers = ['flake8']            " use flake8
+let g:syntastic_python_flake8_args = '--ignore="E501"'  " permit log lines
 
 " markdown
 let g:vim_markdown_folding_disabled=1

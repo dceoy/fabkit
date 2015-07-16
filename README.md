@@ -1,7 +1,7 @@
 dotfiles
 ========
 
-Profiles and Toolkit for Development Environment
+Profiles and Toolkit for Development Environment for Linux and Mac OS X
 
 Setup of a client
 -----------------
@@ -27,5 +27,4 @@ Command
     sshd_rsa_auth               Set up SSH public key authentication
     wheel_nopass_sudo           Enable a user to sudo without password
     git_config:user,email       Set global options of Git
-    rhel_env                    Provision development environment of RHEL (Fedora, CentOS, etc.)
-    osx_env                     Provision development environment of Mac OS X
+    init_dev                    Provision development environment
