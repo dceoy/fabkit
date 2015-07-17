@@ -49,6 +49,7 @@ dnf:
   - python3-devel
   - gmp-devel
   - patch
+  - corkscrew
   - nginx
   - docker-io
   - pandoc

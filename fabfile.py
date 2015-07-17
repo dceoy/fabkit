@@ -26,6 +26,15 @@ def sshd_rsa_auth():
 
 
 @task
+def ssh_via_proxy(proxy, port):
+    cs = run("which corkscrew")
+    if not exists("~/.ssh/config"):
+        run("echo 'Host *\n  Port 443' > ~/.ssh/config")
+        run("echo '  ProxyCommand %s %s %s %%h %%p' >> ~/.ssh/config" % (cs, proxy, port))
+        run("chmod 600 ~/.ssh/config")
+
+
+@task
 def wheel_nopass_sudo():
     run("sudo -v")
     sudo("sed -ie 's/^#\s\+\(%wheel\s\+ALL=(ALL)\s\+NOPASSWD:\s\+ALL\)$/\\1/' /etc/sudoers")
