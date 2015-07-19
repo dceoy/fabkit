@@ -63,8 +63,10 @@ def pkg_mng(env_config):
 
             if pm:
                 sudo("%s -y upgrade" % pm)
-                sudo("%s -y install %s" % (pm, ' '.join(env_config['dnf'])))
-                sudo("%s -y groupinstall '%s'" % (pm, '\' \''.join(env_config['dnf_group'])))
+                if sudo("%s -y install %s" % (pm, ' '.join(env_config['dnf']))).failed:
+                    map(lambda p: run("%s -y install %s" % (pm, p)), env_config['dnf'])
+                if sudo("%s -y groupinstall '%s'" % (pm, '\' \''.join(env_config['dnf_group']))).failed:
+                    map(lambda p: run("%s -y groupinstall %s" % (pm, p)), env_config['dnf_group'])
     elif re.match(r'^darwin', os_type):
         if run("brew --version", warn_only=True).failed:
             run("ruby -e '$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)'")
@@ -99,8 +101,8 @@ def lang_env(env_config):
         for l in ({'lang': py, 'ver': env_config['ver']['py2']},
                   {'lang': py, 'ver': env_config['ver']['py3']},
                   {'lang': rb, 'ver': env_config['ver']['rb']}):
-            if run("%s versions | grep -o -e '\\s%s'" % (l['lang']['env'], l['ver'])).failed:
-                run("%s install %s" % (l['lang']['env'], l['ver']))
+            if run("%s versions | grep -e '\\s%s' || %s install %s" % (l['lang']['env'], l['ver'], l['lang']['env'], l['ver'])).failed:
+                continue
             run("%s global %s" % (l['lang']['env'], l['ver']))
 
             if l['lang'] == py:

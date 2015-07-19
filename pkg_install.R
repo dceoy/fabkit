@@ -19,22 +19,10 @@ pkgs <- c('dplyr',
           'MCMCpack',
           'abc',
           'phangorn',
+          'rstan',
           'RSQLite')
 sapply(pkgs,
        function(p) {
-         if (! p %in% installed.packages()[,1]) {
-           install.packages(p, dependencies = TRUE)
-         }
+         if (! p %in% installed.packages()[,1]) install.packages(p, dependencies = TRUE)
+         require(p, character.only = TRUE)
        })
-
-
-# Stan
-if (! 'rstan' %in% installed.packages()[,1]) {
-  Sys.setenv(MAKEFLAGS = paste('-j', parallel::detectCores(), sep = ''))
-  source('http://mc-stan.org/rstan/install.R', echo = TRUE, max.deparse.length = 2000)
-  install_rstan()
-}
-
-
-# load test
-sapply(c(pkgs, 'rstan'), function(p) require(p, character.only = TRUE))
