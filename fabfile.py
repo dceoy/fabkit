@@ -52,27 +52,28 @@ def init_dev():
 
 def pkg_mng(env_config):
     os_type = run("echo $OSTYPE")
-    if re.match(r'^linux', os_type):
-        if run("sudo -v", warn_only=True).succeeded:
-            if sudo("dnf --version", warn_only=True).succeeded:
-                pm = 'dnf'
-            elif sudo("yum --version", warn_only=True).succeeded:
-                pm = 'yum'
-            else:
-                pm = False
+    with settings(warn_only=True):
+        if re.match(r'^linux', os_type):
+            if run("sudo -v").succeeded:
+                if sudo("dnf --version").succeeded:
+                    pm = 'dnf'
+                elif sudo("yum --version").succeeded:
+                    pm = 'yum'
+                else:
+                    pm = False
 
-            if pm:
-                sudo("%s -y upgrade" % pm)
-                if sudo("%s -y install %s" % (pm, ' '.join(env_config['dnf']))).failed:
-                    map(lambda p: run("%s -y install %s" % (pm, p)), env_config['dnf'])
-                if sudo("%s -y groupinstall '%s'" % (pm, '\' \''.join(env_config['dnf_group']))).failed:
-                    map(lambda p: run("%s -y groupinstall %s" % (pm, p)), env_config['dnf_group'])
-    elif re.match(r'^darwin', os_type):
-        if run("brew --version", warn_only=True).failed:
-            run("ruby -e '$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)'")
-        else:
-            run("brew update && brew upgrade --all")
-        map(lambda p: run("brew install %s" % p), env_config['brew'])
+                if pm:
+                    sudo("%s -y upgrade" % pm)
+                    if sudo("%s -y install %s" % (pm, ' '.join(env_config['dnf']))).failed:
+                        map(lambda p: sudo("%s -y install %s" % (pm, p)), env_config['dnf'])
+                    if sudo("%s -y groupinstall '%s'" % (pm, '\' \''.join(env_config['dnf_group']))).failed:
+                        map(lambda p: sudo("%s -y groupinstall %s" % (pm, p)), env_config['dnf_group'])
+        elif re.match(r'^darwin', os_type):
+            if run("brew --version").failed:
+                run("ruby -e '$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)'")
+            else:
+                run("brew update && brew upgrade --all")
+            map(lambda p: run("brew install %s" % p), env_config['brew'])
 
 
 def lang_env(env_config):
@@ -107,7 +108,7 @@ def lang_env(env_config):
 
             if l['lang'] == py:
                 run("%s list | cut -f 1 -d ' ' | xargs -n 1 %s install -U" % (py['mng'], py['mng']))
-                map(lambda p: run("%s install %s" % (py['mng'], p)), env_config['pip'])
+                map(lambda p: run("%s install -U %s" % (py['mng'], p)), env_config['pip'])
             elif l['lang'] == rb:
                 run("%s update" % rb['mng'])
                 map(lambda p: run("%s install --no-document %s" % (rb['mng'], p)), env_config['gem'])

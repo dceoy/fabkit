@@ -181,6 +181,7 @@ set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %F    
 set statusline+=%=%{fugitive#statusline()}\ %1l/%L,%c%V\ %P
 set ambiwidth=double                        " understand double-byte chars
 set formatoptions=lmoq                      " add multi-byte chars to options
+set spelllang+=cjk                          " exclude jp from spell check
 au BufNewFile,BufRead *.md,*.txt set spell  " check spelling
 hi ZenkakuSpace cterm=underline ctermfg=lightblue guibg=#666666
 au BufNewFile,BufRead * match ZenkakuSpace /　/
