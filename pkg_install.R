@@ -15,6 +15,7 @@ pkgs <- c('dplyr',
           'doSNOW',
           'ggplot2',
           'ggmcmc',
+          'gridExtra',
           'glmmML',
           'MCMCpack',
           'abc',
@@ -23,6 +24,6 @@ pkgs <- c('dplyr',
           'RSQLite')
 sapply(pkgs,
        function(p) {
-         if (! p %in% installed.packages()[,1]) install.packages(p, dependencies = TRUE)
+         if (! p %in% installed.packages()[, 1]) install.packages(p, dependencies = TRUE)
          require(p, character.only = TRUE)
        })
