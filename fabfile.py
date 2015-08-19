@@ -17,12 +17,12 @@ def git_config(user, email):
 
 @task
 def sshd_rsa_auth():
-    run("sudo -v")
     run("ssh-keygen -t rsa")
     run("mv ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys")
     run("chmod 600 ~/.ssh/authorized_keys")
-    sudo("sed -ie 's/^\(PasswordAuthentication\s\+\)yes$/\\1no/' /etc/ssh/sshd_config")
-    sudo("systemctl restart sshd")
+#   run("sudo -v")
+#   sudo("sed -ie 's/^\(PasswordAuthentication\s\+\)yes$/\\1no/' /etc/ssh/sshd_config")
+#   sudo("systemctl restart sshd")
 
 
 @task
@@ -84,6 +84,7 @@ def lang_env(env_config):
         pyenv = 'pyenv'
     else:
         run("git clone https://github.com/yyuu/pyenv.git ~/.pyenv")
+    pip = '~/.pyenv/shims/pip'
 
     if exists('~/.rbenv/.git'):
         run("cd ~/.rbenv && git pull && cd -")
@@ -94,24 +95,22 @@ def lang_env(env_config):
     else:
         run("git clone https://github.com/sstephenson/rbenv.git ~/.rbenv")
         run("git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build")
+    gem = '~/.rbenv/shims/gem'
 
     with settings(warn_only=True):
-        py = {'env': pyenv, 'mng': '~/.pyenv/shims/pip'}
-        rb = {'env': rbenv, 'mng': '~/.rbenv/shims/gem'}
-
-        for l in ({'lang': py, 'ver': env_config['ver']['py2']},
-                  {'lang': py, 'ver': env_config['ver']['py3']},
-                  {'lang': rb, 'ver': env_config['ver']['rb']}):
-            if run("%s versions | grep -e '\\s%s' || %s install %s" % (l['lang']['env'], l['ver'], l['lang']['env'], l['ver'])).failed:
+        for l in ({'env': pyenv, 'lv': env_config['ver']['py2']},
+                  {'env': pyenv, 'lv': env_config['ver']['py3']},
+                  {'env': rbenv, 'lv': env_config['ver']['rb']}):
+            if run("%s versions | grep -e '\\s%s' || %s install %s" % (l['env'], l['lv'], l['env'], l['lv'])).failed:
                 continue
-            run("%s global %s" % (l['lang']['env'], l['ver']))
+            run("%s global %s" % (l['env'], l['lv']))
 
-            if l['lang'] == py:
-                run("%s list | cut -f 1 -d ' ' | xargs -n 1 %s install -U" % (py['mng'], py['mng']))
-                map(lambda p: run("%s install -U %s" % (py['mng'], p)), env_config['pip'])
-            elif l['lang'] == rb:
-                run("%s update" % rb['mng'])
-                map(lambda p: run("%s install --no-document %s" % (rb['mng'], p)), env_config['gem'])
+            if l['env'] == pyenv and run("%s --version" % pip).succeeded:
+                map(lambda p: run("%s install -U %s" % (pip, p)),
+                    set(run("%s list | cut -f 1 -d ' '" % pip).split() + env_config['pip']))
+            elif l['env'] == rbenv and run("%s --version" % gem).succeeded:
+                run("%s update" % gem)
+                map(lambda p: run("%s install --no-document %s" % (gem, p)), env_config['gem'])
 
         if run("go version").succeeded:
             go = 'export GOPATH=${HOME}/go && go'
@@ -129,7 +128,8 @@ def zsh_vim_env():
     dot_files = ('.zshrc', '.zshenv', '.vimrc')
     if not exists('~/dotfiles'):
         run("git clone https://github.com/dceoy/dotfiles.git ~/dotfiles")
-    map(lambda f: run("ln -s ~/dotfiles/%s ~/%s" % ('d' + f, f)), filter(lambda f: not exists("~/%s" % f), dot_files))
+    map(lambda f: run("ln -s ~/dotfiles/%s ~/%s" % ('d' + f, f)),
+        filter(lambda f: not exists("~/%s" % f), dot_files))
 
     if not re.match(r'.*\/zsh$', run("echo $SHELL")):
         run("chsh -s `grep -e '\/zsh$' /etc/shells | tail -1` `whoami`")

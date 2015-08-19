@@ -3,7 +3,7 @@
 ver:
   py2: 2.7.10
   py3: 3.4.3
-  rb: 2.2.2
+  rb: 2.2.3
 
 dnf_group:
   - Development Tools
@@ -103,6 +103,7 @@ go:
   - github.com/codegangsta/cli
   - github.com/spf13/hugo
   - github.com/dceoy/psv
+  - github.com/opencontainers/runc
 
 brew:
   - zsh

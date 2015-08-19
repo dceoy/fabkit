@@ -7,6 +7,9 @@ else
   echo "dropbox.py does not exist"
 fi
 
+# local
+export PATH="${HOME}/local/bin:${PATH}"
+
 # openmpi
 export LD_LIBRARY_PATH="/usr/lib64/openmpi/lib/"
 
