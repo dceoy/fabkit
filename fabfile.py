@@ -9,10 +9,12 @@ from fabric.contrib.files import exists
 
 
 @task
-def git_config(user, email):
+def git_config(user=False, email=False):
     run("git config --global color.ui true")
-    run("git config --global user.name %s" % user)
-    run("git config --global user.email %s" % email)
+    if user:
+        run("git config --global user.name %s" % user)
+    if email:
+        run("git config --global user.email %s" % email)
 
 
 @task
@@ -23,38 +25,11 @@ def sshd_rsa_auth():
 
 
 @task
-def secure_sshd():
-    sudo("sed -ie 's/^\(PasswordAuthentication\s\+\)yes$/\\1no/' /etc/ssh/sshd_config")
-    sudo("sed -ie 's/^#\(PermitRootLogin\s\+\)yes$/\\1no/' /etc/ssh/sshd_config")
-    sudo("systemctl restart sshd")
-
-
-@task
-def enable_firewalld():
-    with settings(warn_only=True):
-        if sudo("firewall-cmd --state").failed:
-            if sudo("dnf --version").succeeded:
-                pm = 'dnf'
-            elif sudo("yum --version").succeeded:
-                pm = 'yum'
-            sudo("%s -y install firewalld" % pm)
-    sudo("systemctl start firewalld")
-    sudo("systemctl enable firewalld")
-
-
-@task
-def ssh_via_proxy(proxy, port):
-    cs = run("which corkscrew")
-    if not exists("~/.ssh/config"):
-        run("echo 'Host *\n  Port 443' > ~/.ssh/config")
-        run("echo '  ProxyCommand %s %s %s %%h %%p' >> ~/.ssh/config" % (cs, proxy, port))
-        run("chmod 600 ~/.ssh/config")
-
-
-@task
-def wheel_nopass_sudo():
+def wheel_nopass_sudo(user=False):
+    if not user:
+        user = run("whoami")
     sudo("sed -ie 's/^#\s\+\(%wheel\s\+ALL=(ALL)\s\+NOPASSWD:\s\+ALL\)$/\\1/' /etc/sudoers")
-    sudo("usermod -G wheel %s" % run("whoami"))
+    sudo("usermod -G wheel %s" % user)
 
 
 @task
@@ -158,6 +133,52 @@ def zsh_vim_env():
 
     run("vim -c NeoBundleUpdate -c q")
     run("vim -c NeoBundleInstall -c q")
+
+
+@task
+def provision_do(new_user=False):
+    user = run("whoami")
+    if user == 'root':
+        run("passwd root")
+        if new_user and run("id %s" % new_user, warn_only=True).failed:
+            run("useradd %s" % new_user)
+            run("passwd %s" % new_user)
+            run("usermod -G wheel %s" % new_user)
+    else:
+        if not exists('~/.ssh/authorized_keys'):
+            sshd_rsa_auth()
+        else:
+            if run("systemctl --version", warn_only=True).succeeded:
+                secure_sshd()
+                enable_firewalld()
+
+
+def secure_sshd():
+    sudo("sed -ie 's/^\(PasswordAuthentication\s\+\)yes$/\\1no/' /etc/ssh/sshd_config")
+    sudo("sed -ie 's/^#\(PermitRootLogin\s\+\)yes$/\\1no/' /etc/ssh/sshd_config")
+    sudo("rm /etc/ssh/sshd_confige")
+    sudo("systemctl restart sshd")
+
+
+def enable_firewalld():
+    with settings(warn_only=True):
+        if sudo("firewall-cmd --state").failed:
+            if sudo("dnf --version").succeeded:
+                pm = 'dnf'
+            elif sudo("yum --version").succeeded:
+                pm = 'yum'
+            sudo("%s -y install firewalld" % pm)
+    sudo("systemctl start firewalld")
+    sudo("systemctl enable firewalld")
+
+
+@task
+def ssh_via_proxy(proxy, port):
+    cs = run("which corkscrew")
+    if not exists("~/.ssh/config"):
+        run("echo 'Host *\n  Port 443' > ~/.ssh/config")
+        run("echo '  ProxyCommand %s %s %s %%h %%p' >> ~/.ssh/config" % (cs, proxy, port))
+        run("chmod 600 ~/.ssh/config")
 
 
 if __name__ == '__main__':
