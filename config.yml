@@ -46,12 +46,13 @@ dnf:
   - libcurl-devel
   - freetype-devel
   - openmpi-devel
+  - python-devel
   - python3-devel
   - gmp-devel
   - patch
   - corkscrew
   - nginx
-  - docker-io
+  - docker
   - pandoc
   - ghc
   - cabal-install

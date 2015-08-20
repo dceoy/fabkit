@@ -20,9 +20,26 @@ def sshd_rsa_auth():
     run("ssh-keygen -t rsa")
     run("mv ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys")
     run("chmod 600 ~/.ssh/authorized_keys")
-#   run("sudo -v")
-#   sudo("sed -ie 's/^\(PasswordAuthentication\s\+\)yes$/\\1no/' /etc/ssh/sshd_config")
-#   sudo("systemctl restart sshd")
+
+
+@task
+def secure_sshd():
+    sudo("sed -ie 's/^\(PasswordAuthentication\s\+\)yes$/\\1no/' /etc/ssh/sshd_config")
+    sudo("sed -ie 's/^#\(PermitRootLogin\s\+\)yes$/\\1no/' /etc/ssh/sshd_config")
+    sudo("systemctl restart sshd")
+
+
+@task
+def enable_firewalld():
+    with settings(warn_only=True):
+        if sudo("firewall-cmd --state").failed:
+            if sudo("dnf --version").succeeded:
+                pm = 'dnf'
+            elif sudo("yum --version").succeeded:
+                pm = 'yum'
+            sudo("%s -y install firewalld" % pm)
+    sudo("systemctl start firewalld")
+    sudo("systemctl enable firewalld")
 
 
 @task
@@ -36,7 +53,6 @@ def ssh_via_proxy(proxy, port):
 
 @task
 def wheel_nopass_sudo():
-    run("sudo -v")
     sudo("sed -ie 's/^#\s\+\(%wheel\s\+ALL=(ALL)\s\+NOPASSWD:\s\+ALL\)$/\\1/' /etc/sudoers")
     sudo("usermod -G wheel %s" % run("whoami"))
 
@@ -107,7 +123,7 @@ def lang_env(env_config):
 
             if l['env'] == pyenv and run("%s --version" % pip).succeeded:
                 map(lambda p: run("%s install -U %s" % (pip, p)),
-                    set(run("%s list | cut -f 1 -d ' '" % pip).split() + env_config['pip']))
+                    set(run("%s list | sed -e 's/ (.\+)$//'" % pip).split() + env_config['pip']))
             elif l['env'] == rbenv and run("%s --version" % gem).succeeded:
                 run("%s update" % gem)
                 map(lambda p: run("%s install --no-document %s" % (gem, p)), env_config['gem'])
