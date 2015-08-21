@@ -108,6 +108,8 @@ NeoBundle 'snipMate'                                " textmate-style snippets fo
 NeoBundle 'fatih/vim-go'                            " go development plugin for vim
 " SQL
 NeoBundle 'sql.vim--Stinson'                        " better sql syntax
+" Docker
+NeoBundle 'ekalinin/Dockerfile.vim'                 " syntax file and snippets for docker's dockerfile
 
 call neobundle#end()
 

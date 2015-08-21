@@ -23,8 +23,8 @@ pkgs <- c('dplyr',
           'phangorn',
           'rstan',
           'RSQLite')
-sapply(pkgs,
-       function(p) {
-         if (! p %in% installed.packages()[, 1]) install.packages(p, dependencies = TRUE)
-         require(p, character.only = TRUE)
-       })
+print(sapply(pkgs,
+             function(p) {
+               if (! p %in% installed.packages()[, 1]) install.packages(p, dependencies = TRUE)
+               require(p, character.only = TRUE)
+             }))

@@ -1,2 +1,4 @@
 .python-version
 *.pyc
+id_rsa
+id_rsa.pub

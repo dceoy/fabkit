@@ -4,8 +4,15 @@
 from __future__ import with_statement
 import re
 import yaml
-from fabric.api import sudo, run, settings, task
+from fabric.api import sudo, run, get, settings, task
 from fabric.contrib.files import exists
+
+
+@task
+def test_connect(text=False):
+    if not text:
+        text = 'Succeeded.'
+    run("echo '%s'" % text)
 
 
 @task
@@ -20,6 +27,8 @@ def git_config(user=False, email=False):
 @task
 def sshd_rsa_auth():
     run("ssh-keygen -t rsa")
+    get('~/.ssh/id_rsa', './id_rsa')
+    get('~/.ssh/id_rsa.pub', './id_rsa.pub')
     run("mv ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys")
     run("chmod 600 ~/.ssh/authorized_keys")
 
@@ -112,7 +121,7 @@ def lang_env(env_config):
             map(lambda p: run("%s get -v %s" % (go, p)), env_config['go'])
 
         if run("R --version").succeeded:
-            run("R -q --vanilla < ~/dotfiles/pkg_install.R")
+            run("curl https://raw.githubusercontent.com/dceoy/dotfiles/master/pkg_install.R | R -q --vanilla")
 
 
 def zsh_vim_env():
@@ -136,49 +145,54 @@ def zsh_vim_env():
 
 
 @task
-def provision_do(new_user=False):
-    user = run("whoami")
-    if user == 'root':
-        run("passwd root")
-        if new_user and run("id %s" % new_user, warn_only=True).failed:
-            run("useradd %s" % new_user)
-            run("passwd %s" % new_user)
-            run("usermod -G wheel %s" % new_user)
+def add_user(user):
+    if sudo("id %s" % user, warn_only=True).failed:
+        sudo("useradd %s" % user)
+        sudo("passwd %s" % user)
+        sudo("usermod -G wheel %s" % user)
+
+
+@task
+def change_pass(user=False):
+    client = run("whoami")
+    if not user or user == client:
+        run("passwd %s" % client)
     else:
-        if not exists('~/.ssh/authorized_keys'):
-            sshd_rsa_auth()
-        else:
-            if run("systemctl --version", warn_only=True).succeeded:
-                secure_sshd()
-                enable_firewalld()
+        sudo("passwd %s" % user)
 
 
+@task
 def secure_sshd():
-    sudo("sed -ie 's/^\(PasswordAuthentication\s\+\)yes$/\\1no/' /etc/ssh/sshd_config")
-    sudo("sed -ie 's/^#\(PermitRootLogin\s\+\)yes$/\\1no/' /etc/ssh/sshd_config")
-    sudo("rm /etc/ssh/sshd_confige")
+    sshd_rsa_auth()
+    rex = ('s/^\(PasswordAuthentication\s\+\)yes$/\\1no/', 's/^#\(PermitRootLogin\s\+\)yes$/\\1no/')
+    sudo("sed -i -e '%s' -e '%s' /etc/ssh/sshd_config" % rex)
     sudo("systemctl restart sshd")
 
 
-def enable_firewalld():
-    with settings(warn_only=True):
-        if sudo("firewall-cmd --state").failed:
-            if sudo("dnf --version").succeeded:
-                pm = 'dnf'
-            elif sudo("yum --version").succeeded:
-                pm = 'yum'
-            sudo("%s -y install firewalld" % pm)
-    sudo("systemctl start firewalld")
-    sudo("systemctl enable firewalld")
+@task
+def set_system_proxy(proxy, port):
+    cmd = '''
+# Proxy
+PROXY=\"''' + proxy + ':' + port + '''\"
+export http_proxy=\"http://${PROXY}\"
+export https_proxy=\"https://${PROXY}\"
+export ftp_proxy=\"ftp://${PROXY}\"
+export HTTP_PROXY=\"${http_proxy}\"
+export HTTPS_PROXY=\"${https_proxy}\"
+export FTP_PROXY=\"${ftp_proxy}\"
+export no_proxy=\"127.0.0.1,localhost\"
+export NO_PROXY=\"${no_proxy}\"'''
+    sudo("echo '%s' >> /etc/profile" % cmd)
 
 
 @task
 def ssh_via_proxy(proxy, port):
     cs = run("which corkscrew")
-    if not exists("~/.ssh/config"):
-        run("echo 'Host *\n  Port 443' > ~/.ssh/config")
-        run("echo '  ProxyCommand %s %s %s %%h %%p' >> ~/.ssh/config" % (cs, proxy, port))
-        run("chmod 600 ~/.ssh/config")
+    cmd = '''
+Host *
+  Port 443
+  ProxyCommand ''' + cs + ' ' + proxy + ' ' + port + ' %h %p'
+    run("echo '%s' >> ~/.ssh/config" % cmd)
 
 
 if __name__ == '__main__':

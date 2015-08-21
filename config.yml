@@ -12,6 +12,8 @@ dnf_group:
 dnf:
   - zsh
   - vim
+  - git
+  - fabric
   - wget
   - curl
   - tree
@@ -111,6 +113,7 @@ brew:
   - vim
   - gcc
   - git
+  - fabric
   - gawk
   - gnu-sed
   - nkf
