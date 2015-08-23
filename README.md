@@ -1,7 +1,7 @@
-dotfiles
-========
+fabkit
+======
 
-Profiles and Toolkit for Development Environment for Linux and Mac OS X
+Fabric-based Provisioning Toolkit for Linux and Mac OS X
 
 Setup of a client
 -----------------
@@ -24,7 +24,10 @@ $ fab -u [user name] -H [host address] <command>[:arg1,arg2]
 Command
 -------
 
+    test_connect:text           Test connection (echo text)
+    add_user:user               Add a user
+    change_pass:user            Change user password
     sshd_rsa_auth               Set up SSH public key authentication
-    wheel_nopass_sudo           Enable a user to sudo without password
     git_config:user,email       Set global options of Git
+    wheel_nopass_sudo           Enable a user to sudo without password
     init_dev                    Provision development environment

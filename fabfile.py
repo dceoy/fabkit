@@ -16,12 +16,20 @@ def test_connect(text=False):
 
 
 @task
-def git_config(user=False, email=False):
-    run("git config --global color.ui true")
-    if user:
-        run("git config --global user.name %s" % user)
-    if email:
-        run("git config --global user.email %s" % email)
+def add_user(user):
+    if sudo("id %s" % user, warn_only=True).failed:
+        sudo("useradd %s" % user)
+        sudo("passwd %s" % user)
+        sudo("usermod -G wheel %s" % user)
+
+
+@task
+def change_pass(user=False):
+    client = run("whoami")
+    if not user or user == client:
+        run("passwd %s" % client)
+    else:
+        sudo("passwd %s" % user)
 
 
 @task
@@ -34,6 +42,15 @@ def sshd_rsa_auth():
 
 
 @task
+def git_config(user=False, email=False):
+    run("git config --global color.ui true")
+    if user:
+        run("git config --global user.name %s" % user)
+    if email:
+        run("git config --global user.email %s" % email)
+
+
+@task
 def wheel_nopass_sudo(user=False):
     if not user:
         user = run("whoami")
@@ -43,7 +60,7 @@ def wheel_nopass_sudo(user=False):
 
 @task
 def init_dev():
-    with open('config.yml') as f:
+    with open('pkg_config.yml') as f:
         env_config = yaml.load(f)
     pkg_mng(env_config)
     lang_env(env_config)
@@ -106,8 +123,9 @@ def lang_env(env_config):
             run("%s global %s" % (l['env'], l['lv']))
 
             if l['env'] == pyenv and run("%s --version" % pip).succeeded:
+                run("%s install -U pip" % pip)
                 map(lambda p: run("%s install -U %s" % (pip, p)),
-                    set(run("%s list | sed -e 's/ (.\+)$//'" % pip).split() + env_config['pip']))
+                    set(run("%s list | cut -f 1 -d ' '" % pip).split() + env_config['pip']))
             elif l['env'] == rbenv and run("%s --version" % gem).succeeded:
                 run("%s update" % gem)
                 map(lambda p: run("%s install --no-document %s" % (gem, p)), env_config['gem'])
@@ -121,14 +139,16 @@ def lang_env(env_config):
             map(lambda p: run("%s get -v %s" % (go, p)), env_config['go'])
 
         if run("R --version").succeeded:
-            run("curl https://raw.githubusercontent.com/dceoy/dotfiles/master/pkg_install.R | R -q --vanilla")
+            with open('r_pkg_install.R') as f:
+                r_pkg_install = f.read()
+            run("echo '%s' | R -q --vanilla" % re.sub(r'([^\\])\'', r'\1"', r_pkg_install))
 
 
 def zsh_vim_env():
     dot_files = ('.zshrc', '.zshenv', '.vimrc')
-    if not exists('~/dotfiles'):
-        run("git clone https://github.com/dceoy/dotfiles.git ~/dotfiles")
-    map(lambda f: run("ln -s ~/dotfiles/%s ~/%s" % ('d' + f, f)),
+    if not exists('~/fabkit'):
+        run("git clone https://github.com/dceoy/fabkit.git ~/fabkit")
+    map(lambda f: run("ln -s ~/fabkit/dotfile/%s ~/%s" % ('d' + f, f)),
         filter(lambda f: not exists("~/%s" % f), dot_files))
 
     if not re.match(r'.*\/zsh$', run("echo $SHELL")):
@@ -136,29 +156,12 @@ def zsh_vim_env():
 
     if not exists('~/.vim/bundle/neobundle.vim'):
         run("mkdir -p ~/.vim/bundle")
-        run("git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim")
+        run("git clone https://github.com/Shougo/neobundle.vim.git ~/.vim/bundle/neobundle.vim")
     else:
         run("cd ~/.vim/bundle/neobundle.vim && git pull && cd -")
 
     run("vim -c NeoBundleUpdate -c q")
     run("vim -c NeoBundleInstall -c q")
-
-
-@task
-def add_user(user):
-    if sudo("id %s" % user, warn_only=True).failed:
-        sudo("useradd %s" % user)
-        sudo("passwd %s" % user)
-        sudo("usermod -G wheel %s" % user)
-
-
-@task
-def change_pass(user=False):
-    client = run("whoami")
-    if not user or user == client:
-        run("passwd %s" % client)
-    else:
-        sudo("passwd %s" % user)
 
 
 @task

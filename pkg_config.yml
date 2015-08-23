@@ -1,4 +1,4 @@
-# fabric config
+# package list
 
 ver:
   py2: 2.7.10
@@ -62,7 +62,6 @@ dnf:
   - sbt
 
 pip:
-  - pip
   - setuptools
   - fabric
   - pyyaml

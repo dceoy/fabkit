@@ -2,7 +2,7 @@
 
 
 # CRAN
-options(repos = "http://cran.rstudio.com/")
+options(repos = 'http://cran.rstudio.com/')
 update.packages(checkBuilt = TRUE, ask = FALSE)
 
 pkgs <- c('dplyr',
