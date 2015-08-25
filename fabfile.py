@@ -33,10 +33,11 @@ def change_pass(user=False):
 
 
 @task
-def sshd_rsa_auth():
-    run("ssh-keygen -t rsa")
-    get('~/.ssh/id_rsa', './id_rsa')
-    get('~/.ssh/id_rsa.pub', './id_rsa.pub')
+def ssh_keygen():
+    user = run("whoami")
+    run("ssh-keygen -t rsa -f ~/.ssh/id_rsa")
+    get('~/.ssh/id_rsa', './' + user + '.rsa')
+    get('~/.ssh/id_rsa.pub', './' + user + '.pub')
     run("mv ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys")
     run("chmod 600 ~/.ssh/authorized_keys")
 
@@ -165,11 +166,31 @@ def zsh_vim_env():
 
 
 @task
-def secure_sshd():
-    sshd_rsa_auth()
-    rex = ('s/^\(PasswordAuthentication\s\+\)yes$/\\1no/', 's/^#\(PermitRootLogin\s\+\)yes$/\\1no/')
-    sudo("sed -i -e '%s' -e '%s' /etc/ssh/sshd_config" % rex)
-    sudo("systemctl restart sshd")
+def secure_sshd(user=False, port=443):
+    if not user:
+        user = run("whoami")
+    if exists('/home/' + user + '/.ssh/authorized_keys'):
+        sudo("setenforce Permissive")
+        sudo("sed -ie 's/^\(SELINUX=\)enforcing$/\\1permissive/' /etc/selinux/config")
+        rex = ('s/^\(PasswordAuthentication \)yes$/\\1no/',
+               's/^#\(PermitRootLogin \)yes$/\\1no/',
+               's/^#\(Port \)22$/\\1' + str(port) + '/')
+        sudo("sed -i -e '%s' -e '%s' -e '%s' /etc/ssh/sshd_config" % rex)
+        sudo("systemctl restart sshd")
+        sudo("systemctl status sshd")
+    else:
+        print('Non-root user having authorized_keys must exist.')
+
+
+@task
+def enable_firewalld():
+    sudo("which firewalld || dnf -y install firewalld || yum -y install firewalld")
+    sudo("systemctl start firewalld")
+    sudo("systemctl enable firewalld")
+    ssh_port = sudo("grep -e '^Port [0-9]\+$' /etc/ssh/sshd_config | cut -f 2 -d ' '")
+    if ssh_port != 22:
+        sudo("sed -e 's/\"22\"/\"%s\"/' /usr/lib/firewalld/services/ssh.xml > /etc/firewalld/services/ssh.xml" % ssh_port)
+    sudo("firewall-cmd --reload")
 
 
 @task
