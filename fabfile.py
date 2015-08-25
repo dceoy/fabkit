@@ -36,8 +36,8 @@ def change_pass(user=False):
 def ssh_keygen():
     user = run("whoami")
     run("ssh-keygen -t rsa -f ~/.ssh/id_rsa")
-    get('~/.ssh/id_rsa', './' + user + '.rsa')
-    get('~/.ssh/id_rsa.pub', './' + user + '.pub')
+    get('~/.ssh/id_rsa', './key/' + user + '_id_rsa')
+    get('~/.ssh/id_rsa.pub', './key/' + user + '_id_rsa.pub')
     run("mv ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys")
     run("chmod 600 ~/.ssh/authorized_keys")
 

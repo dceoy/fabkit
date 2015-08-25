@@ -27,7 +27,7 @@ Command
     test_connect:text           Test connection (echo text)
     add_user:user               Add a user
     change_pass:user            Change user password
-    sshd_rsa_auth               Set up SSH public key authentication
+    ssh_keygen                  Generate RSA keys
     git_config:user,email       Set global options of Git
     wheel_nopass_sudo           Enable a user to sudo without password
     init_dev                    Provision development environment
