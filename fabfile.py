@@ -114,21 +114,21 @@ def lang_env(env_config):
         run("git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build")
     gem = '~/.rbenv/shims/gem'
 
-    with settings(warn_only=True):
-        for l in ({'env': pyenv, 'lv': env_config['ver']['py2']},
-                  {'env': pyenv, 'lv': env_config['ver']['py3']},
-                  {'env': rbenv, 'lv': env_config['ver']['rb']}):
-            if run("%s versions | grep -e '\\s%s' || %s install %s" % (l['env'], l['lv'], l['env'], l['lv'])).failed:
-                continue
-            run("%s global %s" % (l['env'], l['lv']))
+    def install_lang_by_env_ver(l):
+        ver = run("%s install --list | grep -e '^  \+%d\.[0-9]\+\.[0-9]\+$' | cut -f 3 -d ' ' | tail -1" % (l['e'], l['v']))
+        if run("%s versions | grep -e '\\s%s' || %s install %s" % (l['e'], ver, l['e'], ver)).succeeded:
+            run("%s global %s" % (l['e'], ver))
 
-            if l['env'] == pyenv and run("%s --version" % pip).succeeded:
+            if l['e'] == pyenv and run("%s --version" % pip).succeeded:
                 run("%s install -U pip" % pip)
                 map(lambda p: run("%s install -U %s" % (pip, p)),
                     set(run("%s list | cut -f 1 -d ' '" % pip).split() + env_config['pip']))
-            elif l['env'] == rbenv and run("%s --version" % gem).succeeded:
+            elif l['e'] == rbenv and run("%s --version" % gem).succeeded:
                 run("%s update" % gem)
                 map(lambda p: run("%s install --no-document %s" % (gem, p)), env_config['gem'])
+
+    with settings(warn_only=True):
+        map(install_lang_by_env_ver, ({'e': pyenv, 'v': 2}, {'e': pyenv, 'v': 3}, {'e': rbenv, 'v': 2}))
 
         if run("go version").succeeded:
             go = 'export GOPATH=${HOME}/go && go'

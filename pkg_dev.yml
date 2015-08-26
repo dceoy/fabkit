@@ -1,10 +1,5 @@
 # package list
 
-ver:
-  py2: 2.7.10
-  py3: 3.4.3
-  rb: 2.2.3
-
 dnf_group:
   - Development Tools
   - C Development Tools and Libraries
