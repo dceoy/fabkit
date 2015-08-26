@@ -59,8 +59,8 @@ def wheel_nopass_sudo(user=False):
 
 
 @task
-def init_dev():
-    with open('pkg_config.yml') as f:
+def init_dev(yml='pkg_dev.yml'):
+    with open(yml) as f:
         env_config = yaml.load(f)
     pkg_mng(env_config)
     lang_env(env_config)
@@ -165,9 +165,13 @@ def zsh_vim_env():
 
 
 @task
-def secure_sshd(user=False, port=443):
-    if not user:
-        user = run("whoami")
+def init_ssh_server(user, port='443'):
+    new_user_rsa(user)
+    secure_sshd(user, port)
+    enable_firewalld()
+
+
+def secure_sshd(user, port):
     if exists('/home/' + user + '/.ssh/authorized_keys'):
         sudo("setenforce Permissive")
         sudo("sed -ie 's/^\(SELINUX=\)enforcing$/\\1permissive/' /etc/selinux/config")
@@ -181,7 +185,6 @@ def secure_sshd(user=False, port=443):
         print('A non-root user having ssh keys must exist.')
 
 
-@task
 def enable_firewalld():
     sudo("which firewalld || dnf -y install firewalld || yum -y install firewalld")
     sudo("systemctl start firewalld")
