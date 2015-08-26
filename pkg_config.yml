@@ -146,5 +146,6 @@ brew:
   - cabal-install
   - scala
   - sbt
+  - corkscrew
   - homebrew/science/r
   - Caskroom/cask/xquartz

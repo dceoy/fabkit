@@ -2,6 +2,7 @@
 
 
 from __future__ import with_statement
+import os
 import re
 import yaml
 from fabric.api import sudo, run, get, settings, task
@@ -16,11 +17,19 @@ def test_connect(text=False):
 
 
 @task
-def add_user(user):
+def new_user_rsa(user, group='wheel'):
     if sudo("id %s" % user, warn_only=True).failed:
-        sudo("useradd %s" % user)
+        home = '/home/' + user
+        sudo("useradd -m -g %s -d %s %s" % (group, home, user))
         sudo("passwd %s" % user)
-        sudo("usermod -G wheel %s" % user)
+        sudo("mkdir %s/.ssh" % home)
+        sudo("ssh-keygen -t rsa -N '' -f %s/.ssh/id_rsa" % home)
+        get(home + '/.ssh/id_rsa', './key/' + user + '_rsa')
+        get(home + '/.ssh/id_rsa.pub', './key/' + user + '_rsa.pub')
+        os.system("chmod 600 ./key/%s" % user + '_rsa')
+        sudo("mv %s/.ssh/id_rsa.pub %s/.ssh/authorized_keys" % (home, home))
+        sudo("chmod 600 %s/.ssh/authorized_keys" % home)
+        sudo("chown -R %s:%s %s/.ssh" % (user, group, home))
 
 
 @task
@@ -30,16 +39,6 @@ def change_pass(user=False):
         run("passwd %s" % client)
     else:
         sudo("passwd %s" % user)
-
-
-@task
-def ssh_keygen():
-    user = run("whoami")
-    run("ssh-keygen -t rsa -f ~/.ssh/id_rsa")
-    get('~/.ssh/id_rsa', './key/' + user + '_id_rsa')
-    get('~/.ssh/id_rsa.pub', './key/' + user + '_id_rsa.pub')
-    run("mv ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys")
-    run("chmod 600 ~/.ssh/authorized_keys")
 
 
 @task
@@ -55,7 +54,7 @@ def git_config(user=False, email=False):
 def wheel_nopass_sudo(user=False):
     if not user:
         user = run("whoami")
-    sudo("sed -ie 's/^#\s\+\(%wheel\s\+ALL=(ALL)\s\+NOPASSWD:\s\+ALL\)$/\\1/' /etc/sudoers")
+    sudo("sed -ie 's/^#\?\s\+\(%wheel\s\+ALL=(ALL)\s\+NOPASSWD:\s\+ALL\)$/\\1/' /etc/sudoers")
     sudo("usermod -G wheel %s" % user)
 
 
@@ -172,14 +171,14 @@ def secure_sshd(user=False, port=443):
     if exists('/home/' + user + '/.ssh/authorized_keys'):
         sudo("setenforce Permissive")
         sudo("sed -ie 's/^\(SELINUX=\)enforcing$/\\1permissive/' /etc/selinux/config")
-        rex = ('s/^\(PasswordAuthentication \)yes$/\\1no/',
-               's/^#\(PermitRootLogin \)yes$/\\1no/',
-               's/^#\(Port \)22$/\\1' + str(port) + '/')
+        rex = ('s/^#\?\(PasswordAuthentication \)yes$/\\1no/',
+               's/^#\?\(PermitRootLogin \)yes$/\\1no/',
+               's/^#\?\(Port \)22$/\\1' + str(port) + '/')
         sudo("sed -i -e '%s' -e '%s' -e '%s' /etc/ssh/sshd_config" % rex)
         sudo("systemctl restart sshd")
         sudo("systemctl status sshd")
     else:
-        print('Non-root user having authorized_keys must exist.')
+        print('A non-root user having ssh keys must exist.')
 
 
 @task
@@ -187,7 +186,7 @@ def enable_firewalld():
     sudo("which firewalld || dnf -y install firewalld || yum -y install firewalld")
     sudo("systemctl start firewalld")
     sudo("systemctl enable firewalld")
-    ssh_port = sudo("grep -e '^Port [0-9]\+$' /etc/ssh/sshd_config | cut -f 2 -d ' '")
+    ssh_port = sudo("grep -e '^#\?Port [0-9]\+$' /etc/ssh/sshd_config | cut -f 2 -d ' '")
     if ssh_port != 22:
         sudo("sed -e 's/\"22\"/\"%s\"/' /usr/lib/firewalld/services/ssh.xml > /etc/firewalld/services/ssh.xml" % ssh_port)
     sudo("firewall-cmd --reload")
