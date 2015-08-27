@@ -17,28 +17,53 @@ def test_connect(text=False):
 
 
 @task
-def new_user_rsa(user, group='wheel'):
-    if sudo("id %s" % user, warn_only=True).failed:
+def ssh_keygen(user=False):
+    current_user = run("whoami")
+    if not user:
+        user = current_user
+    if user == current_user:
+        run("ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa")
+        get('~/.ssh/id_rsa', './key/' + user + '_rsa')
+        get('~/.ssh/id_rsa.pub', './key/' + user + '_rsa.pub')
+        os.system("chmod 600 ./key/%s" % user + '_rsa')
+        run("mv ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys")
+        run("chmod 600 ~/.ssh/authorized_keys")
+    else:
         home = '/home/' + user
-        sudo("useradd -m -g %s -d %s %s" % (group, home, user))
-        sudo("passwd %s" % user)
-        sudo("mkdir %s/.ssh" % home)
+        sudo("ls -l %s" % home)
+        sudo("ls %s/.ssh || mkdir %s/.ssh" % (home, home))
         sudo("ssh-keygen -t rsa -N '' -f %s/.ssh/id_rsa" % home)
         get(home + '/.ssh/id_rsa', './key/' + user + '_rsa')
         get(home + '/.ssh/id_rsa.pub', './key/' + user + '_rsa.pub')
         os.system("chmod 600 ./key/%s" % user + '_rsa')
         sudo("mv %s/.ssh/id_rsa.pub %s/.ssh/authorized_keys" % (home, home))
         sudo("chmod 600 %s/.ssh/authorized_keys" % home)
-        sudo("chown -R %s:%s %s/.ssh" % (user, group, home))
+        sudo("chown -R %s %s/.ssh" % (user, home))
 
 
 @task
-def change_pass(user=False):
-    client = run("whoami")
-    if not user or user == client:
-        run("passwd %s" % client)
+def new_ssh_user(user, pw=False, group='wheel'):
+    home = '/home/' + user
+    sudo("useradd -m -d %s %s" % (home, user))
+    if pw:
+        sudo("echo '%s:%s' | chpasswd" % (user, pw))
     else:
         sudo("passwd %s" % user)
+    sudo("cut -f 1 -d : /etc/group | grep %s || groupadd %s" % (group, group))
+    sudo("usermod -aG %s %s" % (group, user))
+    ssh_keygen(user)
+
+
+@task
+def ch_pass(user=False, pw=False):
+    client = run("whoami")
+    if pw:
+        sudo("echo '%s:%s' | chpasswd" % (user, pw))
+    else:
+        if not user or user == client:
+            run("passwd")
+        else:
+            sudo("passwd %s" % user)
 
 
 @task
@@ -55,19 +80,19 @@ def wheel_nopass_sudo(user=False):
     if not user:
         user = run("whoami")
     sudo("sed -ie 's/^#\?\s\+\(%wheel\s\+ALL=(ALL)\s\+NOPASSWD:\s\+ALL\)$/\\1/' /etc/sudoers")
-    sudo("usermod -G wheel %s" % user)
+    sudo("usermod -aG wheel %s" % user)
 
 
 @task
 def init_dev(yml='pkg_dev.yml'):
     with open(yml) as f:
         env_config = yaml.load(f)
-    pkg_mng(env_config)
-    lang_env(env_config)
-    zsh_vim_env()
+    install_pkg(env_config)
+    set_lang_env(env_config)
+    set_zsh_vim()
 
 
-def pkg_mng(env_config):
+def install_pkg(env_config):
     os_type = run("echo $OSTYPE")
     with settings(warn_only=True):
         if re.match(r'^linux', os_type):
@@ -93,9 +118,9 @@ def pkg_mng(env_config):
             map(lambda p: run("brew install %s" % p), env_config['brew'])
 
 
-def lang_env(env_config):
+def set_lang_env(env_config):
     if exists('~/.pyenv/.git'):
-        run("cd ~/.pyenv && git pull && cd -")
+        run("cd ~/.pyenv && git pull")
         pyenv = '~/.pyenv/bin/pyenv'
     elif exists('~/.pyenv'):
         pyenv = 'pyenv'
@@ -104,8 +129,8 @@ def lang_env(env_config):
     pip = '~/.pyenv/shims/pip'
 
     if exists('~/.rbenv/.git'):
-        run("cd ~/.rbenv && git pull && cd -")
-        run("cd ~/.rbenv/plugins/ruby-build && git pull && cd -")
+        run("cd ~/.rbenv && git pull")
+        run("cd ~/.rbenv/plugins/ruby-build && git pull")
         rbenv = '~/.rbenv/bin/rbenv'
     elif exists('~/.rbenv'):
         rbenv = 'rbenv'
@@ -144,12 +169,11 @@ def lang_env(env_config):
             run("echo '%s' | R -q --vanilla" % re.sub(r'([^\\])\'', r'\1"', r_pkg_install))
 
 
-def zsh_vim_env():
+def set_zsh_vim():
     dot_files = ('.zshrc', '.zshenv', '.vimrc')
     if not exists('~/fabkit'):
         run("git clone https://github.com/dceoy/fabkit.git ~/fabkit")
-    map(lambda f: run("ln -s ~/fabkit/dotfile/%s ~/%s" % ('d' + f, f)),
-        filter(lambda f: not exists("~/%s" % f), dot_files))
+    map(lambda f: run("ls ~/%s || ln -s ~/fabkit/dotfile/%s ~/%s" % (f, 'd' + f, f)), dot_files)
 
     if not re.match(r'.*\/zsh$', run("echo $SHELL")):
         run("chsh -s `grep -e '\/zsh$' /etc/shells | tail -1` `whoami`")
@@ -158,15 +182,15 @@ def zsh_vim_env():
         run("mkdir -p ~/.vim/bundle")
         run("git clone https://github.com/Shougo/neobundle.vim.git ~/.vim/bundle/neobundle.vim")
     else:
-        run("cd ~/.vim/bundle/neobundle.vim && git pull && cd -")
+        run("cd ~/.vim/bundle/neobundle.vim && git pull")
 
     run("vim -c NeoBundleUpdate -c q")
     run("vim -c NeoBundleInstall -c q")
 
 
 @task
-def init_ssh_server(user, port='443'):
-    new_user_rsa(user)
+def init_ssh_new(user, pw, port='443'):
+    new_ssh_user(user, pw)
     secure_sshd(user, port)
     enable_firewalld()
 
@@ -193,6 +217,7 @@ def enable_firewalld():
     if ssh_port != 22:
         sudo("sed -e 's/\"22\"/\"%s\"/' /usr/lib/firewalld/services/ssh.xml > /etc/firewalld/services/ssh.xml" % ssh_port)
     sudo("firewall-cmd --reload")
+    sudo("firewall-cmd --list-all")
 
 
 @task
