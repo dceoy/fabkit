@@ -94,7 +94,7 @@ gem:
   - mechanize
   - clockwork
   - twitter
-  - heroku
+  - tugboat
 
 go:
   - github.com/codegangsta/cli
@@ -142,5 +142,7 @@ brew:
   - scala
   - sbt
   - corkscrew
+  - docker-machine
   - homebrew/science/r
   - Caskroom/cask/xquartz
+  - Caskroom/cask/virtualbox

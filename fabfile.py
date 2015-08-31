@@ -221,28 +221,27 @@ def enable_firewalld():
 
 
 @task
-def set_system_proxy(proxy, port):
-    cmd = '''
-# Proxy
-PROXY=\"''' + proxy + ':' + port + '''\"
-export http_proxy=\"http://${PROXY}\"
-export https_proxy=\"https://${PROXY}\"
-export ftp_proxy=\"ftp://${PROXY}\"
-export HTTP_PROXY=\"${http_proxy}\"
-export HTTPS_PROXY=\"${https_proxy}\"
-export FTP_PROXY=\"${ftp_proxy}\"
-export no_proxy=\"127.0.0.1,localhost\"
-export NO_PROXY=\"${no_proxy}\"'''
-    sudo("echo '%s' >> /etc/profile" % cmd)
+def set_system_proxy(host, port):
+    proxy = host + ':' + port
+    var = '''
+http_proxy=\"http://''' + proxy + '''\"
+https_proxy=\"https://''' + proxy + '''\"
+ftp_proxy=\"ftp://''' + proxy + '''\"
+HTTP_PROXY=\"http://''' + proxy + '''\"
+HTTPS_PROXY=\"https://''' + proxy + '''\"
+FTP_PROXY=\"ftp://''' + proxy + '''\"
+no_proxy=\"127.0.0.1,localhost\"
+NO_PROXY=\"127.0.0.1,localhost\"'''
+    sudo("echo '%s' >> /etc/environment" % var)
 
 
 @task
-def ssh_via_proxy(proxy, port):
+def ssh_via_proxy(host, port):
     cs = run("which corkscrew")
     cmd = '''
 Host *
   Port 443
-  ProxyCommand ''' + cs + ' ' + proxy + ' ' + port + ' %h %p'
+  ProxyCommand ''' + cs + ' ' + host + ' ' + port + ' %h %p'
     run("echo '%s' >> ~/.ssh/config" % cmd)
 
 

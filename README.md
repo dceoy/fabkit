@@ -31,7 +31,7 @@ $ fab -u [user name] -H [host address] <command>[:arg1,arg2]
 | new_ssh_user:user(,pw,group) | Add a new user with ssh keys        | RHEL, Debian       |
 | ch_pass(:user,pw)            | Change user password                | RHEL, Debian       |
 | wheel_nopass_sudo(:user)     | Enable sudo without password        | RHEL               |
-| system_proxy:proxy,port      | Set a proxy for system              | RHEL               |
+| system_proxy:host,port      | Set a proxy for system              | RHEL               |
 
 () are optional arguments.  
 The default port of `init_ssh_new` is 443.
