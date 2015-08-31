@@ -1,0 +1,15 @@
+---
+authentication:
+  client_key: 
+  api_key: 
+ssh:
+  ssh_user: root
+  ssh_key_path: "~/.ssh/root_do_rsa"
+  ssh_port: '22'
+defaults:
+  region: '6'
+  image: '12065782'
+  size: '66'
+  ssh_key: ''
+  private_networking: 'false'
+  backups_enabled: 'false'

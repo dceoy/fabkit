@@ -27,6 +27,7 @@ pkgs <- c('dplyr',
           'abc',
           'phangorn',
           'rstan',
-          'RSQLite')
+          'RSQLite',
+          'rmarkdown')
 
 print(sapply(pkgs, pkg_load))

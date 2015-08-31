@@ -3,6 +3,7 @@
 dnf_group:
   - Development Tools
   - C Development Tools and Libraries
+  - Engineering and Scientific
 
 dnf:
   - zsh
@@ -18,6 +19,7 @@ dnf:
   - R
   - go
   - mercurial
+  - nmap
   - gcc-gfortran
   - kernel-devel
   - kernel-headers
