@@ -10,6 +10,7 @@ dnf:
   - vim
   - git
   - fabric
+  - ansible
   - wget
   - curl
   - tree
@@ -25,7 +26,6 @@ dnf:
   - kernel-headers
   - dkms
   - redis
-  - mongodb
   - postgresql-devel
   - sqlite-devel
   - mariadb-devel
@@ -85,6 +85,7 @@ pip:
   - mechanize
   - scss
   - twitter
+  - requests
   - requests_oauthlib
 
 gem:
@@ -105,11 +106,14 @@ go:
   - github.com/opencontainers/runc
 
 brew:
+  - Caskroom/cask/virtualbox
+  - Caskroom/cask/iterm2
   - zsh
   - vim
   - gcc
   - git
   - fabric
+  - ansible
   - gawk
   - gnu-sed
   - nkf
@@ -146,5 +150,12 @@ brew:
   - corkscrew
   - docker-machine
   - homebrew/science/r
+  - Caskroom/cask/vagrant
+  - Caskroom/cask/google-chrome
+  - Caskroom/cask/firefox
+  - Caskroom/cask/dropbox
+  - Caskroom/cask/java
   - Caskroom/cask/xquartz
-  - Caskroom/cask/virtualbox
+  - Caskroom/cask/chrome-remote-desktop-host
+  - Caskroom/cask/mendeley-desktop
+  - Caskroom/cask/endnote

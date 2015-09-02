@@ -1,33 +1,56 @@
 #!/usr/bin/env Rscript
 
-
-# CRAN
+# cran
 options(repos = 'http://cran.rstudio.com/')
 update.packages(checkBuilt = TRUE, ask = FALSE)
 
-pkg_load <- function(p) {
-  if (! p %in% installed.packages()[, 1]) install.packages(p, dependencies = TRUE)
-  require(p, character.only = TRUE)
-}
+# bioconductor
+source('http://bioconductor.org/biocLite.R')
+biocLite()
 
-pkgs <- c('dplyr',
-          'tidyr',
-          'data.table',
-          'devtools',
-          'yaml',
-          'snow',
-          'foreach',
-          'doSNOW',
-          'ggplot2',
-          'ggmcmc',
-          'gridExtra',
-          'glmmML',
-          'MCMCpack',
-          'coin',
-          'abc',
-          'phangorn',
-          'rstan',
-          'RSQLite',
-          'rmarkdown')
+# packages
+df_pkg <- rbind(data.frame(name = c('dplyr',
+                                    'tidyr',
+                                    'data.table',
+                                    'devtools',
+                                    'yaml',
+                                    'snow',
+                                    'foreach',
+                                    'doSNOW',
+                                    'ggplot2',
+                                    'ggmcmc',
+                                    'gridExtra',
+                                    'glmmML',
+                                    'MCMCpack',
+                                    'rstan',
+                                    'coin',
+                                    'ranger',
+                                    'abc',
+                                    'phangorn',
+                                    'amap',
+                                    'GMD',
+                                    'RSQLite',
+                                    'plyr',
+                                    'shiny',
+                                    'rbenchmark',
+                                    'rmarkdown'),
+                           repos = 'cran'),
+                data.frame(name = c('PhViD',
+                                    'Biobase',
+                                    'GEOquery'),
+                           repos = 'bioc'))
 
-print(sapply(pkgs, pkg_load))
+# install
+apply(df_pkg,
+      1,
+      function(pkg) {
+        if(! pkg['name'] %in% installed.packages()[, 1]) {
+          switch(pkg['repos'],
+                 'cran' = install.packages(pkg['name'], dependencies = TRUE),
+                 'bioc' = biocLite(pkg['name']))
+        }
+      })
+
+# load
+print(sapply(as.vector(df_pkg$name),
+             function(pkg) require(pkg, character.only = TRUE)))
