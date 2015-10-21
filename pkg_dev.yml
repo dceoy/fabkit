@@ -26,6 +26,8 @@ dnf:
   - kernel-headers
   - dkms
   - redis
+  - expect
+  - parallel
   - postgresql-devel
   - sqlite-devel
   - mariadb-devel
@@ -81,6 +83,7 @@ pip:
   - theano
   - pandas
   - pyper
+  - csvkit
   - selenium
   - mechanize
   - scss
@@ -126,6 +129,7 @@ brew:
   - tmux
   - readline
   - openssl
+  - parallel
   - open-mpi
   - xml2
   - libxml2

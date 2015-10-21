@@ -5,8 +5,10 @@ from __future__ import with_statement
 import os
 import re
 import yaml
-from fabric.api import sudo, run, get, settings, task
+from fabric.api import sudo, run, get, settings, task, env
 from fabric.contrib.files import exists
+
+env.use_ssh_config = True
 
 
 @task
@@ -183,9 +185,7 @@ def set_zsh_vim():
         run("git clone https://github.com/Shougo/neobundle.vim.git ~/.vim/bundle/neobundle.vim")
     else:
         run("cd ~/.vim/bundle/neobundle.vim && git pull")
-
-    run("vim -c NeoBundleUpdate -c q")
-    run("vim -c NeoBundleInstall -c q")
+    run("~/.vim/bundle/neobundle.vim/bin/neoinstall")
 
 
 @task
