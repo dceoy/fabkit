@@ -220,30 +220,5 @@ def enable_firewalld():
     sudo("firewall-cmd --list-all")
 
 
-@task
-def set_system_proxy(host, port):
-    proxy = host + ':' + port
-    var = '''
-http_proxy=\"http://''' + proxy + '''\"
-https_proxy=\"https://''' + proxy + '''\"
-ftp_proxy=\"ftp://''' + proxy + '''\"
-HTTP_PROXY=\"http://''' + proxy + '''\"
-HTTPS_PROXY=\"https://''' + proxy + '''\"
-FTP_PROXY=\"ftp://''' + proxy + '''\"
-no_proxy=\"127.0.0.1,localhost\"
-NO_PROXY=\"127.0.0.1,localhost\"'''
-    sudo("echo '%s' >> /etc/environment" % var)
-
-
-@task
-def ssh_via_proxy(host, port):
-    cs = run("which corkscrew")
-    cmd = '''
-Host *
-  Port 443
-  ProxyCommand ''' + cs + ' ' + host + ' ' + port + ' %h %p'
-    run("echo '%s' >> ~/.ssh/config" % cmd)
-
-
 if __name__ == '__main__':
     print("Usage: fab [options] <command>[:arg1,arg2=val2,host=foo,hosts='h1;h2',...] ...")

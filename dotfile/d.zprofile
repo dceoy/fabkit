@@ -17,6 +17,7 @@ export LD_LIBRARY_PATH="/usr/lib64/openmpi/lib/"
 export AWS_CONFIG_FILE="~/aws.conf"
 
 # proxy
+# $ echo $PROXY_CONFIG >> /etc/environment
 PROXY="proxy.example.com:8080"
 export http_proxy="http://${PROXY}"
 export https_proxy="https://${PROXY}"
