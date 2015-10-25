@@ -172,7 +172,7 @@ def set_lang_env(env_config):
 
 
 def set_zsh_vim():
-    dot_files = ('.zshrc', '.zshenv', '.vimrc')
+    dot_files = ('.zshrc', '.vimrc')
     if not exists('~/fabkit'):
         run("git clone https://github.com/dceoy/fabkit.git ~/fabkit")
     map(lambda f: run("ls ~/%s || ln -s ~/fabkit/dotfile/%s ~/%s" % (f, 'd' + f, f)), dot_files)

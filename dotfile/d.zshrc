@@ -89,16 +89,6 @@ SPROMPT="${tmp_sprompt}"
 # ------------------------------
 
 ### Custom ###
-case "${OSTYPE}" in
-  darwin*)
-    alias sed="gsed"
-    alias awk="gawk"
-    ;;
-  linux*)
-    alias ls="ls --color=auto"
-    ;;
-esac
-
 export LANG=en_US.UTF-8
 setopt nonomatch
 alias v="vim"
@@ -106,6 +96,24 @@ alias vi="vi -u NONE --noplugin -N"
 alias ll="ls -lF"
 alias lla="ll -a"
 alias grep="grep --color=auto"
+
+case "${OSTYPE}" in
+  darwin*)
+    alias sed="gsed"
+    alias awk="gawk"
+    ;;
+  linux*)
+    alias ls="ls --color=auto"
+    export PATH="${HOME}/.rbenv/bin:${PATH}"
+    export PATH="${HOME}/.pyenv/bin:${PATH}"
+    ;;
+esac
+
+eval "$(rbenv init -)"
+eval "$(pyenv init -)"
+alias rv="R -q --vanilla"
+export GOPATH="${HOME}/go"
+export PATH="${GOPATH}/bin:${PATH}"
 
 ### Git ###
 autoload -Uz vcs_info
