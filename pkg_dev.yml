@@ -76,6 +76,7 @@ pip:
   - numpy
   - scipy
   - matplotlib
+  - seaborn
   - ggplot
   - scikit-learn
   - pymc
@@ -86,6 +87,7 @@ pip:
   - csvkit
   - selenium
   - mechanize
+  - beautifulsoup4
   - scss
   - twitter
   - requests
@@ -93,6 +95,7 @@ pip:
 
 gem:
   - bundler
+  - rake
   - rails
   - compass
   - middleman
