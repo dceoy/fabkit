@@ -128,6 +128,8 @@ def set_lang_env(env_config):
         pyenv = 'pyenv'
     else:
         run("git clone https://github.com/yyuu/pyenv.git ~/.pyenv")
+        pyenv = '~/.pyenv/bin/pyenv'
+    run("eval \"$(%s init -)\"" % pyenv)
     pip = '~/.pyenv/shims/pip'
 
     if exists('~/.rbenv/.git'):
@@ -139,6 +141,8 @@ def set_lang_env(env_config):
     else:
         run("git clone https://github.com/sstephenson/rbenv.git ~/.rbenv")
         run("git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build")
+        rbenv = '~/.rbenv/bin/rbenv'
+    run("eval \"$(%s init -)\"" % rbenv)
     gem = '~/.rbenv/shims/gem'
 
     def install_lang_by_env_ver(l):
@@ -149,7 +153,7 @@ def set_lang_env(env_config):
             if l['e'] == pyenv and run("%s --version" % pip).succeeded:
                 run("%s install -U pip" % pip)
                 map(lambda p: run("%s install -U %s" % (pip, p)),
-                    set(run("%s list | cut -f 1 -d ' '" % pip).split() + env_config['pip']))
+                    set(run("%s list | cut -f 1 -d ' '" % pip).split() + env_config['pip']).difference({'pip'}))
             elif l['e'] == rbenv and run("%s --version" % gem).succeeded:
                 run("%s update" % gem)
                 map(lambda p: run("%s install --no-document %s" % (gem, p)), env_config['gem'])
@@ -193,7 +197,7 @@ def set_zsh_vim():
 
 
 @task
-def init_ssh_new(user, pw, port='443'):
+def init_ssh_new(user, pw, port='9100'):
     new_ssh_user(user, pw)
     secure_sshd(user, port)
     enable_firewalld()

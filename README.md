@@ -33,7 +33,7 @@ $ fab -u [user name] -H [host address] <command>[:arg1,arg2]
 | wheel_nopass_sudo(:user)     | Enable sudo without password        | RHEL               |
 
 () are optional arguments.  
-The default port of `init_ssh_new` is 443.
+The default port of `init_ssh_new` is 9100.
 
 - RHEL   : Fedora, CentOS, Red Hat Enterprise Linux
 - OS X   : Mac OS X
