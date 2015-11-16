@@ -2,7 +2,10 @@
 
 # cran
 options(repos = 'http://cran.rstudio.com/')
-update.packages(checkBuilt = TRUE, ask = FALSE)
+if(length(list.files(.libPaths()[1])) != 0) update.packages(checkBuilt = TRUE, ask = FALSE)
+
+# devtools
+if(! 'devtools' %in% installed.packages()[, 1]) install.packages('devtools', dep = TRUE)
 
 # bioconductor
 source('http://bioconductor.org/biocLite.R')
@@ -12,7 +15,6 @@ biocLite()
 df_pkg <- rbind(data.frame(name = c('dplyr',
                                     'tidyr',
                                     'data.table',
-                                    'devtools',
                                     'yaml',
                                     'snow',
                                     'foreach',
@@ -37,6 +39,8 @@ df_pkg <- rbind(data.frame(name = c('dplyr',
                                     'rbenchmark',
                                     'rmarkdown'),
                            repos = 'cran'),
+                data.frame(name = c('klutometis/roxygen'),
+                           repos = 'github'),
                 data.frame(name = c('PhViD',
                                     'Biobase',
                                     'GEOquery'),
@@ -48,7 +52,8 @@ apply(df_pkg,
       function(pkg) {
         if(! pkg['name'] %in% installed.packages()[, 1]) {
           switch(pkg['repos'],
-                 'cran' = install.packages(pkg['name'], dependencies = TRUE),
+                 'cran' = install.packages(pkg['name'], dep = TRUE),
+                 'github' = devtools::install_github(pkg['name']),
                  'bioc' = biocLite(pkg['name']))
         }
       })

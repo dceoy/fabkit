@@ -95,15 +95,16 @@ alias v="vim"
 alias vi="vi -u NONE --noplugin -N"
 alias ll="ls -lF"
 alias lla="ll -a"
-alias grep="grep --color=auto"
 
 case "${OSTYPE}" in
   darwin*)
+    alias grep="ggrep --color=auto"
     alias sed="gsed"
     alias awk="gawk"
     ;;
   linux*)
     alias ls="ls --color=auto"
+    alias grep="grep --color=auto"
     export PATH="${HOME}/.rbenv/bin:${PATH}"
     export PATH="${HOME}/.pyenv/bin:${PATH}"
     ;;
@@ -112,7 +113,8 @@ esac
 eval "$(rbenv init -)"
 eval "$(pyenv init -)"
 alias rv="R -q --vanilla"
-export GOPATH="${HOME}/go"
+export R_LIBS="${HOME}/.R/library"
+export GOPATH="${HOME}/.go"
 export PATH="${GOPATH}/bin:${PATH}"
 
 ### Git ###

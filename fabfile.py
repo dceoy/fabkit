@@ -33,7 +33,7 @@ def ssh_keygen(user=False):
     else:
         home = '/home/' + user
         sudo("ls -l %s" % home)
-        sudo("ls %s/.ssh || mkdir %s/.ssh" % (home, home))
+        sudo("[[ -d %s/.ssh ]] || mkdir %s/.ssh" % (home, home))
         sudo("ssh-keygen -t rsa -N '' -f %s/.ssh/id_rsa" % home)
         get(home + '/.ssh/id_rsa', './key/' + user + '_rsa')
         get(home + '/.ssh/id_rsa.pub', './key/' + user + '_rsa.pub')
@@ -158,24 +158,28 @@ def set_lang_env(env_config):
         map(install_lang_by_env_ver, ({'e': pyenv, 'v': 2}, {'e': pyenv, 'v': 3}, {'e': rbenv, 'v': 2}))
 
         if run("go version").succeeded:
-            go = 'export GOPATH=${HOME}/go && go'
-            if not exists('~/go'):
-                run("mkdir ~/go")
+            gopath = '~/.go'
+            go = 'export GOPATH=' + gopath + ' && go'
+            if not exists(gopath):
+                run("mkdir -p %s" % gopath)
             else:
                 run("%s get -u all" % go)
             map(lambda p: run("%s get -v %s" % (go, p)), env_config['go'])
 
         if run("R --version").succeeded:
+            r_libs = '~/.R/library'
+            if not exists(r_libs):
+                run("mkdir -p %s" % r_libs)
             with open('r_pkg_install.R') as f:
                 r_pkg_install = f.read()
-            run("echo '%s' | R -q --vanilla" % re.sub(r'([^\\])\'', r'\1"', r_pkg_install))
+            run("export R_LIBS=%s && echo '%s' | R -q --vanilla" % (r_libs, re.sub(r'([^\\])\'', r'\1"', r_pkg_install)))
 
 
 def set_zsh_vim():
     dot_files = ('.zshrc', '.vimrc')
     if not exists('~/fabkit'):
         run("git clone https://github.com/dceoy/fabkit.git ~/fabkit")
-    map(lambda f: run("ls ~/%s || ln -s ~/fabkit/dotfile/%s ~/%s" % (f, 'd' + f, f)), dot_files)
+    map(lambda f: run("[[ -f ~/%s ]] || ln -s ~/fabkit/dotfile/%s ~/%s" % (f, 'd' + f, f)), dot_files)
 
     if not re.match(r'.*\/zsh$', run("echo $SHELL")):
         run("chsh -s `grep -e '\/zsh$' /etc/shells | tail -1` `whoami`")

@@ -64,6 +64,7 @@ pip:
   - setuptools
   - fabric
   - pyyaml
+  - virtualenv
   - tornado
   - bottle
   - flake8
@@ -75,6 +76,7 @@ pip:
   - nose
   - numpy
   - scipy
+  - sympy
   - matplotlib
   - seaborn
   - ggplot
@@ -122,6 +124,8 @@ brew:
   - ansible
   - gawk
   - gnu-sed
+  - homebrew/dupes/grep
+  - pigz
   - nkf
   - wget
   - curl
