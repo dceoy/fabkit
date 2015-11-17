@@ -10,6 +10,7 @@ dnf:
   - vim
   - git
   - fabric
+  - python-yaml
   - ansible
   - wget
   - curl

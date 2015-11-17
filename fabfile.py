@@ -174,15 +174,17 @@ def set_lang_env(env_config):
             r_libs = '~/.R/library'
             if not exists(r_libs):
                 run("mkdir -p %s" % r_libs)
-            with open('r_pkg_install.R') as f:
-                r_pkg_install = f.read()
-            run("export R_LIBS=%s && echo '%s' | R -q --vanilla" % (r_libs, re.sub(r'([^\\])\'', r'\1"', r_pkg_install)))
+            with open('install_r_libs.R') as f:
+                rsrc = f.read()
+            run("export R_LIBS=%s && echo '%s' | R -q --vanilla" % (r_libs, re.sub(r'([^\\])\'', r'\1"', rsrc)))
 
 
 def set_zsh_vim():
     dot_files = ('.zshrc', '.vimrc')
     if not exists('~/fabkit'):
         run("git clone https://github.com/dceoy/fabkit.git ~/fabkit")
+    else:
+        run("cd ~/fabkit && git pull")
     map(lambda f: run("[[ -f ~/%s ]] || ln -s ~/fabkit/dotfile/%s ~/%s" % (f, 'd' + f, f)), dot_files)
 
     if not re.match(r'.*\/zsh$', run("echo $SHELL")):
