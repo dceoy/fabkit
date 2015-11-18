@@ -230,5 +230,14 @@ def enable_firewalld():
     sudo("firewall-cmd --list-all")
 
 
+@task
+def set_proxy(host,port):
+    hp = host + ':' + port
+    with open('config/proxy.sh') as f:
+        prof = f.read()
+    sudo("echo '%s' >> /etc/profile.d/proxy.sh" % prof.replace('proxy.example.com:8080', hp))
+    sudo("echo 'proxy=http://%s' >> /etc/dnf/dnf.conf" % hp)
+
+
 if __name__ == '__main__':
     print("Usage: fab [options] <command>[:arg1,arg2=val2,host=foo,hosts='h1;h2',...] ...")

@@ -1,0 +1,12 @@
+Host *
+  ControlMaster auto
+  ControlPath /tmp/%r@%h:%p
+
+Host gw
+  HostName gateway
+  Port 443
+  ProxyCommand corkscrew ${PROXY_HOST} ${PROXY_PORT} %h %p
+
+Host github.com
+  HostName github.com
+  ProxyCommand ssh -W %h:%p gw
