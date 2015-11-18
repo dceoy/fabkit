@@ -190,11 +190,12 @@ def set_zsh_vim():
     if not re.match(r'.*\/zsh$', run("echo $SHELL")):
         run("chsh -s `grep -e '\/zsh$' /etc/shells | tail -1` `whoami`")
 
-    if not exists('~/.vim/bundle/neobundle.vim'):
+    if not exists('~/.vim/bundle/vimproc.vim'):
         run("mkdir -p ~/.vim/bundle")
+        run("git clone https://github.com/Shougo/vimproc.vim.git ~/.vim/bundle/vimproc.vim")
+        run("cd ~/.vim/bundle/vimproc.vim && make")
+    if not exists('~/.vim/bundle/neobundle.vim'):
         run("git clone https://github.com/Shougo/neobundle.vim.git ~/.vim/bundle/neobundle.vim")
-    else:
-        run("cd ~/.vim/bundle/neobundle.vim && git pull")
     run("~/.vim/bundle/neobundle.vim/bin/neoinstall")
 
 
