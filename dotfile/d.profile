@@ -1,5 +1,5 @@
 # dropbox init script
-# wget https://www.dropbox.com/download?dl=packages/dropbox.py ~/Dropbox/
+# $ wget https://www.dropbox.com/download?dl=packages/dropbox.py ~/Dropbox/
 if [ -e ~/Dropbox/dropbox.py ]; then
   dbx_stat=`/usr/bin/python ~/Dropbox/dropbox.py status` && echo "${dbx_stat}"
   [[ ${dbx_stat} =~ "^Dropbox isn't running\!$" ]] && /usr/bin/python ~/Dropbox/dropbox.py start
@@ -17,7 +17,8 @@ export LD_LIBRARY_PATH="/usr/lib64/openmpi/lib/"
 export AWS_CONFIG_FILE="~/aws.conf"
 
 # proxy
-# $ echo $PROXY_CONFIG >> /etc/environment
+# $ echo ${PROXY_SH} >> /etc/profile.d/proxy.sh
+# $ echo proxy=${HTTP_PROXY} >> /etc/dnf/dnf.conf
 PROXY="proxy.example.com:8080"
 export http_proxy="http://${PROXY}"
 export https_proxy="https://${PROXY}"
