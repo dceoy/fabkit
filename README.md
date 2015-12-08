@@ -31,6 +31,7 @@ $ fab -u [user name] -H [host address] <command>[:arg1,arg2]
 | new_ssh_user:user(,pw,group) | Add a new user with ssh keys        | RHEL, Debian       |
 | ch_pass(:user,pw)            | Change user password                | RHEL, Debian       |
 | wheel_nopass_sudo(:user)     | Enable sudo without password        | RHEL               |
+| enable_home_nginx(:user)     | Set up Nginx linked to /home/user   | RHEL               |
 
 () are optional arguments.  
 The default port of `init_ssh_new` is 9100.

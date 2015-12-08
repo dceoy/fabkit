@@ -90,6 +90,7 @@ def enable_home_nginx(user=False):
     if not user:
         user = env.user
     sudo("setenforce 0")
+    sudo("sed -ie 's/^\(SELINUX=\)enforcing$/\\1permissive/' /etc/selinux/config")
     enable_firewalld()
     sudo("firewall-cmd --add-service=http --permanent")
     sudo("firewall-cmd --reload")
@@ -228,7 +229,7 @@ def init_ssh_new(user, pw, port='9100'):
 
 def secure_sshd(user, port):
     if exists('/home/' + user + '/.ssh/authorized_keys'):
-        sudo("setenforce Permissive")
+        sudo("setenforce 0")
         sudo("sed -ie 's/^\(SELINUX=\)enforcing$/\\1permissive/' /etc/selinux/config")
         rex = ('s/^#\?\(PasswordAuthentication \)yes$/\\1no/',
                's/^#\?\(PermitRootLogin \)yes$/\\1no/',
