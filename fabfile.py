@@ -86,6 +86,26 @@ def wheel_nopass_sudo(user=False):
 
 
 @task
+def enable_home_nginx(user=False):
+    if not user:
+        user = env.user
+    sudo("setenforce 0")
+    enable_firewalld()
+    sudo("firewall-cmd --add-service=http --permanent")
+    sudo("firewall-cmd --reload")
+    sudo("firewall-cmd --list-all")
+    sudo("chmod 711 /home/%s" % user)
+    sudo("[[ -d /usr/share/nginx/html/%s ]] || ln -s /home/%s /usr/share/nginx/html/" % (user, user))
+    sudo("which nginx || dnf -y install nginx || yum -y install nginx")
+    sudo("systemctl start nginx")
+    if sudo("grep autoindex /etc/nginx/nginx.conf", warn_only=True).failed:
+        rex = 's/^\( \+\)\(location \/ {\)$/\\1\\2\\n\\1    autoindex   on;/'
+        sudo("sed -ie '%s' /etc/nginx/nginx.conf" % rex)
+        sudo("systemctl restart nginx")
+    sudo("systemctl enable nginx")
+
+
+@task
 def init_dev(yml='pkg_dev.yml'):
     with open(yml) as f:
         env_config = yaml.load(f)
@@ -224,8 +244,9 @@ def enable_firewalld():
     sudo("which firewalld || dnf -y install firewalld || yum -y install firewalld")
     sudo("systemctl start firewalld")
     sudo("systemctl enable firewalld")
+    sudo("firewall-cmd --add-service=ssh --permanent")
     ssh_port = sudo("grep -e '^#\?Port [0-9]\+$' /etc/ssh/sshd_config | cut -f 2 -d ' '")
-    if ssh_port != 22:
+    if ssh_port != '22':
         sudo("sed -e 's/\"22\"/\"%s\"/' /usr/lib/firewalld/services/ssh.xml > /etc/firewalld/services/ssh.xml" % ssh_port)
     sudo("firewall-cmd --reload")
     sudo("firewall-cmd --list-all")
