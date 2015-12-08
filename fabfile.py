@@ -20,7 +20,7 @@ def test_connect(text=False):
 
 @task
 def ssh_keygen(user=False):
-    current_user = run("whoami")
+    current_user = env.user
     if not user:
         user = current_user
     if user == current_user:
@@ -58,7 +58,7 @@ def new_ssh_user(user, pw=False, group='wheel'):
 
 @task
 def ch_pass(user=False, pw=False):
-    client = run("whoami")
+    client = env.user
     if pw:
         sudo("echo '%s:%s' | chpasswd" % (user, pw))
     else:
@@ -80,7 +80,7 @@ def git_config(user=False, email=False):
 @task
 def wheel_nopass_sudo(user=False):
     if not user:
-        user = run("whoami")
+        user = env.user
     sudo("sed -ie 's/^#\?\s\+\(%wheel\s\+ALL=(ALL)\s\+NOPASSWD:\s\+ALL\)$/\\1/' /etc/sudoers")
     sudo("usermod -aG wheel %s" % user)
 
@@ -188,7 +188,7 @@ def set_zsh_vim():
     map(lambda f: run("[[ -f ~/%s ]] || ln -s ~/fabkit/dotfile/%s ~/%s" % (f, 'd' + f, f)), dot_files)
 
     if not re.match(r'.*\/zsh$', run("echo $SHELL")):
-        run("chsh -s `grep -e '\/zsh$' /etc/shells | tail -1` `whoami`")
+        run("chsh -s $(grep -e '\/zsh$' /etc/shells | tail -1) %s" % env.user)
 
     if not exists('~/.vim/bundle/vimproc.vim'):
         run("mkdir -p ~/.vim/bundle")
