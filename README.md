@@ -18,7 +18,7 @@ Usage
 -----
 
 ```sh
-$ fab -u [user name] -H [host address] <command>[:arg1,arg2]
+$ fab -u [user name] -h [host address] <command>[:arg1,arg2]
 ```
 
 | Command                      | Description                         | Platform           |
@@ -39,3 +39,12 @@ The default port of `init_ssh_new` is 9100.
 - RHEL   : Fedora, CentOS, Red Hat Enterprise Linux
 - OS X   : Mac OS X
 - Debian : Ubuntu, Debian
+
+Example
+-------
+
+Several arguments are optional.
+
+```sh
+$ fab init_dev  # equal to "fab -u ${USER} -H localhost init_dev:pkg_dev.yml"
+```

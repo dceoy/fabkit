@@ -8,22 +8,19 @@ import yaml
 from fabric.api import sudo, run, get, settings, task, env
 from fabric.contrib.files import exists
 
+if len(env.hosts) == 0:
+    env.hosts = ['localhost']
 env.use_ssh_config = True
 
 
 @task
-def test_connect(text=False):
-    if not text:
-        text = 'Succeeded.'
+def test_connect(text='Succeeded.'):
     run("echo '%s'" % text)
 
 
 @task
-def ssh_keygen(user=False):
-    current_user = env.user
-    if not user:
-        user = current_user
-    if user == current_user:
+def ssh_keygen(user=env.user):
+    if user == env.user:
         run("ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa")
         get('~/.ssh/id_rsa', './key/' + user + '_rsa')
         get('~/.ssh/id_rsa.pub', './key/' + user + '_rsa.pub')
@@ -57,12 +54,11 @@ def new_ssh_user(user, pw=False, group='wheel'):
 
 
 @task
-def ch_pass(user=False, pw=False):
-    client = env.user
+def ch_pass(user=env.user, pw=False):
     if pw:
         sudo("echo '%s:%s' | chpasswd" % (user, pw))
     else:
-        if not user or user == client:
+        if user == env.user:
             run("passwd")
         else:
             sudo("passwd %s" % user)
@@ -78,17 +74,13 @@ def git_config(user=False, email=False):
 
 
 @task
-def wheel_nopass_sudo(user=False):
-    if not user:
-        user = env.user
+def wheel_nopass_sudo(user=env.user):
     sudo("sed -ie 's/^#\?\s\+\(%wheel\s\+ALL=(ALL)\s\+NOPASSWD:\s\+ALL\)$/\\1/' /etc/sudoers")
     sudo("usermod -aG wheel %s" % user)
 
 
 @task
-def enable_home_nginx(user=False):
-    if not user:
-        user = env.user
+def enable_home_nginx(user=env.user):
     sudo("setenforce 0")
     sudo("sed -ie 's/^\(SELINUX=\)enforcing$/\\1permissive/' /etc/selinux/config")
     enable_firewalld()
@@ -254,7 +246,7 @@ def enable_firewalld():
 
 
 @task
-def set_proxy(host,port):
+def set_proxy(host, port):
     hp = host + ':' + port
     with open('config/proxy.sh') as f:
         prof = f.read()
