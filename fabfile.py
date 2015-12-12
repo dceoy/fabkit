@@ -103,8 +103,9 @@ def init_dev(yml='pkg_dev.yml'):
     with open(yml) as f:
         env_config = yaml.load(f)
     install_pkg(env_config)
+    set_zsh_env()
     set_lang_env(env_config)
-    set_zsh_vim()
+    set_vim_env()
 
 
 def install_pkg(env_config):
@@ -131,6 +132,18 @@ def install_pkg(env_config):
             else:
                 run("brew update && brew upgrade --all")
             map(lambda p: run("brew install %s" % p), env_config['brew'])
+
+
+def set_zsh_env():
+    dot_files = ('.zshrc', '.vimrc')
+    if not exists('~/fabkit'):
+        run("git clone https://github.com/dceoy/fabkit.git ~/fabkit")
+    else:
+        run("cd ~/fabkit && git pull")
+    map(lambda f: run("[[ -f ~/%s ]] || ln -s ~/fabkit/dotfile/%s ~/%s" % (f, 'd' + f, f)), dot_files)
+
+    if not re.match(r'.*\/zsh$', run("echo $SHELL")):
+        run("chsh -s $(grep -e '\/zsh$' /etc/shells | tail -1) %s" % env.user)
 
 
 def set_lang_env(env_config):
@@ -192,17 +205,7 @@ def set_lang_env(env_config):
             run("export R_LIBS=%s && echo '%s' | R -q --vanilla" % (r_libs, re.sub(r'([^\\])\'', r'\1"', rsrc)))
 
 
-def set_zsh_vim():
-    dot_files = ('.zshrc', '.vimrc')
-    if not exists('~/fabkit'):
-        run("git clone https://github.com/dceoy/fabkit.git ~/fabkit")
-    else:
-        run("cd ~/fabkit && git pull")
-    map(lambda f: run("[[ -f ~/%s ]] || ln -s ~/fabkit/dotfile/%s ~/%s" % (f, 'd' + f, f)), dot_files)
-
-    if not re.match(r'.*\/zsh$', run("echo $SHELL")):
-        run("chsh -s $(grep -e '\/zsh$' /etc/shells | tail -1) %s" % env.user)
-
+def set_vim_env():
     if not exists('~/.vim/bundle/vimproc.vim'):
         run("mkdir -p ~/.vim/bundle")
         run("git clone https://github.com/Shougo/vimproc.vim.git ~/.vim/bundle/vimproc.vim")
