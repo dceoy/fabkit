@@ -126,6 +126,7 @@ def install_pkg(env_config):
                         map(lambda p: sudo("%s -y install %s" % (pm, p)), env_config['dnf'])
                     if sudo("%s -y groupinstall '%s'" % (pm, '\' \''.join(env_config['dnf_group']))).failed:
                         map(lambda p: sudo("%s -y groupinstall '%s'" % (pm, p)), env_config['dnf_group'])
+                    sudo("%s clean all")
         elif re.match(r'^darwin', os_type):
             if run("brew --version").failed:
                 run("ruby -e '$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)'")
