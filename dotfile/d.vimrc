@@ -42,6 +42,7 @@ NeoBundle 'elzr/vim-json'                           " a better json for vim
 " edit
 NeoBundle 'Shougo/neocomplcache.vim'                " ultimate auto-completion system for vim
 NeoBundle 'Shougo/neosnippet.vim'                   " neocomplcache snippets source
+NeoBundle 'Shougo/neosnippet-snippets'              " the standard snippets for neosnippet
 "NeoBundle 'Shougo/neocomplete.vim'                  " next generation completion framework after neocomplcache
 NeoBundle 'AndrewRadev/switch.vim'                  " switch segments of text with predefined replacements
 " surroundings
