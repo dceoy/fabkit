@@ -51,6 +51,7 @@ update_env <- function(ls_pkgs, r_lib = .libPaths()[1]) {
   return(print(sapply(ls_pkgs, require_v)))
 }
 
+Sys.setenv(MAKEFLAGS = paste0('-j', parallel::detectCores()))
 update_env(list(CRAN = c('dplyr',
                          'tidyr',
                          'data.table',
@@ -66,6 +67,7 @@ update_env(list(CRAN = c('dplyr',
                          'glmmML',
                          'MCMCpack',
                          'rstan',
+                         'loo',
                          'coin',
                          'ranger',
                          'abc',
