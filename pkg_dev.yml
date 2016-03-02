@@ -19,6 +19,8 @@ dnf:
   - nkf
   - wol
   - tmux
+  - cmake
+  - boost
   - R
   - go
   - mercurial
@@ -30,6 +32,8 @@ dnf:
   - redis
   - expect
   - parallel
+  - ImageMagick
+  - ImageMagick-devel
   - postgresql-devel
   - sqlite-devel
   - mariadb-devel
@@ -55,6 +59,7 @@ dnf:
   - patch
   - corkscrew
   - nginx
+  - samba
   - docker
   - pandoc
   - ghc
@@ -96,6 +101,7 @@ pip:
   - twitter
   - requests
   - requests_oauthlib
+  - feather-format
 
 gem:
   - bundler
@@ -165,10 +171,13 @@ brew:
   - homebrew/science/r
   - Caskroom/cask/vagrant
   - Caskroom/cask/google-chrome
+  - Caskroom/cask/google-drive
   - Caskroom/cask/firefox
   - Caskroom/cask/dropbox
+  - Caskroom/cask/evernote
   - Caskroom/cask/java
   - Caskroom/cask/xquartz
+  - Caskroom/cask/rstudio
   - Caskroom/cask/chrome-remote-desktop-host
   - Caskroom/cask/mendeley-desktop
   - Caskroom/cask/endnote
