@@ -169,6 +169,7 @@ brew:
   - corkscrew
   - docker-machine
   - homebrew/science/r
+  - homebrew/science/opencv
   - Caskroom/cask/vagrant
   - Caskroom/cask/google-chrome
   - Caskroom/cask/google-drive

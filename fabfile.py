@@ -133,6 +133,7 @@ def install_pkg(env_config):
             else:
                 run("brew update && brew upgrade --all")
             map(lambda p: run("brew install %s" % p), env_config['brew'])
+            run("brew cleanup")
 
 
 def set_zsh_env():
