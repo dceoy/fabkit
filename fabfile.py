@@ -14,12 +14,12 @@ env.use_ssh_config = True
 
 
 @task
-def test_connect(text='Succeeded.'):
+def test_connect(text = 'Succeeded.'):
     run("echo '%s'" % text)
 
 
 @task
-def ssh_keygen(user=env.user):
+def ssh_keygen(user = env.user):
     if user == env.user:
         run("ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa")
         get('~/.ssh/id_rsa', './key/' + user + '_rsa')
@@ -41,7 +41,7 @@ def ssh_keygen(user=env.user):
 
 
 @task
-def new_ssh_user(user, pw=False, group='wheel'):
+def new_ssh_user(user, pw = False, group = 'wheel'):
     home = '/home/' + user
     sudo("useradd -m -d %s %s" % (home, user))
     if pw:
@@ -54,7 +54,7 @@ def new_ssh_user(user, pw=False, group='wheel'):
 
 
 @task
-def ch_pass(user=env.user, pw=False):
+def ch_pass(user = env.user, pw = False):
     if pw:
         sudo("echo '%s:%s' | chpasswd" % (user, pw))
     else:
@@ -65,7 +65,7 @@ def ch_pass(user=env.user, pw=False):
 
 
 @task
-def git_config(user=False, email=False):
+def git_config(user = False, email = False):
     run("git config --global color.ui true")
     if user:
         run("git config --global user.name %s" % user)
@@ -74,13 +74,13 @@ def git_config(user=False, email=False):
 
 
 @task
-def wheel_nopass_sudo(user=env.user):
+def wheel_nopass_sudo(user = env.user):
     sudo("sed -ie 's/^#\?\s\+\(%wheel\s\+ALL=(ALL)\s\+NOPASSWD:\s\+ALL\)$/\\1/' /etc/sudoers")
     sudo("usermod -aG wheel %s" % user)
 
 
 @task
-def enable_home_nginx(user=env.user):
+def enable_home_nginx(user = env.user):
     sudo("setenforce 0")
     sudo("sed -ie 's/^\(SELINUX=\)enforcing$/\\1permissive/' /etc/selinux/config")
     enable_firewalld()
@@ -91,7 +91,7 @@ def enable_home_nginx(user=env.user):
     sudo("[[ -d /usr/share/nginx/html/%s ]] || ln -s /home/%s /usr/share/nginx/html/" % (user, user))
     sudo("which nginx || dnf -y install nginx || yum -y install nginx")
     sudo("systemctl start nginx")
-    if sudo("grep autoindex /etc/nginx/nginx.conf", warn_only=True).failed:
+    if sudo("grep autoindex /etc/nginx/nginx.conf", warn_only = True).failed:
         rex = 's/^\( \+\)\(location \/ {\)$/\\1\\2\\n\\1    autoindex   on;/'
         sudo("sed -ie '%s' /etc/nginx/nginx.conf" % rex)
         sudo("systemctl restart nginx")
@@ -99,7 +99,7 @@ def enable_home_nginx(user=env.user):
 
 
 @task
-def init_dev(yml='pkg_dev.yml'):
+def init_dev(yml = 'pkg_dev.yml'):
     with open(yml) as f:
         env_config = yaml.load(f)
     install_pkg(env_config)
@@ -110,23 +110,24 @@ def init_dev(yml='pkg_dev.yml'):
 
 def install_pkg(env_config):
     os_type = run("echo $OSTYPE")
-    with settings(warn_only=True):
+    with settings(warn_only = True):
         if re.match(r'^linux', os_type):
             if run("sudo -v").succeeded:
                 if sudo("dnf --version").succeeded:
-                    pm = 'dnf'
+                    sudo("dnf -y upgrade")
+                    if sudo("dnf -y install %s" % ' '.join(env_config['dnf'])).failed:
+                        map(lambda p: sudo("dnf -y install %s" % p), env_config['dnf'])
+                    sudo("dnf clean all")
                 elif sudo("yum --version").succeeded:
-                    pm = 'yum'
-                else:
-                    pm = False
-
-                if pm:
-                    sudo("%s -y upgrade" % pm)
-                    if sudo("%s -y install %s" % (pm, ' '.join(env_config['dnf']))).failed:
-                        map(lambda p: sudo("%s -y install %s" % (pm, p)), env_config['dnf'])
-                    if sudo("%s -y groupinstall '%s'" % (pm, '\' \''.join(env_config['dnf_group']))).failed:
-                        map(lambda p: sudo("%s -y groupinstall '%s'" % (pm, p)), env_config['dnf_group'])
-                    sudo("%s clean all" % pm)
+                    sudo("yum -y upgrade")
+                    if sudo("yum -y install %s" % ' '.join(env_config['dnf'])).failed:
+                        map(lambda p: sudo("yum -y install %s" % p), env_config['dnf'])
+                    sudo("yum clean all")
+                elif sudo("apt-get --version").succeeded:
+                    sudo("apt-get -y upgrade && apt-get -y update")
+                    if sudo("apt-get -y install %s" % ' '.join(env_config['dnf'])).failed:
+                        map(lambda p: sudo("apt-get -y install %s" % p), env_config['dnf'])
+                    sudo("apt-get clean")
         elif re.match(r'^darwin', os_type):
             if run("brew --version").failed:
                 run("/usr/bin/ruby -e \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)\"")
@@ -186,7 +187,7 @@ def set_lang_env(env_config):
                 run("%s update" % gem)
                 map(lambda p: run("%s install --no-document %s" % (gem, p)), env_config['gem'])
 
-    with settings(warn_only=True):
+    with settings(warn_only = True):
         map(install_lang_by_env_ver, ({'e': pyenv, 'v': 2}, {'e': pyenv, 'v': 3}, {'e': rbenv, 'v': 2}))
 
         if run("go version").succeeded:
@@ -218,7 +219,7 @@ def set_vim_env():
 
 
 @task
-def init_ssh_new(user, pw, port='9100'):
+def init_ssh_new(user, pw, port = '9100'):
     new_ssh_user(user, pw)
     secure_sshd(user, port)
     enable_firewalld()

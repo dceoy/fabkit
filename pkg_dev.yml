@@ -1,10 +1,5 @@
 # package list
 
-dnf_group:
-  - Development Tools
-  - C Development Tools and Libraries
-  - Engineering and Scientific
-
 dnf:
   - zsh
   - vim
@@ -17,22 +12,25 @@ dnf:
   - tree
   - time
   - nkf
+  - make
+  - cmake
+  - expect
+  - parallel
   - wol
   - tmux
-  - cmake
   - boost
   - R
   - go
   - mercurial
   - nmap
+  - corkscrew
+  - gcc
+  - gcc-c++
   - gcc-gfortran
   - kernel-devel
   - kernel-headers
   - dkms
   - redis
-  - expect
-  - parallel
-  - ImageMagick
   - ImageMagick-devel
   - postgresql-devel
   - sqlite-devel
@@ -53,11 +51,14 @@ dnf:
   - libcurl-devel
   - freetype-devel
   - openmpi-devel
+  - glibc-devel
+  - opencv-devel
+  - fftw-devel
+  - swig
   - python-devel
   - python3-devel
   - gmp-devel
   - patch
-  - corkscrew
   - nginx
   - samba
   - docker
@@ -66,12 +67,104 @@ dnf:
   - cabal-install
   - scala
   - sbt
+  - cvs
+  - diffstat
+  - doxygen
+  - patchutils
+  - rcs
+  - subversion
+  - systemtap
+  - autoconf
+  - automake
+  - binutils
+  - bison
+  - flex
+  - gdb
+  - libtool
+  - pkgconfig
+  - strace
+  - byacc
+  - ccache
+  - cscope
+  - ctags
+  - elfutils
+  - indent
+  - ltrace
+  - oprofile
+  - valgrind
+  - gnuplot
+  - gsl-devel
+  - maxima
+  - octave
+  - scipy
+  - speedcrunch
+  - texmaker
+  - transfig
+  - units
+  - wxMaxima
+  - xfig
+
+apt:
+  - zsh
+  - vim
+  - git
+  - curl
+  - wget
+  - tree
+  - time
+  - nkf
+  - make
+  - cmake
+  - expect
+  - nmap
+  - mercurial
+  - pandoc
+  - build-essential
+  - g++
+  - pkg-config
+  - zlib1g-dev
+  - libatlas-base-dev
+  - libopencv-dev
+  - swig
+  - r-base
+  - libapparmor1
+  - libcurl4-openssl-dev
+  - libxml2-dev
+  - libssl-dev
+  - libxslt-dev
+  - gdebi-core
+  - fabric
+  - ansible
+  - python-dev
+  - python-scipy
+  - python-yaml
+  - python3-dev
+  - ethtool
+  - dkms
+  - ImageMagick
+  - openssl-devel
+  - postgresql
+  - sqlite
+  - bzip2
+  - tmux
+  - nginx
+  - samba
+  - corkscrew
+  - docker
+  - patch
+  - ghc
+  - cabal-install
+  - scala
+  - libpng-dev
+  - libpcap-dev
+  - libffi-dev
 
 pip:
   - setuptools
   - fabric
   - pyyaml
   - virtualenv
+  - pycuda
   - cython
   - tornado
   - bottle
@@ -91,6 +184,8 @@ pip:
   - pymc
   - pystan
   - theano
+  - mxnet
+  - keras
   - pandas
   - pyper
   - csvkit
@@ -122,8 +217,6 @@ go:
   - github.com/opencontainers/runc
 
 brew:
-  - Caskroom/cask/virtualbox
-  - Caskroom/cask/iterm2
   - zsh
   - vim
   - gcc
@@ -170,6 +263,8 @@ brew:
   - docker-machine
   - homebrew/science/r
   - homebrew/science/opencv
+  - Caskroom/cask/virtualbox
+  - Caskroom/cask/iterm2
   - Caskroom/cask/vagrant
   - Caskroom/cask/google-chrome
   - Caskroom/cask/google-drive
