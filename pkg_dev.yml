@@ -17,6 +17,8 @@ dnf:
   - expect
   - parallel
   - wol
+  - incron
+  - inotify-tools
   - tmux
   - boost
   - R
@@ -53,7 +55,15 @@ dnf:
   - openmpi-devel
   - glibc-devel
   - opencv-devel
+  - protobuf-devel
+  - leveldb-devel
+  - snappy-devel
+  - boost-devel
+  - hdf5-devel
   - fftw-devel
+  - gflags-devel
+  - glog-devel
+  - lmdb-devel
   - swig
   - python-devel
   - python3-devel
@@ -117,14 +127,28 @@ apt:
   - cmake
   - expect
   - nmap
+  - incron
+  - inotify-tools
   - mercurial
   - pandoc
   - build-essential
   - g++
+  - nvidia-cuda-toolkit
   - pkg-config
   - zlib1g-dev
+  - libpq-dev
+  - libmariadb-client-lgpl-dev
   - libatlas-base-dev
+  - libprotobuf-dev
+  - libleveldb-dev
+  - libsnappy-dev
   - libopencv-dev
+  - libboost-all-dev
+  - libhdf5-serial-dev
+  - libgflags-dev
+  - libgoogle-glog-dev
+  - liblmdb-dev
+  - protobuf-compiler
   - swig
   - r-base
   - libapparmor1
@@ -142,7 +166,6 @@ apt:
   - ethtool
   - dkms
   - ImageMagick
-  - openssl-devel
   - postgresql
   - sqlite
   - bzip2
@@ -225,7 +248,6 @@ brew:
   - ansible
   - gawk
   - gnu-sed
-  - homebrew/dupes/grep
   - pigz
   - nkf
   - wget
@@ -261,8 +283,18 @@ brew:
   - sbt
   - corkscrew
   - docker-machine
+  - snappy
+  - leveldb
+  - gflags
+  - glog
+  - szip
+  - lmdb
+  - protobuf
+  - boost
+  - homebrew/dupes/grep
   - homebrew/science/r
   - homebrew/science/opencv
+  - homebrew/science/hdf5
   - Caskroom/cask/virtualbox
   - Caskroom/cask/iterm2
   - Caskroom/cask/vagrant
