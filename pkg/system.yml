@@ -1,4 +1,4 @@
-# package list
+# to be installed with dnf, yum, apt-get, or brew
 
 dnf:
   - zsh
@@ -181,63 +181,6 @@ apt:
   - libpng-dev
   - libpcap-dev
   - libffi-dev
-
-pip:
-  - setuptools
-  - fabric
-  - pyyaml
-  - virtualenv
-  - pycuda
-  - cython
-  - tornado
-  - bottle
-  - flake8
-  - grip
-  - awscli
-  - ipython
-  - sphinx
-  - nose
-  - numpy
-  - scipy
-  - sympy
-  - matplotlib
-  - seaborn
-  - ggplot
-  - scikit-learn
-  - pymc
-  - pystan
-  - theano
-  - mxnet
-  - keras
-  - pandas
-  - pyper
-  - csvkit
-  - selenium
-  - mechanize
-  - beautifulsoup4
-  - scss
-  - twitter
-  - requests
-  - requests_oauthlib
-  - feather-format
-
-gem:
-  - bundler
-  - rake
-  - rails
-  - compass
-  - middleman
-  - selenium
-  - mechanize
-  - clockwork
-  - twitter
-  - tugboat
-
-go:
-  - github.com/codegangsta/cli
-  - github.com/spf13/hugo
-  - github.com/dceoy/psv
-  - github.com/opencontainers/runc
 
 brew:
   - zsh

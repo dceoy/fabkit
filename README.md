@@ -21,20 +21,15 @@ Usage
 $ fab -u [user name] -h [host address] <command>[:arg1,arg2]
 ```
 
-| Command                      | Description                         | Platform           |
-|:-----------------------------|:------------------------------------|:-------------------|
-| test_connect(:text)          | Test connection (echo text)         | RHEL, OS X, Debian |
-| init_dev(:yml)               | Set up a development server by yaml | RHEL, OS X         |
-| init_ssh_new:user,pw(,port)  | Set up a ssh server with a new user | RHEL               |
-| ssh_keygen(:user)            | Generate ssh keys                   | RHEL, OS X, Debian |
-| git_config(:user,email)      | Set global options of git           | RHEL, OS X, Debian |
-| new_ssh_user:user(,pw,group) | Add a new user with ssh keys        | RHEL, Debian       |
-| ch_pass(:user,pw)            | Change user password                | RHEL, Debian       |
-| wheel_nopass_sudo(:user)     | Enable sudo without password        | RHEL               |
-| enable_home_nginx(:user)     | Set up Nginx linked to /home/user   | RHEL               |
+| Command                        | Description                       | Platform           |
+|:-------------------------------|:----------------------------------|:-------------------|
+| dev                            | Set up a development server       | RHEL, OS X, Debian |
+| local.git_config(:user,email)  | Set global options of git         | RHEL, OS X, Debian |
+| local.wheel_nopass_sudo(:user) | Enable sudo without password      | RHEL               |
+| local.enable_home_nginx(:user) | Set up Nginx linked to /home/user | RHEL               |
 
-() are optional arguments.  
-The default port of `init_ssh_new` is 9100.
+`dev` installs the packages written at the files in `pkg/` directory.  
+() are optional arguments.
 
 - RHEL   : Fedora, CentOS, Red Hat Enterprise Linux
 - OS X   : Mac OS X
@@ -46,5 +41,5 @@ Example
 Several arguments are optional.
 
 ```sh
-$ fab init_dev  # equal to "fab -u ${USER} -H localhost init_dev:pkg_dev.yml"
+$ fab dev  # equal to "fab -u ${USER} -H localhost dev"
 ```
