@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-
 import os
 from fabric.api import sudo, run, get, env, task
 from fabric.contrib.files import exists

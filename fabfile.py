@@ -3,7 +3,7 @@
 import sys
 from fabric.api import env, task
 
-sys.path.append('script')
+sys.path.append('lib')
 import devel
 import local
 import remote
@@ -18,8 +18,9 @@ def dev():
     devel.setup_system()
     devel.setup_zsh_env()
     devel.setup_vim_env()
-    devel.setup_py_env()
-    devel.setup_rb_env()
+    devel.setup_py_env(2)
+    devel.setup_py_env(3)
+    devel.setup_rb_env(2)
     devel.setup_go_env()
     devel.setup_r_env()
 

@@ -3,6 +3,9 @@ fabkit
 
 Fabric-based Provisioning Toolkit for Linux and Mac OS X
 
+[![wercker status](https://app.wercker.com/status/f2cd44bd90931f136e21ad448a25d240/m "wercker status")](https://app.wercker.com/project/bykey/f2cd44bd90931f136e21ad448a25d240)
+[![](https://imagelayers.io/badge/dceoy/dev:latest.svg)](https://imagelayers.io/?images=dceoy/dev:latest 'Get your own badge on imagelayers.io')
+
 Setup of a client
 -----------------
 

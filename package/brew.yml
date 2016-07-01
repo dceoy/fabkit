@@ -9,6 +9,7 @@ brew:
   - fabric
   - gawk
   - gcc
+  - gdal
   - gdbm
   - gflags
   - ghc
@@ -16,6 +17,7 @@ brew:
   - glog
   - gnu-sed
   - go
+  - hunspell
   - jenkins
   - jq
   - leveldb
@@ -64,6 +66,7 @@ brew:
   - Caskroom/cask/google-drive
   - Caskroom/cask/iterm2
   - Caskroom/cask/java
+  - Caskroom/cask/julia
   - Caskroom/cask/mendeley-desktop
   - Caskroom/cask/rstudio
   - Caskroom/cask/vagrant

@@ -1,0 +1,48 @@
+box: ubuntu
+build:
+  steps:
+    - script:
+        name: prepare required packages
+        code: |
+          apt-get -y update
+          apt-get -y install sudo ssh fabric python-yaml
+    - script:
+        name: set up ssh
+        code: |
+          service ssh start
+          ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa
+          mv ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys
+          chmod 600 ~/.ssh/authorized_keys
+          touch ~/.ssh/config
+    - script:
+        name: install packages with devel.setup_system
+        code: fab -i ~/.ssh/id_rsa devel.setup_system
+    - script:
+        name: set up zsh with devel.setup_zsh_env
+        code: fab -i ~/.ssh/id_rsa devel.setup_zsh_env
+    - script:
+        name: set up vim with devel.setup_vim_env
+        code: fab -i ~/.ssh/id_rsa devel.setup_vim_env
+    - script:
+        name: set up python 2 with devel.setup_py_env
+        code: fab -i ~/.ssh/id_rsa devel.setup_py_env:2
+    - script:
+        name: set up python 3 with devel.setup_py_env
+        code: fab -i ~/.ssh/id_rsa devel.setup_py_env:3
+    - script:
+        name: set up ruby 2 with devel.setup_rb_env
+        code: fab -i ~/.ssh/id_rsa devel.setup_rb_env:2
+    - script:
+        name: set up go with devel.setup_go_env
+        code: fab -i ~/.ssh/id_rsa devel.setup_go_env
+    - script:
+        name: set up r with devel.setup_r_env
+        code: fab -i ~/.ssh/id_rsa devel.setup_r_env
+push:
+  steps:
+    - internal/docker-push:
+        username: dceoy
+        password: $DOCKER_PASS
+        tag: latest
+        repository: dceoy/dev
+        registry: https://registry.hub.docker.com

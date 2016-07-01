@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-
 from __future__ import with_statement
 from fabric.api import sudo, run, env, task
 
@@ -12,6 +11,7 @@ env.use_ssh_config = True
 @task
 def git_config(user=False, email=False):
     run("git config --global color.ui true")
+    run("git config --global push.default matching")
     if user:
         run("git config --global user.name %s" % user)
     if email:

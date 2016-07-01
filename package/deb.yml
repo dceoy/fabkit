@@ -1,4 +1,4 @@
-apt:
+deb:
   - ansible
   - build-essential
   - bzip2
@@ -7,7 +7,6 @@ apt:
   - corkscrew
   - curl
   - dkms
-  - docker
   - ethtool
   - expect
   - fabric
@@ -15,36 +14,42 @@ apt:
   - gdebi-core
   - ghc
   - git
-  - ImageMagick
+  - golang
+  - imagemagick
   - incron
   - inotify-tools
+  - julia
   - libapparmor1
   - libatlas-base-dev
+  - libblas-dev
   - libboost-all-dev
   - libbz2-dev
   - libcairo2-dev
   - libcurl4-openssl-dev
   - libffi-dev
   - libfreetype6-dev
+  - libgdal1-dev
   - libgdbm-dev
   - libgflags-dev
   - libgoogle-glog-dev
   - libhdf5-serial-dev
+  - libhunspell-dev
   - libleveldb-dev
   - liblmdb-dev
   - libmariadb-client-lgpl-dev
   - libopencv-dev
+  - libopenmpi-dev
   - libpcap-dev
-  - libpng-dev
   - libpng12-dev
   - libpq-dev
+  - libproj-dev
   - libprotobuf-dev
   - libreadline6-dev
   - libsnappy-dev
   - libsqlite3-dev
   - libssl-dev
   - libxml2-dev
-  - libxslt-dev
+  - libxslt1-dev
   - libzmq3-dev
   - make
   - mercurial

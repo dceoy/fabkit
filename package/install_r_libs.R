@@ -9,13 +9,13 @@ load_cran <- function(pkgs, cran_repos, r_lib = .libPaths()[1]) {
     options(repos = cran_repos)
     if(length(pp <- intersect(pkgs, installed.packages(lib.loc = r_lib)[, 1])) > 0) {
       if(require('devtools')) {
-        with_libpaths(r_lib, update_packages(pp, dependencies = TRUE))
+        try(withr::with_libpaths(r_lib, update_packages(pp, dependencies = TRUE)))
       } else {
-        update.packages(instPkgs = pp, checkBuilt = TRUE, ask = FALSE, lib.loc = r_lib)
+        try(update.packages(instPkgs = pp, checkBuilt = TRUE, ask = FALSE, lib.loc = r_lib))
       }
     }
     if(length(pd <- setdiff(pkgs, installed.packages(lib.loc = r_lib)[, 1])) > 0) {
-      install.packages(pkgs = pd, lib = r_lib, dependencies = TRUE)
+      try(install.packages(pkgs = pd, lib = r_lib, dependencies = TRUE))
     }
     return(require_v(pkgs))
   }
@@ -23,10 +23,10 @@ load_cran <- function(pkgs, cran_repos, r_lib = .libPaths()[1]) {
 
 load_dev <- function(pkgs, host = 'GitHub', r_lib = .libPaths()[1]) {
   if(! is.null(pkgs) && require('devtools')) {
-    try(with_libpaths(r_lib,
-                      switch(host,
-                             'GitHub' = install_github(names(pkgs)),
-                             'Bitbucket' = install_bitbucket(names(pkgs)))))
+    try(withr::with_libpaths(r_lib,
+                             switch(host,
+                                    'GitHub' = install_github(names(pkgs)),
+                                    'Bitbucket' = install_bitbucket(names(pkgs)))))
     return(require_v(pkgs))
   }
 }

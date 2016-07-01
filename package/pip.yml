@@ -33,6 +33,7 @@ pip:
   - seaborn
   - selenium
   - setuptools
+  - six
   - sphinx
   - sympy
   - theano

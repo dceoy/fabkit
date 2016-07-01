@@ -1,4 +1,4 @@
-dnf:
+rpm:
   - ansible
   - atlas-devel
   - atlas-sse3-devel
@@ -6,7 +6,7 @@ dnf:
   - automake
   - binutils
   - bison
-  - boost
+  - blas-devel
   - boost-devel
   - byacc
   - bzip2-devel
@@ -21,7 +21,6 @@ dnf:
   - cvs
   - diffstat
   - dkms
-  - docker
   - doxygen
   - elfutils
   - expect
@@ -32,6 +31,7 @@ dnf:
   - gcc
   - gcc-c++
   - gcc-gfortran
+  - gdal-devel
   - gdb
   - gdbm-devel
   - gflags-devel
@@ -44,12 +44,15 @@ dnf:
   - go
   - gsl-devel
   - hdf5-devel
+  - hunspell-devel
   - ImageMagick-devel
   - incron
   - indent
   - inotify-tools
+  - julia
   - kernel-devel
   - kernel-headers
+  - lapack-devel
   - leveldb-devel
   - libcurl-devel
   - libdb4-devel
@@ -80,6 +83,8 @@ dnf:
   - patchutils
   - pkgconfig
   - postgresql-devel
+  - proj-devel
+  - proj-epsg
   - protobuf-devel
   - python3-devel
   - python-devel
