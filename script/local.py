@@ -19,7 +19,7 @@ def git_config(user=False, email=False):
 
 
 @task
-def wheel_nopass_sudo(user=env.user):
+def enable_nopass_sudo(user=env.user):
     sudo("sed -ie 's/^#\?\s\+\(%wheel\s\+ALL=(ALL)\s\+NOPASSWD:\s\+ALL\)$/\\1/' /etc/sudoers")
     sudo("usermod -aG wheel %s" % user)
 

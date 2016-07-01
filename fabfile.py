@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 
-
 import sys
-from fabric.api import sudo, run, get, settings, env, task
+from fabric.api import env, task
 
-sys.path.append('src')
-import pkg
+sys.path.append('script')
+import devel
 import local
 import remote
 
@@ -16,11 +15,13 @@ env.use_ssh_config = True
 
 @task
 def dev():
-    pkg.set_system_pkg()
-    pkg.set_zsh_env()
-    pkg.set_lang_env()
-    pkg.set_r_env()
-    pkg.set_vim_env()
+    devel.setup_system()
+    devel.setup_zsh_env()
+    devel.setup_vim_env()
+    devel.setup_py_env()
+    devel.setup_rb_env()
+    devel.setup_go_env()
+    devel.setup_r_env()
 
 
 if __name__ == '__main__':

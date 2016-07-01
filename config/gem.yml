@@ -1,0 +1,12 @@
+cmd: ~/.rbenv/shims/gem
+gem:
+  - bundler
+  - clockwork
+  - compass
+  - mechanize
+  - middleman
+  - rails
+  - rake
+  - selenium
+  - tugboat
+  - twitter

@@ -12,13 +12,13 @@ env.use_ssh_config = True
 
 @task
 def setup_ssh_server(user, pw, port='9100'):
-    new_ssh_user(user, pw)
+    add_ssh_user(user, pw)
     secure_sshd(user, port)
     enable_firewalld()
 
 
 @task
-def new_ssh_user(user, pw=False, group='wheel'):
+def add_ssh_user(user, pw=False, group='wheel'):
     home = '/home/' + user
     sudo("useradd -m -d %s %s" % (home, user))
     if pw:
