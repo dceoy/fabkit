@@ -1,8 +1,10 @@
 deb:
   - ansible
+  - apt-transport-https
   - build-essential
   - bzip2
   - cabal-install
+  - ca-certificates
   - cmake
   - corkscrew
   - curl

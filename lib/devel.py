@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from __future__ import with_statement
+import os.path
 import re
 import yaml
 from fabric.api import sudo, run, settings, env, put, task
@@ -25,7 +26,7 @@ def setup_system():
 
 
 @task
-def setup_with_rpm(yml='package/rpm.yml'):
+def setup_with_rpm(yml='config/rpm.yml'):
     with open(yml) as f:
         pkg = yaml.load(f)
     if sudo("dnf --version").succeeded:
@@ -41,7 +42,7 @@ def setup_with_rpm(yml='package/rpm.yml'):
 
 
 @task
-def setup_with_deb(yml='package/deb.yml'):
+def setup_with_deb(yml='config/deb.yml'):
     with open(yml) as f:
         pkg = yaml.load(f)
     if sudo("apt-get --version").succeeded:
@@ -52,7 +53,7 @@ def setup_with_deb(yml='package/deb.yml'):
 
 
 @task
-def setup_with_brew(yml='package/brew.yml'):
+def setup_with_brew(yml='config/brew.yml'):
     with open(yml) as f:
         pkg = yaml.load(f)
     if run("brew --version").failed:
@@ -74,12 +75,12 @@ def install_lang(l, pkg):
                 set(run("%s list | cut -f 1 -d ' '" % pkg['cmd']).split() + pkg['pip']).difference({'pip'}))
         elif re.match(r'^.*rbenv$', l['e']):
             run("%s --version" % pkg['cmd'])
-            run("%s update" % pkg['cmd'])
+            run("%s update -N" % pkg['cmd'])
             map(lambda p: run("%s install -N %s" % (pkg['cmd'], p)), pkg['gem'])
 
 
 @task
-def setup_py_env(ver=3, yml='package/pip.yml'):
+def setup_py_env(ver=3, yml='config/pip.yml'):
     if exists('~/.pyenv/.git'):
         run("cd ~/.pyenv && git pull")
         pyenv = '~/.pyenv/bin/pyenv'
@@ -95,7 +96,7 @@ def setup_py_env(ver=3, yml='package/pip.yml'):
 
 
 @task
-def setup_rb_env(ver=2, yml='package/gem.yml'):
+def setup_rb_env(ver=2, yml='config/gem.yml'):
     if exists('~/.rbenv/.git'):
         run("cd ~/.rbenv && git pull")
         run("cd ~/.rbenv/plugins/ruby-build && git pull")
@@ -113,7 +114,7 @@ def setup_rb_env(ver=2, yml='package/gem.yml'):
 
 
 @task
-def setup_go_env(yml='package/go.yml'):
+def setup_go_env(yml='config/go.yml'):
     with open(yml) as f:
         pkg = yaml.load(f)
     with settings(warn_only=True):
@@ -128,27 +129,31 @@ def setup_go_env(yml='package/go.yml'):
 
 
 @task
-def setup_r_env(code='package/install_r_libs.R'):
+def setup_r_env(yml='config/r.yml'):
     with settings(warn_only=True):
         if run("R --version").succeeded:
-            r_libs = '~/.R/library'
+            r_path = '~/.R'
+            r_libs = r_path + '/library'
             if not exists(r_libs):
                 run("mkdir -p %s" % r_libs)
-            with open(code) as f:
-                src = f.read()
-            run("export R_LIBS=%s && echo '%s' | R -q --vanilla" % (r_libs, re.sub(r'([^\\])\'', r'\1"', src)))
+            src = 'lib/package_installer.R'
+            remote_yml = r_path + '/' + os.path.basename(yml)
+            remote_src = r_path + '/' + os.path.basename(src)
+            put(yml, remote_yml)
+            put(src, remote_src)
+            run("export R_LIBS=%s && Rscript %s %s" % (r_libs, remote_src, remote_yml))
 
 
 @task
-def setup_zsh_env():
-    put('config/_.zshrc', '~/.zshrc')
+def setup_zsh_env(zshrc='template/_.zshrc'):
+    put(zshrc, '~/.zshrc')
     if not re.match(r'.*\/zsh$', run("echo $SHELL")):
         sudo("chsh -s $(grep -e '\/zsh$' /etc/shells | tail -1) %s" % env.user)
 
 
 @task
-def setup_vim_env():
-    put('config/_.vimrc', '~/.vimrc')
+def setup_vim_env(vimrc='template/_.vimrc'):
+    put(vimrc, '~/.vimrc')
     if not exists('~/.vim/bundle/vimproc.vim'):
         run("mkdir -p ~/.vim/bundle")
         run("git clone https://github.com/Shougo/vimproc.vim.git ~/.vim/bundle/vimproc.vim")

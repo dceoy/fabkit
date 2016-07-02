@@ -46,7 +46,7 @@ def enable_home_nginx(user=env.user):
 @task
 def set_proxy(host, port):
     hp = host + ':' + port
-    with open('config/proxy.sh') as f:
+    with open('template/proxy.sh') as f:
         prof = f.read()
     sudo("echo '%s' >> /etc/profile.d/proxy.sh" % prof.replace('proxy.example.com:8080', hp))
     sudo("echo 'proxy=http://%s' >> /etc/dnf/dnf.conf" % hp)

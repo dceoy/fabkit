@@ -1,0 +1,49 @@
+repos:
+  cran: https://cran.rstudio.com/
+  drat: dmlc
+cran:
+  - abc
+  - amap
+  - broom
+  - caret
+  - coin
+  - data.table
+  - doSNOW
+  - dplyr
+  - feather
+  - foreach
+  - ggdendro
+  - ggmcmc
+  - ggplot2
+  - glmmML
+  - glmnet
+  - GMD
+  - gridExtra
+  - h2o
+  - leaflet
+  - loo
+  - MCMCpack
+  - phangorn
+  - plyr
+  - ranger
+  - rbenchmark
+  - rmarkdown
+  - RSQLite
+  - rstan
+  - rvest
+  - shiny
+  - snow
+  - tidyr
+  - tm
+github:
+  roxygen2: klutometis/roxygen
+  httpuv:   rstudio/httpuv
+drat:
+  - xgboost
+  - mxnet
+bioconductor:
+  - Biobase
+  - BiocInstaller
+  - Biostrings
+  - GEOquery
+  - PhViD
