@@ -5,6 +5,7 @@ from fabric.api import env, task
 
 sys.path.append('lib')
 import devel
+import docker
 import local
 import remote
 

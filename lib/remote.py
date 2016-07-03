@@ -4,10 +4,6 @@ import os
 from fabric.api import sudo, run, get, env, task
 from fabric.contrib.files import exists
 
-if len(env.hosts) == 0:
-    env.hosts = ['localhost']
-env.use_ssh_config = True
-
 
 @task
 def setup_ssh_server(user, pw, port='9100'):
@@ -65,7 +61,6 @@ def secure_sshd(user, port):
 
 
 def enable_firewalld():
-    sudo("which firewalld || dnf -y install firewalld || yum -y install firewalld")
     sudo("systemctl start firewalld")
     sudo("systemctl enable firewalld")
     sudo("firewall-cmd --add-service=ssh --permanent")

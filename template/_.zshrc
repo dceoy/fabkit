@@ -95,6 +95,8 @@ alias v="vim"
 alias vi="vi -u NONE --noplugin -N"
 alias ll="ls -lF"
 alias lla="ll -a"
+alias llh="ll -h"
+alias d="docker"
 
 case "${OSTYPE}" in
   darwin*)
@@ -110,8 +112,8 @@ case "${OSTYPE}" in
     ;;
 esac
 
-eval "$(rbenv init -)"
-eval "$(pyenv init -)"
+[[ -d "${HOME}/.rbenv" ]] && eval "$(rbenv init -)"
+[[ -d "${HOME}/.pyenv" ]] && eval "$(pyenv init -)"
 alias rv="R -q --vanilla"
 export R_LIBS="${HOME}/.R/library"
 export GOPATH="${HOME}/.go"

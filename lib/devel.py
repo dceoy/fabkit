@@ -7,10 +7,6 @@ import yaml
 from fabric.api import sudo, run, settings, env, put, task
 from fabric.contrib.files import exists
 
-if len(env.hosts) == 0:
-    env.hosts = ['localhost']
-env.use_ssh_config = True
-
 
 @task
 def setup_system():
@@ -75,7 +71,7 @@ def install_lang(l, pkg):
                 set(run("%s list | cut -f 1 -d ' '" % pkg['cmd']).split() + pkg['pip']).difference({'pip'}))
         elif re.match(r'^.*rbenv$', l['e']):
             run("%s --version" % pkg['cmd'])
-            run("%s update -N" % pkg['cmd'])
+            run("%s update -N -f" % pkg['cmd'])
             map(lambda p: run("%s install -N %s" % (pkg['cmd'], p)), pkg['gem'])
 
 

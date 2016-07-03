@@ -3,10 +3,6 @@
 from __future__ import with_statement
 from fabric.api import sudo, run, env, task
 
-if len(env.hosts) == 0:
-    env.hosts = ['localhost']
-env.use_ssh_config = True
-
 
 @task
 def git_config(user=False, email=False):
@@ -26,7 +22,6 @@ def enable_nopass_sudo(user=env.user):
 
 @task
 def enable_home_nginx(user=env.user):
-    sudo("which nginx || dnf -y install nginx || yum -y install nginx")
     sudo("setenforce 0")
     sudo("sed -ie 's/^\(SELINUX=\)enforcing$/\\1permissive/' /etc/selinux/config")
     if sudo("systemctl status firewalld", warn_only=True).succeeded:
