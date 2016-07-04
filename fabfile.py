@@ -17,8 +17,7 @@ env.use_ssh_config = True
 @task
 def dev():
     devel.setup_system()
-    devel.setup_zsh_env()
-    devel.setup_vim_env()
+    devel.setup_cli()
     devel.setup_py_env(2)
     devel.setup_py_env(3)
     devel.setup_rb_env(2)

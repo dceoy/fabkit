@@ -44,6 +44,7 @@ $ fab -u [user name] -h [host address] <command>[:arg1,arg2]
 | devel.setup_rb_env(:ver,yml)      | Set up Ruby using rbenv           | Fedora, CentOS, Ubuntu, MacOSX |
 | devel.setup_go_env(:yml)          | Set up Go                         | Fedora, CentOS, Ubuntu, MacOSX |
 | devel.setup_r_env(:yml)           | Set up R                          | Fedora, CentOS, Ubuntu, MacOSX |
+| devel.setup_cli                   | Set up Zsh and Vim                | Fedora, CentOS, Ubuntu, MacOSX |
 | devel.setup_zsh_env(:zshrc)       | Set up Zsh                        | Fedora, CentOS, Ubuntu, MacOSX |
 | devel.setup_vim_env(:vimrc)       | Set up Vim                        | Fedora, CentOS, Ubuntu, MacOSX |
 | docker.run_nginx_autoindex(:port) | Run Nginx on Docker               | Fedora, CentOS, Ubuntu         |

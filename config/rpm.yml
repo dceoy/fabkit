@@ -89,7 +89,7 @@ rpm:
   - python3-devel
   - python-devel
   - python-yaml
-  - R
+  - R-devel
   - rcs
   - readline-devel
   - redis

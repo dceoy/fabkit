@@ -14,12 +14,12 @@ cran:
   - foreach
   - ggdendro
   - ggmcmc
-  - ggplot2
   - glmmML
   - glmnet
   - GMD
   - gridExtra
   - h2o
+  - knitr
   - leaflet
   - loo
   - MCMCpack
@@ -33,9 +33,11 @@ cran:
   - rvest
   - shiny
   - snow
+  - testthat
   - tidyr
   - tm
 github:
+  ggplot2:  hadley/ggplot2
   roxygen2: klutometis/roxygen
   httpuv:   rstudio/httpuv
 drat:

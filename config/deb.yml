@@ -68,7 +68,7 @@ deb:
   - python-dev
   - python-scipy
   - python-yaml
-  - r-base
+  - r-base-dev
   - samba
   - scala
   - sqlite3

@@ -141,6 +141,12 @@ def setup_r_env(yml='config/r.yml'):
 
 
 @task
+def setup_cli():
+    setup_zsh_env()
+    setup_vim_env()
+
+
+@task
 def setup_zsh_env(zshrc='template/_.zshrc'):
     put(zshrc, '~/.zshrc')
     if not re.match(r'.*\/zsh$', run("echo $SHELL")):
