@@ -49,7 +49,7 @@ $ fab -u [user name] -h [host address] <command>[:arg1,arg2]
 | devel.setup_vim_env(:vimrc)       | Set up Vim                        | Fedora, CentOS, Ubuntu, MacOSX |
 | docker.run_nginx_autoindex(:port) | Run Nginx on Docker               | Fedora, CentOS, Ubuntu         |
 | docker.run_rstudio_server(:port)  | Run RStudio Server on Docker      | Fedora, CentOS, Ubuntu         |
-| local.git_config(:user,email)     | Set global options of Git         | Fedora, CentOS, Ubuntu, MacOSX |
+| local.config_git(:user,email)     | Set global options of Git         | Fedora, CentOS, Ubuntu, MacOSX |
 | local.enable_nopass_sudo          | Enable sudo without password      | Fedora, CentOS                 |
 
 - `dev` and `devel.setup_system` install the packages written at `config/*.yml`.

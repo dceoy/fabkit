@@ -5,7 +5,7 @@ from fabric.api import sudo, run, env, task
 
 
 @task
-def git_config(user=False, email=False):
+def config_git(user=False, email=False):
     run("git config --global color.ui true")
     run("git config --global push.default matching")
     if user:
@@ -15,13 +15,18 @@ def git_config(user=False, email=False):
 
 
 @task
+def set_github_token(dir,user,token):
+    run("sed -ie 's/\(url = https:\/\/\)\(github.com\/\)/\\1%s:%s@\\2/' %s/.git/config" % (user, token, dir))
+
+
+@task
 def enable_nopass_sudo(user=env.user):
     sudo("sed -ie 's/^#\?\s\+\(%wheel\s\+ALL=(ALL)\s\+NOPASSWD:\s\+ALL\)$/\\1/' /etc/sudoers")
     sudo("usermod -aG wheel %s" % user)
 
 
 @task
-def enable_home_nginx(user=env.user):
+def run_home_nginx(user=env.user):
     sudo("setenforce 0")
     sudo("sed -ie 's/^\(SELINUX=\)enforcing$/\\1permissive/' /etc/selinux/config")
     if sudo("systemctl status firewalld", warn_only=True).succeeded:
