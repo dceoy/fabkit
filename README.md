@@ -35,24 +35,24 @@ $ fab -u [user name] -h [host address] <command>[:arg1,arg2]
 
 | Command                           | Description                       | Platform                       |
 |:----------------------------------|:----------------------------------|:-------------------------------|
-| dev                               | Set up a development server       | Fedora, CentOS, Ubuntu, MacOSX |
-| devel.setup_system                | Install packages for system       | Fedora, CentOS, Ubuntu         |
-| devel.setup_with_rpm(:yml)        | Install packages using dnf or yum | Fedora, CentOS                 |
-| devel.setup_with_deb(:yml)        | Install packages using apt-get    | Ubuntu                         |
-| devel.setup_with_brew(:yml)       | Install packages using homebrew   | MacOSX                         |
-| devel.setup_py_env(:ver,yml)      | Set up Python 2 or 3 using pyenv  | Fedora, CentOS, Ubuntu, MacOSX |
-| devel.setup_rb_env(:ver,yml)      | Set up Ruby using rbenv           | Fedora, CentOS, Ubuntu, MacOSX |
-| devel.setup_go_env(:yml)          | Set up Go                         | Fedora, CentOS, Ubuntu, MacOSX |
-| devel.setup_r_env(:yml)           | Set up R                          | Fedora, CentOS, Ubuntu, MacOSX |
-| devel.setup_cli                   | Set up Zsh and Vim                | Fedora, CentOS, Ubuntu, MacOSX |
-| devel.setup_zsh_env(:zshrc)       | Set up Zsh                        | Fedora, CentOS, Ubuntu, MacOSX |
-| devel.setup_vim_env(:vimrc)       | Set up Vim                        | Fedora, CentOS, Ubuntu, MacOSX |
+| d                                 | Set up a development server       | Fedora, CentOS, Ubuntu, MacOSX |
+| dev.setup_system                  | Install packages for system       | Fedora, CentOS, Ubuntu         |
+| dev.setup_with_rpm(:yml)          | Install packages using dnf or yum | Fedora, CentOS                 |
+| dev.setup_with_deb(:yml)          | Install packages using apt-get    | Ubuntu                         |
+| dev.setup_with_brew(:yml)         | Install packages using homebrew   | MacOSX                         |
+| dev.setup_py(:ver,yml)            | Set up Python 2 or 3 using pyenv  | Fedora, CentOS, Ubuntu, MacOSX |
+| dev.setup_rb(:ver,yml)            | Set up Ruby using rbenv           | Fedora, CentOS, Ubuntu, MacOSX |
+| dev.setup_go(:yml)                | Set up Go                         | Fedora, CentOS, Ubuntu, MacOSX |
+| dev.setup_r(:yml)                 | Set up R                          | Fedora, CentOS, Ubuntu, MacOSX |
+| dev.setup_cli                     | Set up Zsh and Vim                | Fedora, CentOS, Ubuntu, MacOSX |
+| dev.setup_zsh(:zshrc)             | Set up Zsh                        | Fedora, CentOS, Ubuntu, MacOSX |
+| dev.setup_vim(:vimrc)             | Set up Vim                        | Fedora, CentOS, Ubuntu, MacOSX |
 | docker.run_nginx_autoindex(:port) | Run Nginx on Docker               | Fedora, CentOS, Ubuntu         |
 | docker.run_rstudio_server(:port)  | Run RStudio Server on Docker      | Fedora, CentOS, Ubuntu         |
 | local.config_git(:user,email)     | Set global options of Git         | Fedora, CentOS, Ubuntu, MacOSX |
 | local.enable_nopass_sudo          | Enable sudo without password      | Fedora, CentOS                 |
 
-- `dev` and `devel.setup_system` install the packages written at `config/*.yml`.
+- `d` and `dev.setup_system` install the packages written at `config/*.yml`.
 - () are optional arguments.
 - `yml` are yaml files (default: `config/*.yml`).
 - `ver` are versions of Python or Ruby (integer).
@@ -69,5 +69,5 @@ Several arguments are optional.
 ```sh
 $ git clone https://github.com/dceoy/fabkit.git
 $ cd fabkit
-$ fab dev   # equal to "fab -u ${USER} -H localhost dev"
+$ fab d   # equal to "fab -u ${USER} -H localhost dev"
 ```

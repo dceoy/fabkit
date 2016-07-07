@@ -76,7 +76,7 @@ def install_lang(l, pkg):
 
 
 @task
-def setup_py_env(ver=3, yml='config/pip.yml'):
+def setup_py(ver=3, yml='config/pip.yml'):
     if exists('~/.pyenv/.git'):
         run("cd ~/.pyenv && git pull")
         pyenv = '~/.pyenv/bin/pyenv'
@@ -92,7 +92,7 @@ def setup_py_env(ver=3, yml='config/pip.yml'):
 
 
 @task
-def setup_rb_env(ver=2, yml='config/gem.yml'):
+def setup_rb(ver=2, yml='config/gem.yml'):
     if exists('~/.rbenv/.git'):
         run("cd ~/.rbenv && git pull")
         run("cd ~/.rbenv/plugins/ruby-build && git pull")
@@ -110,7 +110,7 @@ def setup_rb_env(ver=2, yml='config/gem.yml'):
 
 
 @task
-def setup_go_env(yml='config/go.yml'):
+def setup_go(yml='config/go.yml'):
     with open(yml) as f:
         pkg = yaml.load(f)
     with settings(warn_only=True):
@@ -125,7 +125,7 @@ def setup_go_env(yml='config/go.yml'):
 
 
 @task
-def setup_r_env(yml='config/r.yml'):
+def setup_r(yml='config/r.yml'):
     with settings(warn_only=True):
         if run("R --version").succeeded:
             r_path = '~/.R'
@@ -147,14 +147,14 @@ def setup_cli():
 
 
 @task
-def setup_zsh_env(zshrc='template/_.zshrc'):
+def setup_zsh(zshrc='template/_.zshrc'):
     put(zshrc, '~/.zshrc')
     if not re.match(r'.*\/zsh$', run("echo $SHELL")):
         sudo("chsh -s $(grep -e '\/zsh$' /etc/shells | tail -1) %s" % env.user)
 
 
 @task
-def setup_vim_env(vimrc='template/_.vimrc'):
+def setup_vim(vimrc='template/_.vimrc'):
     put(vimrc, '~/.vimrc')
     if not exists('~/.vim/bundle/vimproc.vim'):
         run("mkdir -p ~/.vim/bundle")
