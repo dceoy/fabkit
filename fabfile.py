@@ -15,14 +15,14 @@ env.use_ssh_config = True
 
 
 @task
-def d():
+def flow():
     dev.setup_system()
     dev.setup_cli()
-    dev.setup_py_env(2)
-    dev.setup_py_env(3)
-    dev.setup_rb_env(2)
-    dev.setup_go_env()
-    dev.setup_r_env()
+    dev.setup_py(2)
+    dev.setup_py(3)
+    dev.setup_rb(2)
+    dev.setup_go()
+    dev.setup_r()
 
 
 if __name__ == '__main__':

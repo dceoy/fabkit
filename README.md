@@ -35,7 +35,7 @@ $ fab -u [user name] -h [host address] <command>[:arg1,arg2]
 
 | Command                           | Description                       | Platform                       |
 |:----------------------------------|:----------------------------------|:-------------------------------|
-| d                                 | Set up a development server       | Fedora, CentOS, Ubuntu, MacOSX |
+| flow                              | Set up a development server       | Fedora, CentOS, Ubuntu, MacOSX |
 | dev.setup_system                  | Install packages for system       | Fedora, CentOS, Ubuntu         |
 | dev.setup_with_rpm(:yml)          | Install packages using dnf or yum | Fedora, CentOS                 |
 | dev.setup_with_deb(:yml)          | Install packages using apt-get    | Ubuntu                         |
@@ -52,7 +52,7 @@ $ fab -u [user name] -h [host address] <command>[:arg1,arg2]
 | local.config_git(:user,email)     | Set global options of Git         | Fedora, CentOS, Ubuntu, MacOSX |
 | local.enable_nopass_sudo          | Enable sudo without password      | Fedora, CentOS                 |
 
-- `d` and `dev.setup_system` install the packages written at `config/*.yml`.
+- `flow` and `dev.setup_system` install the packages written at `config/*.yml`.
 - () are optional arguments.
 - `yml` are yaml files (default: `config/*.yml`).
 - `ver` are versions of Python or Ruby (integer).

@@ -13,9 +13,9 @@ def setup_system():
     os_type = run("echo $OSTYPE")
     with settings(warn_only=True):
         if re.match(r'^linux', os_type):
-            if sudo("cat /etc/redhat-release").succeeded:
+            if run("cat /etc/redhat-release").succeeded:
                 setup_with_rpm()
-            elif sudo("cat /etc/lsb-release").succeeded:
+            elif run("cat /etc/lsb-release").succeeded:
                 setup_with_deb()
         elif re.match(r'^darwin', os_type):
             setup_with_brew()
@@ -142,8 +142,8 @@ def setup_r(yml='config/r.yml'):
 
 @task
 def setup_cli():
-    setup_zsh_env()
-    setup_vim_env()
+    setup_zsh()
+    setup_vim()
 
 
 @task

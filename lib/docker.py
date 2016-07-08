@@ -7,6 +7,7 @@ from fabric.api import run, task
 def run_nginx_autoindex(port=80):
     run("docker pull dceoy/nginx-autoindex")
     run("docker run -p %d:80 -v ${HOME}:/var/www/html -d dceoy/nginx-autoindex" % port)
+    run("chmod 755 ${HOME}")
 
 
 @task
