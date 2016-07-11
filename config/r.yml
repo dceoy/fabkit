@@ -14,6 +14,7 @@ cran:
   - foreach
   - ggdendro
   - ggmcmc
+  - ggplot2
   - glmmML
   - glmnet
   - GMD
@@ -30,6 +31,7 @@ cran:
   - rmarkdown
   - RSQLite
   - rstan
+  - RcppTOML
   - rvest
   - shiny
   - snow
@@ -37,7 +39,6 @@ cran:
   - tidyr
   - tm
 github:
-  ggplot2:  hadley/ggplot2
   roxygen2: klutometis/roxygen
   httpuv:   rstudio/httpuv
 drat:

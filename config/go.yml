@@ -1,5 +1,5 @@
 go:
   - github.com/codegangsta/cli
-  - github.com/dceoy/psv
+  - github.com/naoina/toml
   - github.com/opencontainers/runc
   - github.com/spf13/hugo

@@ -8,5 +8,6 @@ gem:
   - rails
   - rake
   - selenium
+  - toml-rb
   - tugboat
   - twitter

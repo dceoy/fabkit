@@ -24,6 +24,7 @@ pip:
   - pymc
   - pyper
   - pystan
+  - pytoml
   - pyyaml
   - requests
   - requests_oauthlib
