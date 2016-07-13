@@ -1,5 +1,5 @@
 cmd: ~/.rbenv/shims/gem
-gem:
+gems:
   - bundler
   - clockwork
   - compass

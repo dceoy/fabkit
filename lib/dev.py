@@ -60,21 +60,6 @@ def setup_with_brew(yml='config/brew.yml'):
     run("brew cleanup")
 
 
-def install_lang(l, pkg):
-    v = run("%s install --list | grep -e '^  \+%d\.[0-9]\+\.[0-9]\+$' | cut -f 3 -d ' ' | tail -1" % (l['e'], int(l['v'])))
-    if run("%s versions | grep -e '\\s%s' || %s install %s" % (l['e'], v, l['e'], v)).succeeded:
-        run("%s global %s" % (l['e'], v))
-        if re.match(r'^.*pyenv$', l['e']):
-            run("%s --version" % pkg['cmd'])
-            run("%s install --no-cache-dir -U pip" % pkg['cmd'])
-            map(lambda p: run("%s install --no-cache-dir -U %s" % (pkg['cmd'], p)),
-                set(run("%s list | cut -f 1 -d ' '" % pkg['cmd']).split() + pkg['pip']).difference({'pip'}))
-        elif re.match(r'^.*rbenv$', l['e']):
-            run("%s --version" % pkg['cmd'])
-            run("%s update -N -f" % pkg['cmd'])
-            map(lambda p: run("%s install -N %s" % (pkg['cmd'], p)), pkg['gem'])
-
-
 @task
 def setup_py(ver=3, yml='config/pip.yml'):
     if exists('~/.pyenv/.git'):
@@ -88,7 +73,13 @@ def setup_py(ver=3, yml='config/pip.yml'):
     with open(yml) as f:
         pkg = yaml.load(f)
     with settings(warn_only=True):
-        install_lang({'e': pyenv, 'v': ver}, pkg)
+        v = run("%s install --list | grep -e '^  \+%d\.[0-9]\+\.[0-9]\+$' | cut -f 3 -d ' ' | tail -1" % (pyenv, int(ver)))
+        if run("%s versions | grep -e '\\s%s' || %s install %s" % (pyenv, v, pyenv, v)).succeeded:
+            run("%s global %s" % (pyenv, v))
+            run("%s --version" % pkg['cmd'])
+            run("%s install --no-cache-dir -U pip" % pkg['cmd'])
+            map(lambda p: run("%s install --no-cache-dir -U %s" % (pkg['cmd'], p)),
+                set(run("%s list | cut -f 1 -d ' '" % pkg['cmd']).split() + pkg['pypi']).difference({'pypi'}))
 
 
 @task
@@ -106,7 +97,12 @@ def setup_rb(ver=2, yml='config/gem.yml'):
     with open(yml) as f:
         pkg = yaml.load(f)
     with settings(warn_only=True):
-        install_lang({'e': rbenv, 'v': ver}, pkg)
+        v = run("%s install --list | grep -e '^  \+%d\.[0-9]\+\.[0-9]\+$' | cut -f 3 -d ' ' | tail -1" % (rbenv, int(ver)))
+        if run("%s versions | grep -e '\\s%s' || %s install %s" % (rbenv, v, rbenv, v)).succeeded:
+            run("%s global %s" % (rbenv, v))
+            run("%s --version" % pkg['cmd'])
+            run("%s update -N -f" % pkg['cmd'])
+            map(lambda p: run("%s install -N %s" % (pkg['cmd'], p)), pkg['gems'])
 
 
 @task

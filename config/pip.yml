@@ -1,5 +1,5 @@
 cmd: ~/.pyenv/shims/pip
-pip:
+pypi:
   - awscli
   - beautifulsoup4
   - bottle
