@@ -19,6 +19,7 @@ pypi:
   - mxnet
   - nose
   - numpy
+  - numba
   - pandas
   - pycuda
   - pymc

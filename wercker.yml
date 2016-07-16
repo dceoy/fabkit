@@ -1,4 +1,6 @@
-box: ubuntu
+box:
+  id: ubuntu
+  entrypoint: /bin/bash -c
 build:
   steps:
     - script:
@@ -18,11 +20,8 @@ build:
         name: install packages with dev.setup_system
         code: fab -i ~/.ssh/id_rsa dev.setup_system
     - script:
-        name: set up zsh with dev.setup_zsh
-        code: fab -i ~/.ssh/id_rsa dev.setup_zsh
-    - script:
-        name: set up vim with dev.setup_vim
-        code: fab -i ~/.ssh/id_rsa dev.setup_vim
+        name: set up zsh and vim with dev.setup_cli
+        code: fab -i ~/.ssh/id_rsa dev.setup_cli
     - script:
         name: set up python 2 with dev.setup_py
         code: fab -i ~/.ssh/id_rsa dev.setup_py:2

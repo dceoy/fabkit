@@ -114,10 +114,10 @@ esac
 
 [[ -d "${HOME}/.rbenv" ]] && eval "$(rbenv init -)"
 [[ -d "${HOME}/.pyenv" ]] && eval "$(pyenv init -)"
-alias rv="R -q --vanilla"
-export R_LIBS="${HOME}/.R/library"
+alias rv="R --quiet --vanilla"
+export R_LIBS="${HOME}/.clir/r/library"
 export GOPATH="${HOME}/.go"
-export PATH="${GOPATH}/bin:${PATH}"
+export PATH="${GOPATH}/bin:${PATH}:${HOME}/.clir/bin"
 
 ### Git ###
 autoload -Uz vcs_info

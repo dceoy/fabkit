@@ -1,5 +1,6 @@
 brew:
   - ansible
+  - bats
   - boost
   - cabal-install
   - cairo
@@ -21,6 +22,7 @@ brew:
   - jenkins
   - jq
   - leveldb
+  - librsvg
   - libxml2
   - lmdb
   - mariadb
@@ -48,6 +50,7 @@ brew:
   - szip
   - tmux
   - tree
+  - v8-315
   - vim
   - watch
   - wget

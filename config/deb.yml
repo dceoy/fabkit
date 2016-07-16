@@ -1,6 +1,7 @@
 deb:
   - ansible
   - apt-transport-https
+  - bats
   - build-essential
   - bzip2
   - cabal-install
@@ -50,6 +51,8 @@ deb:
   - libsnappy-dev
   - libsqlite3-dev
   - libssl-dev
+  - librsvg2-dev
+  - libv8-dev
   - libxml2-dev
   - libxslt1-dev
   - libzmq3-dev

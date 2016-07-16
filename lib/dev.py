@@ -122,18 +122,21 @@ def setup_go(yml='config/go.yml'):
 
 @task
 def setup_r(yml='config/r.yml'):
+    with open(yml) as f:
+        pkg = yaml.load(f)
     with settings(warn_only=True):
         if run("R --version").succeeded:
-            r_path = '~/.R'
-            r_libs = r_path + '/library'
-            if not exists(r_libs):
-                run("mkdir -p %s" % r_libs)
-            src = 'lib/package_installer.R'
-            remote_yml = r_path + '/' + os.path.basename(yml)
-            remote_src = r_path + '/' + os.path.basename(src)
-            put(yml, remote_yml)
-            put(src, remote_src)
-            run("export R_LIBS=%s && Rscript %s %s" % (r_libs, remote_src, remote_yml))
+            if exists('~/.clir'):
+                run("cd ~/.clir && git pull")
+            else:
+                run("curl https://raw.githubusercontent.com/dceoy/clir/master/install.sh | bash")
+            clir = "export R_LIBS=${HOME}/.clir/r/library && ~/.clir/bin/clir"
+            run("%s set-cran %s" % (clir, ' '.join(pkg['repos']['cran'])))
+            run("%s set-drat %s" % (clir, ' '.join(pkg['repos']['drat'])))
+            map(lambda p: run("%s cran-install --quiet %s" % (clir, p)), set(pkg['cran'] + pkg['drat']))
+            map(lambda p: run("%s github-install --quiet %s" % (clir, p)), pkg['github'].values())
+            map(lambda p: run("%s bioc-install --quiet %s" % (clir, p)), pkg['bioconductor'])
+            run("%s test-load %s" % (clir, ' '.join(set(pkg['cran'] + pkg['drat'] + pkg['github'].keys() + pkg['bioconductor']))))
 
 
 @task
@@ -143,14 +146,14 @@ def setup_cli():
 
 
 @task
-def setup_zsh(zshrc='template/_.zshrc'):
+def setup_zsh(zshrc='template/_zshrc'):
     put(zshrc, '~/.zshrc')
     if not re.match(r'.*\/zsh$', run("echo $SHELL")):
         sudo("chsh -s $(grep -e '\/zsh$' /etc/shells | tail -1) %s" % env.user)
 
 
 @task
-def setup_vim(vimrc='template/_.vimrc'):
+def setup_vim(vimrc='template/_vimrc'):
     put(vimrc, '~/.vimrc')
     if not exists('~/.vim/bundle/vimproc.vim'):
         run("mkdir -p ~/.vim/bundle")

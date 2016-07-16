@@ -111,6 +111,9 @@ NeoBundle 'fatih/vim-go'                            " go development plugin for 
 NeoBundle 'sql.vim--Stinson'                        " better sql syntax
 " Docker
 NeoBundle 'ekalinin/Dockerfile.vim'                 " syntax file and snippets for docker's dockerfile
+" Bats
+NeoBundle 'bats.vim'                                " syntax highlighting for bats
+
 
 call neobundle#end()
 

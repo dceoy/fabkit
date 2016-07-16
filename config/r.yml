@@ -1,6 +1,11 @@
 repos:
-  cran: https://cran.rstudio.com/
-  drat: dmlc
+  cran:
+    - https://cran.rstudio.com/
+    - https://cran.ism.ac.jp/
+  drat:
+    - dmlc
+    - eddelbuettel
+    - RcppCore
 cran:
   - abc
   - amap

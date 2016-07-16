@@ -4,6 +4,7 @@ rpm:
   - atlas-sse3-devel
   - autoconf
   - automake
+  - bats
   - binutils
   - bison
   - blas-devel
@@ -60,6 +61,7 @@ rpm:
   - libpcap-devel
   - libpng-devel
   - libsqlite3x-devel
+  - librsvg2-devel
   - libtool
   - libxml2-devel
   - libxslt-devel
@@ -110,6 +112,7 @@ rpm:
   - transfig
   - tree
   - units
+  - v8-devel
   - valgrind
   - vim
   - wget

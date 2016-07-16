@@ -3,7 +3,7 @@ fabkit
 
 Fabric-based Provisioning Toolkit for Linux and MacOSX
 
-[![wercker status](https://app.wercker.com/status/f2cd44bd90931f136e21ad448a25d240/m "wercker status")](https://app.wercker.com/project/bykey/f2cd44bd90931f136e21ad448a25d240)
+[![wercker status](https://app.wercker.com/status/31ef33efa7b966de9247ad68e5c9c0be/m "wercker status")](https://app.wercker.com/project/bykey/31ef33efa7b966de9247ad68e5c9c0be)
 [![](https://imagelayers.io/badge/dceoy/dev:latest.svg)](https://imagelayers.io/?images=dceoy/dev:latest 'Get your own badge on imagelayers.io')
 
 Requirements
@@ -69,5 +69,5 @@ Several arguments are optional.
 ```sh
 $ git clone https://github.com/dceoy/fabkit.git
 $ cd fabkit
-$ fab d   # equal to "fab -u ${USER} -H localhost dev"
+$ fab flow    # equal to "fab -u ${USER} -H localhost flow"
 ```
