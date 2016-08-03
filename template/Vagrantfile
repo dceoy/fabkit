@@ -63,39 +63,22 @@ Vagrant.configure("2") do |config|
   #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
   # end
 
-  # # $ vagrant plugin install vagrant-proxyconf
-  # if Vagrant.has_plugin?("vagrant-proxyconf")
-  #   config.proxy.http = "http://example.proxy.co.jp:8080/"
-  #   config.proxy.https = "https://example.proxy.co.jp:8080/"
-  #   config.proxy.no_proxy = "localhost,127.0.0.1"
-  # end
-
-  # config.vm.synced_folder "../data", "/vagrant_data", type: "rsync"
-  # config.vm.provision "file", source: "~/.ssh/config", destination: "ssh_config"
-  # config.vm.provision "docker", images: ["ubuntu", "dceoy/nginx-autoindex", "dceoy/rstudio-server"]
-
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
     apt-get -y update
     apt-get -y upgrade
-    apt-get -y install gcc make apt-transport-https ca-certificates linux-image-extra-$(uname -r)
+    apt-get -y install zsh gcc make
+
+    sed -ie "s/^\\(127.0.0.1 .*\\)$/\\1 $(hostname)/" /etc/hosts && rm /etc/hostse
     useradd -m dceoy
     echo dceoy:vagrant | chpasswd
+    chsh -s /usr/bin/zsh dceoy
 
     vbga_ver="$(curl http://download.virtualbox.org/virtualbox/LATEST.TXT)"
     curl http://download.virtualbox.org/virtualbox/${vbga_ver}/VBoxGuestAdditions_${vbga_ver}.iso -o /tmp/vbga.iso
     mount -t iso9660 /tmp/vbga.iso /mnt/
     /mnt/VBoxLinuxAdditions.run
-
-    apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
-    echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" > /etc/apt/sources.list.d/docker.list
-    apt-cache policy docker-engine
-    apt-get -y update
-    apt-get -y install docker-engine
-    systemctl start docker
-    systemctl enable docker
-    usermod -aG docker ubuntu
   SHELL
 end

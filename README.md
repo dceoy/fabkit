@@ -49,8 +49,8 @@ $ fab -u [user name] -h [host address] <command>[:arg1,arg2]
 | dev.setup_vim(:vimrc)             | Set up Vim                        | Fedora, CentOS, Ubuntu, MacOSX |
 | docker.run_nginx_autoindex(:port) | Run Nginx on Docker               | Fedora, CentOS, Ubuntu         |
 | docker.run_rstudio_server(:port)  | Run RStudio Server on Docker      | Fedora, CentOS, Ubuntu         |
-| local.config_git(:user,email)     | Set global options of Git         | Fedora, CentOS, Ubuntu, MacOSX |
-| local.enable_nopass_sudo          | Enable sudo without password      | Fedora, CentOS                 |
+| util.config_git(:user,email)      | Set global options of Git         | Fedora, CentOS, Ubuntu, MacOSX |
+| util.enable_nopass_sudo           | Enable sudo without password      | Fedora, CentOS                 |
 
 - `flow` and `dev.setup_system` install the packages written at `config/*.yml`.
 - () are optional arguments.

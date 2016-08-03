@@ -6,7 +6,7 @@ from fabric.api import env, task
 sys.path.append('lib')
 import dev
 import docker
-import local
+import util
 import remote
 
 if len(env.hosts) == 0:

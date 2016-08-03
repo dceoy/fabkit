@@ -79,7 +79,7 @@ def setup_py(ver=3, yml='config/pip.yml'):
             run("%s --version" % pkg['cmd'])
             run("%s install --no-cache-dir -U pip" % pkg['cmd'])
             map(lambda p: run("%s install --no-cache-dir -U %s" % (pkg['cmd'], p)),
-                set(run("%s list | cut -f 1 -d ' '" % pkg['cmd']).split() + pkg['pypi']).difference({'pypi'}))
+                set(run("%s freeze | cut -f 1 -d '='" % pkg['cmd']).split() + pkg['pypi']).difference({'pypi'}))
 
 
 @task
