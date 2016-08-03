@@ -1,5 +1,4 @@
-" vim:set ft=vim et tw=78 sw=2:
-" ~/.vimrc
+" vim: set ft=vim et tw=78 sw=2:
 
 
 " NeoBundle
@@ -200,6 +199,7 @@ set tabstop=2 shiftwidth=2 softtabstop=0    " set tabstop, shiftwidth, softtabst
 au BufNewFile,BufRead *.py set ts=4 sw=4 sts=0
 set smarttab                                " sw at the start of the line, sts everywhere else
 set textwidth=0                             " don't wrap lines by default
+set modeline                                " read modelines
 
 " search for visually selected text
 vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><CR>

@@ -1,4 +1,5 @@
-# (d) is default on
+#!/usr/bin/env zsh
+
 
 # ------------------------------
 # General Settings

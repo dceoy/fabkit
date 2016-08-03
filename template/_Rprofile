@@ -1,8 +1,9 @@
+#!/usr/bin/env Rscript
+
 .First <- function() {
   options(repos = c(CRAN = 'https://cran.rstudio.com/'),
           browserNLdisabled = TRUE,
           deparse.max.lines = 2)
-  .libPaths('~/.R/library')
 }
 
 .libPaths(c(paste0(Sys.getenv('HOME'), '/.clir/r/library')))

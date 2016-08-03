@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+set -e
+[[ "${1}" = '--debug' ]] && set -x
+
 if [[ -f "/etc/lsb-release" ]]; then
   sudo apt-get -y update
   sudo apt-get -y install gcc make

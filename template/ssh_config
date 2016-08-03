@@ -1,6 +1,7 @@
 Host *
   ControlMaster auto
   ControlPath /tmp/%r@%h:%p
+  StrictHostKeyChecking no
 
 Host gw
   HostName gateway
