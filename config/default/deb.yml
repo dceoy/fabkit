@@ -1,5 +1,6 @@
 deb:
   - ansible
+  - apt-file
   - apt-transport-https
   - bats
   - build-essential

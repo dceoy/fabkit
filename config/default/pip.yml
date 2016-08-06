@@ -1,4 +1,4 @@
-cmd: ~/.pyenv/shims/pip
+command: ~/.pyenv/shims/pip
 pypi:
   - awscli
   - beautifulsoup4

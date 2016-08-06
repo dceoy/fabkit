@@ -9,6 +9,7 @@ repos:
 cran:
   - abc
   - amap
+  - binom
   - broom
   - caret
   - coin

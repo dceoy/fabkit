@@ -99,7 +99,7 @@ alias lla="ll -a"
 alias llh="ll -h"
 alias d="docker"
 alias rmc="docker ps -aq | xargs docker rm -f"
-alias rmci="docker images | awk 'NR != 1 { print \$3 }' | xargs docker rmi"
+alias rmi="docker images | awk '/^<none>/ { print \$3 }' | xargs docker rmi"
 
 case "${OSTYPE}" in
   darwin*)

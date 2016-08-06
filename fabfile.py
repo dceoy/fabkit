@@ -1,28 +1,43 @@
 #!/usr/bin/env python
 
 import sys
+import os
+import shutil
 from fabric.api import env, task
 
 sys.path.append('lib')
-import dev
+import install
+import utilize
 import docker
-import util
-import remote
 
 if len(env.hosts) == 0:
     env.hosts = ['localhost']
-env.use_ssh_config = True
+if os.path.isfile(os.environ['HOME'] + '/.ssh/config'):
+    env.use_ssh_config = True
+
+map(lambda f: shutil.copyfile('config/default/' + f, 'config/' + f),
+    filter(lambda f: not os.path.isfile('config/' + f), os.listdir('config/default')))
+map(lambda f: shutil.copyfile('dotfile/default/' + f, 'dotfile/' + f),
+    filter(lambda f: not os.path.isfile('dotfile/' + f), os.listdir('dotfile/default')))
 
 
 @task
-def flow():
-    dev.setup_system()
-    dev.setup_cli()
-    dev.setup_py(2)
-    dev.setup_py(3)
-    dev.setup_rb(2)
-    dev.setup_go()
-    dev.setup_r()
+def dev():
+    install.package()
+    utilize.zsh()
+    utilize.vim()
+    install.python(2)
+    install.python(3)
+    install.ruby(2)
+    install.go_lib()
+    install.r_lib()
+
+
+@task
+def cli():
+    install.package(names=('zsh', 'vim', 'git', 'make', 'gcc'))
+    utilize.zsh()
+    utilize.vim()
 
 
 if __name__ == '__main__':

@@ -35,28 +35,30 @@ $ fab -u [user name] -h [host address] <command>[:arg1,arg2]
 
 | Command                           | Description                       | Platform                       |
 |:----------------------------------|:----------------------------------|:-------------------------------|
-| flow                              | Set up a development server       | Fedora, CentOS, Ubuntu, MacOSX |
-| dev.setup_system                  | Install packages for system       | Fedora, CentOS, Ubuntu         |
-| dev.setup_with_rpm(:yml)          | Install packages using dnf or yum | Fedora, CentOS                 |
-| dev.setup_with_deb(:yml)          | Install packages using apt-get    | Ubuntu                         |
-| dev.setup_with_brew(:yml)         | Install packages using homebrew   | MacOSX                         |
-| dev.setup_py(:ver,yml)            | Set up Python 2 or 3 using pyenv  | Fedora, CentOS, Ubuntu, MacOSX |
-| dev.setup_rb(:ver,yml)            | Set up Ruby using rbenv           | Fedora, CentOS, Ubuntu, MacOSX |
-| dev.setup_go(:yml)                | Set up Go                         | Fedora, CentOS, Ubuntu, MacOSX |
-| dev.setup_r(:yml)                 | Set up R                          | Fedora, CentOS, Ubuntu, MacOSX |
-| dev.setup_cli                     | Set up Zsh and Vim                | Fedora, CentOS, Ubuntu, MacOSX |
-| dev.setup_zsh(:zshrc)             | Set up Zsh                        | Fedora, CentOS, Ubuntu, MacOSX |
-| dev.setup_vim(:vimrc)             | Set up Vim                        | Fedora, CentOS, Ubuntu, MacOSX |
+| dev                               | Set up a development server       | Fedora, CentOS, Ubuntu, MacOSX |
+| cli                               | Set up Zsh and Vim                | Fedora, CentOS, Ubuntu, MacOSX |
+| install.package                   | Install packages for system       | Fedora, CentOS, Ubuntu         |
+| install.rpm(:yml)                 | Install packages using dnf or yum | Fedora, CentOS                 |
+| install.deb(:yml)                 | Install packages using apt-get    | Ubuntu                         |
+| install.brew(:yml)                | Install packages using homebrew   | MacOSX                         |
+| install.python(:ver,yml)          | Install Python and libraries      | Fedora, CentOS, Ubuntu, MacOSX |
+| install.ruby(:ver,yml)            | Install Ruby and libraries        | Fedora, CentOS, Ubuntu, MacOSX |
+| install.go_lib(:yml)              | Install Go libraries              | Fedora, CentOS, Ubuntu, MacOSX |
+| install.r_lib(:yml)               | Install R libraries               | Fedora, CentOS, Ubuntu, MacOSX |
+| utilize.zsh(:zshrc)               | Set up Zsh                        | Fedora, CentOS, Ubuntu, MacOSX |
+| utilize.vim(:vimrc)               | Set up Vim                        | Fedora, CentOS, Ubuntu, MacOSX |
+| utilize.git_config(:user,email)   | Set global options of Git         | Fedora, CentOS, Ubuntu, MacOSX |
 | docker.run_nginx_autoindex(:port) | Run Nginx on Docker               | Fedora, CentOS, Ubuntu         |
 | docker.run_rstudio_server(:port)  | Run RStudio Server on Docker      | Fedora, CentOS, Ubuntu         |
-| util.config_git(:user,email)      | Set global options of Git         | Fedora, CentOS, Ubuntu, MacOSX |
-| util.enable_nopass_sudo           | Enable sudo without password      | Fedora, CentOS                 |
 
-- `flow` and `dev.setup_system` install the packages written at `config/*.yml`.
+- `dev` and `install.system` install the packages written at `config/*.yml`.
+- `install.*` commands execute both install and update.
 - () are optional arguments.
-- `yml` are yaml files (default: `config/*.yml`).
+- `yml` are yaml files (default: `config/*.yml`). If their files does not exist in `config`, they are copied from `config/default`.
 - `ver` are versions of Python or Ruby (integer).
-- `zshrc` and `vimrc` are run scripts (default: `template/_.*rc`).
+- `install.python` and `install.ruby` use pyenv and rbenv respectively.
+- `install.r_lib` uses [clir](https://github.com/dceoy/clir).
+- `zshrc` and `vimrc` are run scripts (default: `default/_*rc`). If their files does not exist in `dotfile`, they are copied from `dotfile/default`.
 - `docker.run_nginx_autoindex` run [dceoy/docker-nginx-autoindex](https://github.com/dceoy/docker-nginx-autoindex) making a home directory available at `/` of Nginx (default port: 80).
 - `docker.run_rstudio_server` run [dceoy/docker-rstudio-server](https://github.com/dceoy/docker-rstudio-server) sharing a home directory (default port: 8787).
 - Commands can use configurations in `~/.ssh/config`. (e.g., certificates, host names, and user names)
@@ -69,5 +71,5 @@ Several arguments are optional.
 ```sh
 $ git clone https://github.com/dceoy/fabkit.git
 $ cd fabkit
-$ fab flow    # equal to "fab -u ${USER} -H localhost flow"
+$ fab dev   # equal to `fab -u ${USER} -H localhost dev`
 ```

@@ -1,5 +1,5 @@
-cmd: ~/.rbenv/shims/gem
-gems:
+command: ~/.rbenv/shims/gem
+rubygems:
   - bundler
   - clockwork
   - compass
