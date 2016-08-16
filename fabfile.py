@@ -4,11 +4,9 @@ import sys
 import os
 import shutil
 from fabric.api import env, task
-
-sys.path.append('lib')
-import install
-import utilize
-import docker
+from lib import install
+from lib import utilize
+from lib import docker
 
 if len(env.hosts) == 0:
     env.hosts = ['localhost']
