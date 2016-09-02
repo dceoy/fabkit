@@ -38,5 +38,11 @@ def cli():
     utilize.vim()
 
 
+@task
+def clean():
+    map(lambda f: os.remove('config/' + f), set(os.listdir('config')).difference({'default'}))
+    map(lambda f: os.remove('dotfile/' + f), set(os.listdir('dotfile')).difference({'default'}))
+
+
 if __name__ == '__main__':
     print("Usage: fab [options] <command>[:arg1,arg2=val2,host=foo,hosts='h1;h2',...] ...")

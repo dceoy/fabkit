@@ -1,4 +1,6 @@
 *.pyc
 .python-version
-config/*.yml
-dotfile/_*
+config/*
+!config/default
+dotfile/*
+!dotfile/default
