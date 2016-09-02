@@ -17,31 +17,31 @@ build:
           chmod 600 ~/.ssh/authorized_keys
           touch ~/.ssh/config
     - script:
-        name: install packages with dev.setup_system
-        code: fab -i ~/.ssh/id_rsa dev.setup_system
+        name: set up cli
+        code: fab -i ~/.ssh/id_rsa cli
     - script:
-        name: set up zsh and vim with dev.setup_cli
-        code: fab -i ~/.ssh/id_rsa dev.setup_cli
+        name: install packages
+        code: fab -i ~/.ssh/id_rsa install.package
     - script:
-        name: set up python 2 with dev.setup_py
-        code: fab -i ~/.ssh/id_rsa dev.setup_py:2
+        name: set up python 2
+        code: fab -i ~/.ssh/id_rsa install.python:2
     - script:
-        name: set up python 3 with dev.setup_py
-        code: fab -i ~/.ssh/id_rsa dev.setup_py:3
+        name: set up python 3
+        code: fab -i ~/.ssh/id_rsa install.python:3
     - script:
-        name: set up ruby 2 with dev.setup_rb
-        code: fab -i ~/.ssh/id_rsa dev.setup_rb:2
+        name: set up ruby 2
+        code: fab -i ~/.ssh/id_rsa install.ruby:2
     - script:
-        name: set up go with dev.setup_go
-        code: fab -i ~/.ssh/id_rsa dev.setup_go
+        name: set up go
+        code: fab -i ~/.ssh/id_rsa install.go_lib
     - script:
-        name: set up r with dev.setup_r
-        code: fab -i ~/.ssh/id_rsa dev.setup_r
+        name: set up r
+        code: fab -i ~/.ssh/id_rsa install.r_lib
 push:
   steps:
     - internal/docker-push:
         username: dceoy
         password: $DOCKER_PASS
         tag: latest
-        repository: dceoy/dev
+        repository: dceoy/fabkit
         registry: https://registry.hub.docker.com

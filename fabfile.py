@@ -33,7 +33,7 @@ def dev():
 
 @task
 def cli():
-    install.package(names=('zsh', 'vim', 'git', 'make', 'gcc'))
+    install.package(names=('zsh', 'vim', 'tree', 'git', 'make', 'gcc'))
     utilize.zsh()
     utilize.vim()
 
