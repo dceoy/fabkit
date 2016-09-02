@@ -7,14 +7,14 @@ from fabric.contrib.files import exists
 
 
 @task
-def zsh(zshrc='dotfile/_zshrc'):
+def zsh(zshrc='dotfile/zshrc'):
     put(zshrc, '~/.zshrc')
     if not re.match(r'.*\/zsh$', run("echo $SHELL")):
         sudo("chsh -s $(grep -e '\/zsh$' /etc/shells | tail -1) %s" % env.user)
 
 
 @task
-def vim(vimrc='dotfile/_vimrc'):
+def vim(vimrc='dotfile/vimrc'):
     put(vimrc, '~/.vimrc')
     if not exists('~/.vim/bundle/vimproc.vim'):
         run("mkdir -p ~/.vim/bundle")

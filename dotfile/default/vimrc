@@ -89,6 +89,7 @@ NeoBundle 'tpope/vim-endwise'                       " wisely add 'end' in ruby, 
 NeoBundle 'python.vim'                              " a set of menus/shortcuts to work with python files
 NeoBundle 'python.vim--Vasiliev'                    " enhanced version of the python syntax highlighting script
 NeoBundle 'nvie/vim-flake8'                         " a static syntax and style checker for python source code
+NeoBundle 'hynek/vim-python-pep8-indent'            " a nicer python indentation style for vim
 " R
 NeoBundle 'R-syntax-highlighting'                   " r syntax highlighting
 "NeoBundle 'Vim-R-plugin'                            " plugin to work with r
@@ -211,7 +212,7 @@ endif
 
 " flake8
 let g:syntastic_python_checkers = ['flake8']            " use flake8
-let g:syntastic_python_flake8_args = '--ignore="E501"'  " permit log lines
+let g:syntastic_python_flake8_args = '--ignore="E501"'  " permit long lines
 
 " markdown
 let g:vim_markdown_folding_disabled=1
