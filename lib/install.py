@@ -14,11 +14,10 @@ def package(names=None):
         if exists("/etc/redhat-release"):
             run("cat /etc/redhat-release")
             rpm(names=names)
-        elif exists("/etc/lsb-release"):
+        elif exists("/etc/lsb-release") or exists("/etc/os-release"):
             run("cat /etc/lsb-release")
             deb(names=names)
-        elif exists("/etc/os-release"):
-            run("cat /etc/os-release")
+        else:
             deb(names=names)
     elif re.match(r'^darwin', os_type):
         brew(names=names)
@@ -103,7 +102,7 @@ def python(ver=3, yml='config/pip.yml'):
             run("%s --version" % pip)
             run("%s install --no-cache-dir -U pip" % pip)
             map(lambda p: run("%s install --no-cache-dir -U %s" % (pip, p)),
-                pkgs.union(set(run("%s freeze | cut -f 1 -d '='" % pip).split())))
+                pkgs | set(run("%s freeze | cut -f 1 -d '='" % pip).split()))
 
 
 @task
@@ -138,8 +137,8 @@ def go_lib(yml='config/go.yml'):
         y = yaml.load(f)
     pkgs = set(y['go'])
 
-    with settings(warn_only=True):
-        if run("go version").succeeded:
+    if run("go version").succeeded:
+        with settings(warn_only=True):
             gopath = '~/.go'
             go = 'export GOPATH=' + gopath + ' && go'
             if not exists(gopath):
@@ -159,8 +158,8 @@ def r_lib(yml='config/r.yml'):
     gh_pkgs = set(y['github'].keys())
     bioc_pkgs = set(y['bioconductor'])
 
-    with settings(warn_only=True):
-        if run("R --version").succeeded:
+    if run("R --version").succeeded:
+        with settings(warn_only=True):
             if exists('~/.clir'):
                 run("cd ~/.clir && git pull")
             else:
@@ -171,7 +170,7 @@ def r_lib(yml='config/r.yml'):
             map(lambda p: run("%s cran-install --quiet %s" % (clir, p)), cran_pkgs)
             map(lambda p: run("%s github-install --quiet %s" % (clir, p)), gh_urls)
             map(lambda p: run("%s bioc-install --quiet %s" % (clir, p)), bioc_pkgs)
-            run("%s test-load %s" % (clir, ' '.join(cran_pkgs.union(gh_pkgs, bioc_pkgs))))
+            run("%s test-load %s" % (clir, ' '.join(cran_pkgs | gh_pkgs | bioc_pkgs)))
 
 
 if __name__ == '__main__':

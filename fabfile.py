@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 
-import sys
 import os
-import shutil
 from fabric.api import env, task
 from lib import install
 from lib import utilize
@@ -10,13 +8,8 @@ from lib import docker
 
 if len(env.hosts) == 0:
     env.hosts = ['localhost']
-if os.path.isfile(os.environ['HOME'] + '/.ssh/config'):
+if os.path.isfile('~/.ssh/config'):
     env.use_ssh_config = True
-
-map(lambda f: shutil.copyfile('config/default/' + f, 'config/' + f),
-    filter(lambda f: not os.path.isfile('config/' + f), os.listdir('config/default')))
-map(lambda f: shutil.copyfile('dotfile/default/' + f, 'dotfile/' + f),
-    filter(lambda f: not os.path.isfile('dotfile/' + f), os.listdir('dotfile/default')))
 
 
 @task
@@ -40,8 +33,11 @@ def cli():
 
 @task
 def clean():
-    map(lambda f: os.remove('config/' + f), set(os.listdir('config')).difference({'default'}))
-    map(lambda f: os.remove('dotfile/' + f), set(os.listdir('dotfile')).difference({'default'}))
+    map(lambda d:
+        map(lambda f:
+            os.remove(os.path.join(d, f)),
+            set(os.listdir(d)) - {'default'}),
+        ('config', 'dotfile'))
 
 
 if __name__ == '__main__':
