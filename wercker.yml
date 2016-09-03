@@ -34,9 +34,6 @@ build:
     - script:
         name: set up go
         code: fab -i ~/.ssh/id_rsa install.go_lib
-    - script:
-        name: set up r
-        code: fab -i ~/.ssh/id_rsa install.r_lib
 push:
   steps:
     - internal/docker-push:
