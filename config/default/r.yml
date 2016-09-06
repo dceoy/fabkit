@@ -16,6 +16,7 @@ cran:
   - data.table
   - doSNOW
   - dplyr
+  - dtplyr
   - feather
   - foreach
   - ggdendro
@@ -32,6 +33,7 @@ cran:
   - MCMCpack
   - phangorn
   - plyr
+  - purrr
   - ranger
   - rbenchmark
   - rmarkdown
@@ -41,6 +43,7 @@ cran:
   - rvest
   - shiny
   - snow
+  - stringr
   - testthat
   - tidyr
   - tm
