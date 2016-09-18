@@ -25,6 +25,7 @@ brew:
   - librsvg
   - libxml2
   - lmdb
+  - lua
   - mariadb
   - mercurial
   - mongodb
@@ -51,7 +52,7 @@ brew:
   - tmux
   - tree
   - v8-315
-  - vim
+  - vim --with-lua
   - watch
   - wget
   - xml2

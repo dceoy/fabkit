@@ -42,7 +42,7 @@ NeoBundle 'elzr/vim-json'                           " a better json for vim
 NeoBundle 'Shougo/neocomplcache.vim'                " ultimate auto-completion system for vim
 NeoBundle 'Shougo/neosnippet.vim'                   " neocomplcache snippets source
 NeoBundle 'Shougo/neosnippet-snippets'              " the standard snippets for neosnippet
-"NeoBundle 'Shougo/neocomplete.vim'                  " next generation completion framework after neocomplcache
+NeoBundle 'Shougo/neocomplete.vim'                  " next generation completion framework after neocomplcache
 NeoBundle 'AndrewRadev/switch.vim'                  " switch segments of text with predefined replacements
 " surroundings
 NeoBundle 'tpope/vim-surround'                      " quoting/parenthesizing made simple
@@ -79,7 +79,7 @@ NeoBundle 'pangloss/vim-javascript'                 " vastly improved Javascript
 NeoBundle 'othree/javascript-libraries-syntax.vim'  " syntax for javascript libraries
 NeoBundle 'lint.vim'                                " jshint integration with quickfix window
 NeoBundle 'kchmck/vim-coffee-script'                " coffeescript support for vim
-"NeoBundle 'leafgarland/typescript-vim'              " typescript syntax files for vim
+NeoBundle 'leafgarland/typescript-vim'              " typescript syntax files for vim
 " Ruby
 NeoBundle 'vim-ruby/vim-ruby'                       " vim/ruby configuration files
 NeoBundle 'rails.vim'                               " ruby on rails: easy file navigation, enhanced syntax highlighting, and more
@@ -107,6 +107,12 @@ NeoBundle 'scala.vim'                               " syntaxic coloration for sc
 NeoBundle 'snipMate'                                " textmate-style snippets for vim
 " Go
 NeoBundle 'fatih/vim-go'                            " go development plugin for vim
+" Rust
+NeoBundle 'rust-lang/rust.vim'                      " vim configuration for rust
+" Elixir
+NeoBundle 'elixir-lang/vim-elixir'                  " vim configuration files for elixir
+" Julia
+NeoBundle 'JuliaLang/julia-vim'                     " vim support for julia
 " SQL
 NeoBundle 'sql.vim--Stinson'                        " better sql syntax
 " Docker
@@ -124,14 +130,79 @@ filetype plugin indent on
 " this will conveniently prompt you to install them.
 NeoBundleCheck
 
-" neocomplete
-"let g:neocomplete#enable_at_startup = 1
+" Neocomplete
+let g:acp_enableAtStartup = 0                       " Disable AutoComplPop.
+let g:neocomplete#enable_at_startup = 1             " Use neocomplete.
+let g:neocomplete#enable_smart_case = 1             " Use smartcase.
+let g:neocomplete#sources#syntax#min_keyword_length = 3   " Set minimum syntax keyword length.
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+      \ 'default' : '',
+      \ 'vimshell' : $HOME.'/.vimshell_hist',
+      \ 'scheme' : $HOME.'/.gosh_completions'
+      \ }
+
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+  let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+" Plugin key-mappings.
+inoremap <expr><C-g>    neocomplete#undo_completion()
+inoremap <expr><C-l>    neocomplete#complete_common_string()
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? "\<C-y>" : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+
+" AutoComplPop like behavior.
+"let g:neocomplete#enable_auto_select = 1
+
+" Shell like behavior (not recommended).
+"set completeopt+=longest
+"let g:neocomplete#enable_auto_select = 1
+"let g:neocomplete#disable_auto_complete = 1
+"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
 
 " general
 set history=256                             " number of lines of history to remember
 set scrolloff=16                            " minimal number of screen lines to keep above and below the cursor
-"set clipboard=unnamed,autoselect            " share clipboard
+set clipboard=unnamed,autoselect            " share clipboard
 set ttyfast                                 " fast terminal connection
 set t_Co=256                                " enable 256 colors
 

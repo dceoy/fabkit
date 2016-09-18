@@ -114,7 +114,7 @@ rpm:
   - units
   - v8-devel
   - valgrind
-  - vim
+  - vim-enhanced
   - wget
   - wol
   - wxMaxima

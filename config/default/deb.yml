@@ -81,7 +81,7 @@ deb:
   - tk-dev
   - tmux
   - tree
-  - vim
+  - vim-gnome
   - wget
   - zip
   - zlib1g-dev
