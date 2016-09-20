@@ -8,7 +8,7 @@ from lib import docker
 
 if len(env.hosts) == 0:
     env.hosts = ['localhost']
-if os.path.isfile('~/.ssh/config'):
+if os.path.isfile(os.path.join(os.environ['HOME'], '.ssh/config')):
     env.use_ssh_config = True
 
 
