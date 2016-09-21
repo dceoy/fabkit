@@ -5,6 +5,7 @@ pypi:
   - bottle
   - csvkit
   - cython
+  - docker-compose
   - fabric
   - feather-format
   - flake8
