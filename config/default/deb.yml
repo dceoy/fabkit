@@ -80,6 +80,7 @@ deb:
   - time
   - tk-dev
   - tmux
+  - traceroute
   - tree
   - vim-gnome
   - wget

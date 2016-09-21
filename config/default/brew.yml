@@ -29,6 +29,7 @@ brew:
   - mariadb
   - mercurial
   - mongodb
+  - nmap
   - nkf
   - open-mpi
   - openssl
@@ -62,9 +63,9 @@ brew:
   - homebrew/science/opencv
   - homebrew/science/r
   - Caskroom/cask/chrome-remote-desktop-host
+  - Caskroom/cask/docker-toolbox
   - Caskroom/cask/dropbox
   - Caskroom/cask/endnote
-  - Caskroom/cask/evernote
   - Caskroom/cask/firefox
   - Caskroom/cask/google-chrome
   - Caskroom/cask/google-drive

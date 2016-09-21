@@ -109,6 +109,7 @@ rpm:
   - texmaker
   - time
   - tmux
+  - traceroute
   - transfig
   - tree
   - units

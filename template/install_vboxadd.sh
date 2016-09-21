@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+#
+# $ sudo mount -t vboxsf share ~/share
 
 set -e
 [[ "${1}" = '--debug' ]] && set -x

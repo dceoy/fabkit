@@ -107,6 +107,7 @@ case "${OSTYPE}" in
     alias grep="ggrep --color=auto"
     alias sed="gsed"
     alias awk="gawk"
+    alias dm="docker-machine"
     ;;
   linux*)
     alias ls="ls --color=auto"
