@@ -117,6 +117,8 @@ NeoBundle 'JuliaLang/julia-vim'                     " vim support for julia
 NeoBundle 'sql.vim--Stinson'                        " better sql syntax
 " Docker
 NeoBundle 'ekalinin/Dockerfile.vim'                 " syntax file and snippets for docker's dockerfile
+" Nginx
+NeoBundle 'evanmiller/nginx-vim-syntax'             " nginx vim syntax
 " Bats
 NeoBundle 'bats.vim'                                " syntax highlighting for bats
 
