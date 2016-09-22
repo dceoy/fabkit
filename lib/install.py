@@ -14,10 +14,11 @@ def package(names=None):
         if exists("/etc/redhat-release"):
             run("cat /etc/redhat-release")
             rpm(names=names)
-        elif exists("/etc/lsb-release") or exists("/etc/os-release"):
-            run("cat /etc/lsb-release")
-            deb(names=names)
         else:
+            if exists("/etc/lsb-release"):
+                run("cat /etc/lsb-release")
+            elif exists("/etc/os-release"):
+                run("cat /etc/os-release")
             deb(names=names)
     elif re.match(r'^darwin', os_type):
         brew(names=names)
