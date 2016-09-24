@@ -3,7 +3,12 @@
 # $ sudo mount -t vboxsf share ~/share
 
 set -e
-[[ "${1}" = '--debug' ]] && set -x
+
+if [[ "${1}" = '--debug' ]]; then
+  set -ux
+else
+  set -u
+fi
 
 if [[ -f "/etc/lsb-release" ]]; then
   sudo apt-get -y update
