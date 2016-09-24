@@ -83,6 +83,7 @@ deb:
   - traceroute
   - tree
   - vim-gnome
+  - wakeonlan
   - wget
   - zip
   - zlib1g-dev
