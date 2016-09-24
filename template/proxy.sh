@@ -1,3 +1,7 @@
+#!/usr/bin/env bash
+
+set -ue
+
 PROXY="proxy.example.com:8080"
 export http_proxy="http://${PROXY}"
 export https_proxy="https://${PROXY}"

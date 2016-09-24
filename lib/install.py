@@ -56,11 +56,11 @@ def deb(yml='config/deb.yml', names=None):
         pkgs = set(y['deb'])
 
     with settings(warn_only=True):
-        if sudo("apt-get --version").succeeded:
-            sudo("apt-get -y update && apt-get -y upgrade")
-            if sudo("apt-get -y install %s" % ' '.join(pkgs)).failed:
-                map(lambda p: sudo("apt-get -y install %s" % p), pkgs)
-            sudo("apt-get clean")
+        if sudo("apt --version").succeeded:
+            sudo("apt -y update && apt -y upgrade")
+            if sudo("apt -y install %s" % ' '.join(pkgs)).failed:
+                map(lambda p: sudo("apt -y install %s" % p), pkgs)
+            sudo("apt clean")
 
 
 @task
