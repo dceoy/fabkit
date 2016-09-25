@@ -3,7 +3,7 @@
 
 set -ue
 
-CHANNEL='#ssh'
+CHANNEL='#home'
 ME="$(whoami)"
 USERNAME="${ME}@$(hostname)"
 TEXT="$(who | grep -e "^${ME} \\+" | tail -1)"
