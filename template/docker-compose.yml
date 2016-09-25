@@ -1,0 +1,77 @@
+version: '2'
+
+services:
+
+  elasticsearch:
+    image: elasticsearch
+    container_name: elasticsearch
+    ports:
+      - "9200:9200"
+
+  kibana:
+    image: kibana
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    links:
+      - elasticsearch
+
+  influxdb:
+    image: influxdb
+    container_name: influxdb
+    ports:
+      - "8084:8083"
+      - "8086:8086"
+    volumes:
+      - ${HOME}/vm/default/influxdb:/var/lib/influxdb
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "8085:3000"
+    links:
+      - influxdb
+
+  redash:
+    image: redash/redash
+    container_name: redash
+    ports:
+      - "5000:5000"
+
+  redash-nginx:
+    image: redash/nginx
+    container_name: redash-nginx
+    ports:
+      - "6000:80"
+    links:
+      - redash
+
+  jenkins:
+    image: jenkins
+    container_name: jenkins
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - ${HOME}/vm/default/jenkins:/var/jenkins_home
+    environment:
+      JENKINS_OPTS: "--accessLoggerClassName=winstone.accesslog.SimpleAccessLogger \
+                     --simpleAccessLogger.format=combined \
+                     --simpleAccessLogger.file=/dev/stdout"
+
+  nginx-autoindex:
+    image: dceoy/nginx-autoindex
+    container_name: nginx-autoindex
+    ports:
+      - "9000:80"
+    volumes:
+      - ${HOME}/vm/default:/var/www/html:ro
+
+  rstudio-server:
+    image: dceoy/rstudio-server
+    container_name: rstudio-server
+    ports:
+      - "8787:8787"
+    volumes:
+      - ${HOME}/vm/default/rstudio:/home/rstudio
