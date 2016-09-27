@@ -9,7 +9,7 @@ from fabric.contrib.files import exists
 
 @task
 def package(names=None):
-    os_type = run("echo $OSTYPE")
+    os_type = run("echo ${OSTYPE}")
     if re.match(r'^linux', os_type):
         if exists("/etc/redhat-release"):
             run("cat /etc/redhat-release")

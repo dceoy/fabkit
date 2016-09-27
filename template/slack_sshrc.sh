@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
-# slack notification
 
-set -ue
+set -e
+
+if [[ "${1}" = '--debug' ]]; then
+  set -ux
+else
+  set -u
+fi
 
 CHANNEL='#home'
 ME="$(whoami)"
