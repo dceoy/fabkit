@@ -36,10 +36,11 @@ cran:
   - purrr
   - ranger
   - rbenchmark
+  - RcppTOML
   - rmarkdown
   - RSQLite
   - rstan
-  - RcppTOML
+  - Rtsne
   - rvest
   - shiny
   - snow
@@ -50,6 +51,7 @@ cran:
 github:
   roxygen2: klutometis/roxygen
   httpuv:   rstudio/httpuv
+  tensorflow: rstudio/tensorflow
 drat:
   - xgboost
   - mxnet

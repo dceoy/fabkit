@@ -62,6 +62,8 @@ NeoBundle 'tpope/vim-fugitive'                      " a git wrapper so awesome, 
 NeoBundle 'ingydotnet/yaml-vim'                     " yaml highlight script for vim
 " TOML
 NeoBundle 'cespare/vim-toml'                        " vim syntax for toml
+" Crontab
+NeoBundle 'crontab.vim'                             " syntax highlight for crontab files
 
 " HTML
 NeoBundle 'mattn/emmet-vim'                         " emmet for vim

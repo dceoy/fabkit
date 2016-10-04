@@ -17,6 +17,7 @@ pypi:
   - keras
   - matplotlib
   - mechanize
+  - mock
   - mxnet
   - nose
   - numpy
@@ -26,6 +27,7 @@ pypi:
   - pymc
   - pyper
   - pystan
+  - pytest
   - pytoml
   - pyyaml
   - requests
@@ -39,7 +41,10 @@ pypi:
   - six
   - sphinx
   - sympy
+  - testfixtures
   - theano
   - tornado
+  - tox
   - twitter
   - virtualenv
+  - webtest
