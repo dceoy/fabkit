@@ -52,7 +52,6 @@ brew:
   - szip
   - tmux
   - tree
-  - v8-315
   - vim --with-lua
   - watch
   - wget

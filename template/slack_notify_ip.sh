@@ -7,7 +7,7 @@ ME="$(whoami)"
 USERNAME="${ME}@$(hostname)"
 ICON_EMOJI=':postbox:'
 WEBHOOK_URL='https://hooks.slack.com/services/xxxxxxxxx/yyyyyyyyy/zzzzzzzzzzzzzzzzzzzzzzzz'
-GLOBAL_IP_TXT="${HOME}/global_ip.txt"
+GLOBAL_IP_TXT="$(dirname ${0})/global_ip.txt"
 NOTIFICATION=0
 
 function fetch_ip {
@@ -45,6 +45,7 @@ set -u
   && exit 0
 
 echo "${GLOBAL_IP}" > ${GLOBAL_IP_TXT}
+echo -e "$(date '+%D')\t${GLOBAL_IP}"
 
 curl -s -S -X POST --data-urlencode \
   "payload={'channel': '${CHANNEL}', \
