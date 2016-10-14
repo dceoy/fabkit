@@ -4,7 +4,6 @@ import os
 from fabric.api import env, task
 from lib import install
 from lib import utilize
-from lib import docker
 
 if len(env.hosts) == 0:
     env.hosts = ['localhost']
@@ -41,4 +40,4 @@ def clean():
 
 
 if __name__ == '__main__':
-    print("Usage: fab [options] <command>[:arg1,arg2=val2,host=foo,hosts='h1;h2',...] ...")
+    print("Usage: fab [options] <command>[:arg1,arg2=val2,...]")

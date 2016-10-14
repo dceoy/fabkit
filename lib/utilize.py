@@ -37,7 +37,8 @@ def git_config(user=False, email=False):
 
 @task
 def github_token(dir, user, token):
-    run("sed -ie 's/\(url = https:\/\/\)\(github.com\/\)/\\1%s:%s@\\2/' %s/.git/config" % (user, token, dir))
+    run("sed -ie 's/\(url = https:\/\/\)\(github.com\/\)/\\1%s:%s@\\2/' %s/.git/config"
+        % (user, token, dir))
     run("rm %s/.git/confige" % dir)
 
 
@@ -54,7 +55,3 @@ def http_proxy(host, port):
         prof = f.read()
     sudo("echo '%s' >> /etc/profile.d/proxy.sh" % prof.replace('proxy.example.com:8080', hp))
     sudo("echo 'proxy=http://%s' >> /etc/dnf/dnf.conf" % hp)
-
-
-if __name__ == '__main__':
-    print("Usage: fab [options] <command>[:arg1,arg2=val2,host=foo,hosts='h1;h2',...] ...")

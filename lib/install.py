@@ -75,7 +75,8 @@ def brew(yml='config/brew.yml', names=None):
 
     with settings(warn_only=True):
         if run("brew --version").failed:
-            run("/usr/bin/ruby -e $(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)")
+            run("/usr/bin/ruby -e \
+                $(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)")
         else:
             run("brew update")
             run("brew upgrade")
@@ -99,7 +100,8 @@ def python(ver=3, yml='config/pip.yml'):
     pkgs = set(y['pypi'])
 
     with settings(warn_only=True):
-        v = run("%s install --list | grep -e '^  \+%d\.[0-9]\+\.[0-9]\+$' | cut -f 3 -d ' ' | tail -1" % (pyenv, int(ver)))
+        v = run("%s install --list | grep -e '^  \+%d\.[0-9]\+\.[0-9]\+$' | awk 'END{ print $1 }'"
+                % (pyenv, int(ver)))
         if run("%s versions | grep -e '\\s%s' || %s install %s" % (pyenv, v, pyenv, v)).succeeded:
             run("%s global %s" % (pyenv, v))
             run("%s --version" % pip)
@@ -126,7 +128,8 @@ def ruby(ver=2, yml='config/gem.yml'):
     pkgs = set(y['rubygems'])
 
     with settings(warn_only=True):
-        v = run("%s install --list | grep -e '^  \+%d\.[0-9]\+\.[0-9]\+$' | cut -f 3 -d ' ' | tail -1" % (rbenv, int(ver)))
+        v = run("%s install --list | grep -e '^  \+%d\.[0-9]\+\.[0-9]\+$' | awk 'END{ print $1 }'"
+                % (rbenv, int(ver)))
         if run("%s versions | grep -e '\\s%s' || %s install %s" % (rbenv, v, rbenv, v)).succeeded:
             run("%s global %s" % (rbenv, v))
             run("%s --version" % gem)
@@ -174,7 +177,3 @@ def r_lib(yml='config/r.yml'):
             map(lambda p: run("%s github-install --quiet %s" % (clir, p)), gh_urls)
             map(lambda p: run("%s bioc-install --quiet %s" % (clir, p)), bioc_pkgs)
             run("%s test-load %s" % (clir, ' '.join(cran_pkgs | gh_pkgs | bioc_pkgs)))
-
-
-if __name__ == '__main__':
-    print("Usage: fab [options] <command>[:arg1,arg2=val2,host=foo,hosts='h1;h2',...] ...")
