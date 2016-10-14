@@ -48,8 +48,6 @@ $ fab -u [user name] -h [host address] <command>[:arg1,arg2]
 | utilize.zsh(:zshrc)               | Set up Zsh                        | Fedora, CentOS, Ubuntu, MacOSX |
 | utilize.vim(:vimrc)               | Set up Vim                        | Fedora, CentOS, Ubuntu, MacOSX |
 | utilize.git_config(:user,email)   | Set global options of Git         | Fedora, CentOS, Ubuntu, MacOSX |
-| docker.run_nginx_autoindex(:port) | Run Nginx on Docker               | Fedora, CentOS, Ubuntu         |
-| docker.run_rstudio_server(:port)  | Run RStudio Server on Docker      | Fedora, CentOS, Ubuntu         |
 
 - `dev` and `install.system` install the packages written at `config/*.yml`.
 - `install.*` commands execute both install and update.
@@ -59,8 +57,6 @@ $ fab -u [user name] -h [host address] <command>[:arg1,arg2]
 - `install.python` and `install.ruby` use pyenv and rbenv respectively.
 - `install.r_lib` uses [clir](https://github.com/dceoy/clir).
 - `zshrc` and `vimrc` are run scripts (default: `default/_*rc`). If their files does not exist in `dotfile`, they are copied from `dotfile/default`.
-- `docker.run_nginx_autoindex` run [dceoy/docker-nginx-autoindex](https://github.com/dceoy/docker-nginx-autoindex) making a home directory available at `/` of Nginx (default port: 80).
-- `docker.run_rstudio_server` run [dceoy/docker-rstudio-server](https://github.com/dceoy/docker-rstudio-server) sharing a home directory (default port: 8787).
 - Commands can use configurations in `~/.ssh/config`. (e.g., certificates, host names, and user names)
 
 Example
