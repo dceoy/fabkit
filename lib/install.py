@@ -77,7 +77,8 @@ def brew(yml='config/brew.yml', names=None):
         if run("brew --version").failed:
             run("/usr/bin/ruby -e $(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)")
         else:
-            run("brew update && brew upgrade --all")
+            run("brew update")
+            run("brew upgrade")
         map(lambda p: run("brew install %s" % p), pkgs)
         run("brew cleanup")
 
