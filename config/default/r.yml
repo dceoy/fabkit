@@ -36,6 +36,7 @@ cran:
   - purrr
   - ranger
   - rbenchmark
+  - RcppSMC
   - RcppTOML
   - rmarkdown
   - RSQLite

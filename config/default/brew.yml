@@ -6,7 +6,6 @@ brew:
   - cairo
   - corkscrew
   - curl
-  - docker-machine
   - fabric
   - gawk
   - gcc
@@ -62,7 +61,6 @@ brew:
   - homebrew/science/opencv
   - homebrew/science/r
   - Caskroom/cask/chrome-remote-desktop-host
-  - Caskroom/cask/docker-toolbox
   - Caskroom/cask/dropbox
   - Caskroom/cask/endnote
   - Caskroom/cask/firefox
