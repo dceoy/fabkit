@@ -85,6 +85,7 @@ deb:
   - vim-gnome
   - wakeonlan
   - wget
+  - whois
   - zip
   - zlib1g-dev
   - zsh

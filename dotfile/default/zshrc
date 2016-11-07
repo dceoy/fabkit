@@ -97,6 +97,7 @@ alias vi="vi -u NONE --noplugin -N"
 alias ll="ls -lF"
 alias lla="ll -a"
 alias llh="ll -h"
+alias less="less -iMRW"
 alias d="docker"
 alias dc="docker-compose"
 alias rmc="docker ps -aq | xargs docker rm"
@@ -128,7 +129,7 @@ export PATH="${GOPATH}/bin:${PATH}:${HOME}/.clir/bin"
 autoload -Uz vcs_info
 zstyle ":vcs_info:*" formats "%b "
 zstyle ":vcs_info:*" actionformats "%b|%a "
-precmd () {
+function precmd {
   psvar=()
   LANG=en_US.UTF-8 vcs_info
   [[ -n "${vcs_info_msg_0_}" ]] && psvar[1]="${vcs_info_msg_0_}"

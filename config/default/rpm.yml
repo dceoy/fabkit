@@ -117,6 +117,7 @@ rpm:
   - valgrind
   - vim-enhanced
   - wget
+  - whois
   - wol
   - wxMaxima
   - xfig
