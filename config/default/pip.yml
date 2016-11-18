@@ -15,6 +15,7 @@ pypi:
   - ipython
   - jupyter
   - keras
+  - luigi
   - matplotlib
   - mechanize
   - mock
