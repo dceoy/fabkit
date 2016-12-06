@@ -14,6 +14,7 @@ cran:
   - caret
   - coin
   - data.table
+  - diffusionMap
   - doSNOW
   - dplyr
   - dtplyr
@@ -27,8 +28,10 @@ cran:
   - GMD
   - gridExtra
   - h2o
+  - kernlab
   - knitr
   - leaflet
+  - lle
   - loo
   - MCMCpack
   - phangorn
@@ -45,9 +48,11 @@ cran:
   - rvest
   - shiny
   - snow
+  - som
   - stringr
   - testthat
   - tidyr
+  - tidyverse
   - tm
 github:
   roxygen2: klutometis/roxygen
@@ -62,3 +67,4 @@ bioconductor:
   - Biostrings
   - GEOquery
   - PhViD
+  - RDRToolbox
