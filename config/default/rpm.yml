@@ -83,6 +83,7 @@ rpm:
   - parallel
   - patch
   - patchutils
+  - pigz
   - pkgconfig
   - postgresql-devel
   - proj-devel
@@ -104,6 +105,7 @@ rpm:
   - sqlite-devel
   - strace
   - subversion
+  - supervisor
   - swig
   - systemtap
   - texmaker

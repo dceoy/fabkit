@@ -5,6 +5,7 @@ pypi:
   - bottle
   - csvkit
   - cython
+  - docker
   - docker-compose
   - fabric
   - feather-format
@@ -31,6 +32,7 @@ pypi:
   - pytest
   - pytoml
   - pyyaml
+  - redis
   - requests
   - requests_oauthlib
   - scikit-learn

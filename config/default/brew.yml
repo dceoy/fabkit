@@ -47,6 +47,7 @@ brew:
   - scala
   - snappy
   - sqlite
+  - supervisor
   - szip
   - tmux
   - tree
@@ -58,7 +59,7 @@ brew:
   - homebrew/dupes/grep
   - homebrew/science/hdf5
   - homebrew/science/opencv
-  - homebrew/science/r
+  - homebrew/science/r --with-openblas --with-x11
   - Caskroom/cask/chrome-remote-desktop-host
   - Caskroom/cask/dropbox
   - Caskroom/cask/endnote

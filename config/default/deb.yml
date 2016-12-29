@@ -65,6 +65,7 @@ deb:
   - nvidia-cuda-toolkit
   - pandoc
   - patch
+  - pigz
   - pkg-config
   - postgresql
   - protobuf-compiler
@@ -73,9 +74,11 @@ deb:
   - python-scipy
   - python-yaml
   - r-base-dev
+  - redis-server
   - samba
   - scala
   - sqlite3
+  - supervisor
   - swig
   - time
   - tk-dev
